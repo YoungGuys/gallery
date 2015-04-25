@@ -4,6 +4,7 @@
 design
 cache
 node_modules
+bower_components
 # =========================
 # Operating System Files
 # =========================
