@@ -21,6 +21,7 @@
                                        class="form-control"
                                        id="InputPassword1"
                                        placeholder="Password"
+                                       ng-model="pass"
                                 />
                             </div>
                         </div>
@@ -35,20 +36,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Фото:</label>
+                        <label>Photo:</label>
 
                         <div class="form-inline">
-                            <input type="text" class="form-control">
-                            <button type="button" class="btn btn-danger btn-xs">
+                            <input type="text" class="form-control" ng-model="photo">
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="removePhoto()">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
-                            <input class="input-file" type="file">
+                            <input class="input-file" type="file" ng-model="photo">
                         </div>
                     </div>
 
                     <hr>
 
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>
+                    <button class="btn btn-primary" ng-click="updateJury()">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
                         Сохранить
                     </button>
                 </form>

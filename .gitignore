@@ -4,7 +4,7 @@
 design
 cache
 node_modules
-app/bower_components
+/bower_components
 # =========================
 # Operating System Files
 # =========================
