@@ -1,0 +1,47 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <nav class="top-nav">
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-list-alt"></span> Главная
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-user"></span> Художники
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-user"></span> Жюри
+                    </button>
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-star"></span> Рейтинг
+                    </button>
+                    <div class="user-login">
+                        Вы вошли как: Admin | <a href="#">Выйти</a>
+                    </div>
+                </nav>
+                <h3 class="page-header">Добавить нового художника:</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label for="InputName">Имя:</label>
+                        <input type="text" class="form-control" id="InputName" placeholder="ФИО">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputInformation">Информация о художнике:</label>
+                        <textarea class="form-control" rows="10" id="InputInformation"
+                                  placeholder="Здесь краткая биография художника"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputFoto">Фото:</label>
+                        <input type="file" id="InputFoto">
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>
+                        Добавить художника
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

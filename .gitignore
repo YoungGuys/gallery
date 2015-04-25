@@ -3,6 +3,7 @@
 --update
 design
 cache
+node_modules
 # =========================
 # Operating System Files
 # =========================

@@ -1,0 +1,266 @@
+<section class="step-3 wrapper">
+
+    <h3 class="page-header">Інформація про роботи / проекти</h3>
+
+    <fieldset class="form-horizontal">
+
+        <div class="information" ng-repeat="project in projects track by $index">
+            <h4 class="page-header">Робота / Проект {{$index + 1}}:</h4>
+
+            <div class="form-group">
+                <label for="Project1NameUA" class="col-sm-4 control-label">
+                    Коротка назва(Українською)
+                    <span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="Project1NameUA" required="required" ng-model="user.project[$index].nameUa" />
+                </div>
+                <div class="col-sm-3">
+                    <p class="help-block">До 100 символів</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1NameEN" class="col-sm-4 control-label">
+                    Коротка назва(Англійською)
+                    <span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="Project1NameEN" required="required" ng-model="user.project[$index].nameEng" />
+                </div>
+                <div class="col-sm-3">
+                    <p class="help-block">До 100 символів</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1FullName" class="col-sm-4 control-label">Довга назва</label>
+
+                <div class="col-sm-6">
+                    <textarea class="form-control" id="Project1FullName" rows="2" maxlength="500" ng-model="user.project[$index].nameFull"></textarea>
+                </div>
+                <div class="col-sm-2">
+                    <p class="help-block">До 500 символів</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1TypeOfWork" class="col-sm-4 control-label">
+                    Тип роботи<span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-8">
+                    <select class="form-control" id="Project1TypeOfWork" required="required" ng-model="user.project[$index].type">
+                        <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="col-sm-4 control-label">Завантажити фото:</p>
+
+                <div class="col-sm-5">
+                    <div class="form-inline">
+                        <!--<label for="Project1InputFoto1" class="col-sm-1">1.</label>-->
+                        <input id="Project1InputFoto1" type="file" ng-model="user.project[$index].file1">
+                    </div>
+                    <div class="form-inline">
+                        <!--<label for="Project1InputFoto2" class="col-sm-1">2.</label>-->
+                        <input id="Project1InputFoto2" type="file" ng-model="user.project[$index].file2">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <p class="help-block"><strong>Формат:</strong> jpeg, gif, png;</p>
+                    <p class="help-block"><strong>Розмір:</strong> до 5Mb</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="col-sm-4 control-label">Додати відео:</p>
+
+                <div class="col-sm-8 form-inline">
+                    <label for="Project1InputVideo1" class="col-xs-5">
+                        <!--<span class="col-xs-1">1.</span>-->
+                        <input id="Project1InputVideo1" class="form-control pull-left" type="text" ng-model="user.project[$index].video1">
+                    </label>
+                    <label for="Project1InputVideo2" class="col-xs-5">
+                        <!--<span class="col-xs-1">2.</span>-->
+                        <input id="Project1InputVideo2" class="form-control pull-left" type="text" ng-model="user.project[$index].video2">
+                    </label>
+                    <div class="col-sm-12">
+                        <p class="help-block">Посилання на завантаження відео на <a href="#">vimeo.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1MoreAboutUA" class="col-sm-4 control-label">
+                    Детальніше про проект (Українською)<span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="Project1MoreAboutUA" rows="4" required="required" ng-model="user.project[$index].descriptionUa"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1MoreAboutEN" class="col-sm-4 control-label">
+                    Детальніше про проект (Англійською)<span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="Project1MoreAboutEN" rows="4" required="required" ng-model="user.project[$index].descriptionEng"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1Material" class="col-sm-5 control-label">
+                    Матеріал, з якого виготовлена робота<span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Project1Material" required="required" ng-model="user.project[$index].material" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Project1Size" class="col-sm-5 control-label">
+                    Габарити <span class="needs">*</span>
+                </label>
+
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Project1Size" required="required" ng-model="user.project[$index].size" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="col-sm-5 control-label">
+                    Рекомендую до участі у виставці<span class="needs">*</span>
+                </p>
+
+                <div class="col-sm-7">
+                    <label class="radio-inline" for="Project1RecommendationYes">
+                        <input name="Project1Recommendation{{$index}}"
+                               type="radio"
+                               id="Project1RecommendationYes"
+                               value="true"
+                               required="required"
+                               ng-model="user.project[$index].recomend"
+                        />
+                        Так
+                    </label>
+                    <label class="radio-inline" for="Project1RecommendationNo">
+                        <input name="Project1Recommendation{{$index}}"
+                               type="radio"
+                               id="Project1RecommendationNo"
+                               value="false"
+                               required="required"
+                               ng-model="user.project[$index].recomend"
+                        />
+                        Ні
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="container-fluid">
+                    <div class="well">
+                        <div class="row">
+                            <h4 class="col-sm-6">
+                                Власник роботи/проекту <span class="needs">*</span>
+                            </h4>
+
+                            <p class="col-sm-6">
+                                <label class="radio-inline" for="Project1OwnerYes">
+                                    <input name="Project1Owner{{$index}}"
+                                           type="radio"
+                                           id="Project1OwnerYes"
+                                           value="false"
+                                           required="required"
+                                           ng-change="anotherPersonFn()"
+                                           ng-model="user.project[$index].anotherPerson"
+                                    />
+                                    Учасник конкурсу
+                                </label>
+                                <label class="radio-inline" for="Project1OwnerNo">
+                                    <input name="Project1Owner{{$index}}"
+                                           type="radio"
+                                           id="Project1OwnerNo"
+                                           value="true"
+                                           required="required"
+                                           ng-change="anotherPersonFn()"
+                                           ng-model="user.project[$index].anotherPerson"
+                                    />
+                                    Інша особа
+                                </label>
+                            </p>
+
+                            <div class="col-sm-12" ng-show="anotherPersonShow">
+                                <div class="col-sm-12 form-group">
+                                    <label for="PIBua" class="col-sm-3 control-label pull-left">
+                                        ПІБ (українською)<span class="needs">*</span>
+                                    </label>
+                                    <div class="col-sm-8 pull-right">
+                                        <input type="text" class="form-control" id="PIBua" aria-describedby="helpBlockPIBua" required="required" ng-model="user.project[$index].anotherPersonNameUa">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 form-group">
+                                    <label for="PIBua" class="col-sm-3 control-label pull-left">
+                                        ПІБ (англійською)<span class="needs">*</span>
+                                    </label>
+                                    <div class="col-sm-8 pull-right">
+                                        <input type="text" class="form-control" id="PIBua" aria-describedby="helpBlockPIBua" required="required" ng-model="user.project[$index].anotherPersonNameEng">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 form-group">
+                                    <div class="col-sm-4 pull-right">
+                                        Завантажити нотаріально завірений дозвіл власника на участь роботи у конкурсі в електронному видгляді <span class="needs">*</span>
+                                    </div>
+                                    <div class="col-sm-4 pull-right">
+                                        <input type="file" id="InputFoto" />
+                                    </div>
+                                    <div class="col-sm-4 pull-right">
+                                        <p class="help-block"><
+                                            <strong>Якість:</strong> до 300dpi,
+                                            <strong>Формат:</strong> jpeg,
+                                            <strong>Розмір:</strong> до 5 Мб
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <span class="needs">*</span> - Поля, обов'язкові для заповнення
+                <hr>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-right">
+                <button class="btn btn-success btn-lg" ng-click="addProjects()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Додати ще одну роботу/проект
+                </button>
+                <!--<button class="btn btn-default btn-lg" type="reset">Очистити <span-->
+                <!--class="glyphicon glyphicon-trash"></span>-->
+                <!--</button>-->
+                <button class="btn btn-danger btn-lg" ng-click="setTab(4)">
+                    Далі <span class="glyphicon glyphicon-arrow-right"></span>
+                </button>
+            </div>
+        </div>
+
+    </fieldset>
+
+</section>

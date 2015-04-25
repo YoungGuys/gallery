@@ -1,0 +1,45 @@
+<section class="step-1 wrapper">
+    <h3 class="page-header">Згода з правилами конкурсу:</h3>
+
+    <fieldset class="form-inline">
+        <div class="form-group">
+            <input type="checkbox" class="checkbox" id="checkbox" ng-model="rulesModel" />
+            <label for="checkbox">
+                Я погоджуюся з
+                <a href="#myModal" data-toggle="modal">правилами конкурсу</a>
+                <span class="needs">*</span></label>
+
+            <p class="help-block">
+                <span class="needs">*</span> Уважно прочитайте правила
+            </p>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Правила конкурсу</h4>
+                        </div>
+                        <div class="modal-body">
+                            текст тут
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Закрити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="enablecheck btn btn-danger btn-lg pull-right" ng-disabled="!rulesModel" ng-click="setTab(2)">
+            Далі
+            <span class="glyphicon glyphicon-arrow-right"></span>
+        </button>
+
+    </fieldset>
+</section>

@@ -1,0 +1,254 @@
+<fieldset class="form-horizontal">
+
+    <div class="form-group">
+        <label for="PIBua" class="col-sm-4 control-label">
+            П.І.Б. (Українською)<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="PIBua" aria-describedby="helpBlockPIBua" required="required" ng-model="user.nameUa">
+            <span id="helpBlockPIBua" class="help-block"><strong>Формат:</strong> Петренко Петро Петрович</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="PIBen" class="col-sm-4 control-label">
+            П.І.Б. (Англійською)<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="PIBen" aria-describedby="helpBlockPIBen" required="required" ng-model="user.nameEng"/>
+            <span id="helpBlockPIBen" class="help-block"><strong>Формат:</strong> Petrenko Petro Petrovich</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="BidthDay" class="col-sm-4 control-label">Дата народження<span class="needs">*</span></label>
+        <div class="col-sm-3">
+            <input type="date" class="form-control" id="BidthDay"  ng-model="user.bidthDay"/>
+        </div>
+        <!--<div class="col-sm-2">-->
+        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
+        <!--<select class="form-control" id="BidthDay" required="required">-->
+        <!--<option ng-repeat="day in arrayDay" value="{{day}}">{{day}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--<div class="col-sm-4">-->
+        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
+        <!--<select class="form-control" id="BidthDay" required="required">-->
+        <!--<option></option>-->
+        <!--<option ng-repeat="month in arrayMonth track by $index" value="{{$index}}">{{month}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--<div class="col-sm-2">-->
+        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
+        <!--<select class="form-control" id="BidthDay" required="required">-->
+        <!--<option></option>-->
+        <!--<option ng-repeat="year in arrayYear" value="{{year}}">{{year}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+    </div>
+
+    <div class="form-group">
+        <label for="education" class="col-sm-4 control-label">
+            Освіта<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="education" required="required" ng-model="user.education">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="country" class="col-sm-4 control-label">
+            Країна проживання<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <select class="form-control" id="country" required="required" ng-model="user.country" ng-change="changeCountry()">
+                <option ng-repeat="countryItem in country" value="{{countryItem}}">{{countryItem}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="region" class="col-sm-4 control-label">
+            Область(регіон) проживання<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <select class="form-control" id="region" required="required" ng-disabled="!district" ng-model="user.district">
+                <option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="city" class="col-sm-4 control-label">
+            Населений пункт, де живете<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="city" required="required" ng-model="user.city">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="adress" class="col-sm-4 control-label">
+            Адреса місця проживання<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="adress" aria-describedby="helpBlockAdress" required="required" ng-model="user.adress">
+            <span id="helpBlockAdress" class="help-block"><strong>Формат:</strong> Вулиця, будинок, квартира</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="mobile" class="col-sm-4 control-label">
+            Контактний телефон<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="tel" class="form-control" id="mobile" aria-describedby="helpBlockMobile" required="required" pattern="\+380(\d){9}"  ng-model="user.tel">
+            <span id="helpBlockMobile" class="help-block"><strong>Формат:</strong> +380445556677</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="col-sm-4 control-label">
+            Ваш E-mail<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   required="required"
+                   pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"
+                   ng-model="user.email"
+            />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="website" class="col-sm-4 control-label">
+            Адреса сайту<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <input type="url" class="form-control" id="website" required="required" ng-model="user.cite">
+        </div>
+    </div>
+
+    <div class="information">
+
+        <h4 class="page-header">Паспортні відомості:</h4>
+
+        <div class="form-group">
+            <label for="PassportSeries" class="col-sm-4 control-label">
+                Паспорт серія<span class="needs">*</span>
+            </label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="PassportSeries" required="required" ng-model="passport.series">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="PassportNumber" class="col-sm-4 control-label">
+                Паспорт №<span class="needs">*</span>
+            </label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="PassportNumber" required="required" ng-model="passport.number">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="PassportIssued" class="col-sm-4 control-label">
+                Ким виданий<span class="needs">*</span>
+            </label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="PassportIssued" required="required" ng-model="passport.issuedBy" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="PassportDate" class="col-sm-4 control-label">
+                Коли виданий<span class="needs">*</span>
+            </label>
+
+            <div class="col-sm-8">
+                <input type="text" id="PassportDate" name="date" class="form-control tcal" value="" required="required" ng-model="passport.whenIssuedBy" />
+            </div>
+        </div>
+
+    </div>
+
+    <h4 class="page-header">Додаткова інформація:</h4>
+
+    <div class="form-group">
+        <label for="InputFoto" class="col-sm-4 control-label">Фото учасника</label>
+
+        <div class="col-sm-8">
+            <input type="file" id="InputFoto" ng-model="user.avatar" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Biografy" class="col-sm-4 control-label">
+            Творча біографія<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <textarea class="form-control" rows="4" id="Biografy" required="required" aria-describedby="helpBlockBiografy" maxlength="1000" ng-model="user.bio" ></textarea>
+            <span id="helpBlockBiografy" class="help-block">До 1000 символів</span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label">
+            Участь у виставках<span class="needs">*</span>
+        </label>
+
+        <div class="col-sm-8">
+            <label class="radio-inline" for="takePartYes">
+                <input type="radio" name="ChoseTakepart" id="takePartYes" value="true" ng-change="exhibitionCh()" ng-model="user.exhibition">
+                Так
+            </label>
+            <label class="radio-inline" for="takePartNo">
+                <input type="radio" name="ChoseTakepart" id="takePartNo" value="false" ng-change="exhibitionCh()" ng-model="user.exhibition">
+                Ні
+            </label>
+
+            <textarea class="form-control"
+                      rows="4"
+                      id="Biografy"
+                      required="required"
+                      aria-describedby="helpBlockBiografy"
+                      maxlength="1000"
+                      ng-model="user.exhibitionText"
+                      ng-show="exhibitionShow"></textarea>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <span class="needs">*</span> - Поля, обов'язкові для заповнення
+            <hr>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12 text-right">
+            <!--<button class="btn btn-default btn-lg" >-->
+            <!--Очистити <span class="glyphicon glyphicon-trash"></span>-->
+            <!--</button>-->
+            <button class="btn btn-danger btn-lg" type="submit" ng-click="setTab(3)">
+                Далі <span class="glyphicon glyphicon-arrow-right"></span>
+            </button>
+        </div>
+    </div>
+
+</fieldset>

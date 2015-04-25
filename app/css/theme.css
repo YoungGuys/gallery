@@ -1,0 +1,249 @@
+/* Nav */
+
+.top-nav{
+    display: block;
+    margin: 20px 0;
+    padding: 10px 0 20px 0;
+}
+
+.user-login {
+    float: right;
+    padding: 0;
+    margin: 0;
+    line-height: 34px;
+}
+
+/* Sidebar */
+
+.sidebar-list {
+    padding: 20px 0;
+}
+
+/* Content */
+
+.information {
+    border-color: #DDD;
+    border-width: 1px;
+    border-radius: 5px;
+    box-shadow: none;
+    position: relative;
+    padding: 15px 15px 15px;
+    margin: 0 0 20px 0;
+    border-style: solid;
+    min-height: 90px;
+}
+
+.login-block {
+    width: 200px;
+    margin: auto;
+}
+
+.padding-top-bot-10{
+    padding: 10px 0;
+}
+
+.padding-top-bot-100{
+    padding: 100px 0;
+}
+
+.form-inline {
+    padding: 5px 0;
+}
+
+.input-file {
+    display: inline !important;
+    padding-left: 15px;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.media, .media-body {
+    width: 100%;
+}
+
+.media-body, .media-left, .media-right {
+    display: table-cell;
+    vertical-align: top;
+}
+
+img.media-object {
+    padding-top: 40px;
+}
+
+.media-left, .media > .pull-left {
+    padding-right: 20px;
+}
+
+/* Cabinet */
+
+.wrapper {
+    width: 100%;
+    background: #c7c7c7;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 40px 20px 40px;
+    margin: 20px 0;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .095);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .095);
+}
+
+.wrapper .page-header {
+    margin: 20px 0 20px;
+}
+
+.wrapper .links {
+    color: #C12E2A;
+    text-decoration: underline;
+    float: right;
+}
+
+.wrapper .links:hover {
+    text-decoration: none;
+}
+
+.nav-steps {
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.nav-steps ul.steps {
+    margin: 20px 0 0 0;
+}
+
+.steps > li {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.steps > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #428bca;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #428bca;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+
+.steps > li > span:hover {
+    border-color: #0A487D;
+}
+
+.steps > li > span.arrow {
+    border: none !important;
+}
+
+.steps > .active > span,
+.steps > .active > span:hover,
+.steps > .active > span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border: none;
+}
+
+.link-right {
+    margin: 0 auto;
+    padding: 5px;
+    float: right;
+}
+
+.no-style {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.no-style > tbody > tr > td {
+    border: none;
+    margin: 0;
+    padding: 8px 8px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.needs {
+    display: inline-block;
+    color: #C12E2A;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: -20px;
+}
+
+/* Checkbox style */
+
+/* for IE8 and older */
+.checkbox {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 17px;
+    height: 17px;
+}
+
+/* for all browsers */
+.checkbox + label {
+    cursor: pointer;
+}
+
+.checkbox:not(checked) {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox:not(checked) + label {
+    position: relative;
+    padding: 0 0 0 60px;
+}
+
+.checkbox:not(checked) + label:before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    background: #C12E2A;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,.2);
+}
+
+.checkbox:not(checked) + label:after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+    transition: all .2s;
+}
+
+.checkbox:checked + label:before {
+    background: #9FD468;
+}
+
+.checkbox:checked + label:after {
+    left: 26px;
+}
+
+.checkbox:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(255,255,0,.5);
+}
+
+
+
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+.ng-valid.ng-dirty {
+    border-color: green;
+}
