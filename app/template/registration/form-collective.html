@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<filedest class="form-horizontal">
 
     <div class="form-group">
         <label for="GroupNameUA" class="col-sm-4 control-label">Назва групи (Українською)<span class="needs">*</span></label>
@@ -81,6 +81,8 @@
         </div>
     </div>
 
+    <form-member></form-member>
+
     <div class="row">
         <div class="col-md-12 text-right"><span class="needs">*</span> - Поля, обов'язкові для
             заповнення
@@ -89,11 +91,18 @@
     </div>
     <div class="form-group">
         <div class="col-sm-12 text-right">
-            <button class="btn btn-default btn-lg" type="reset">Очистити <span class="glyphicon glyphicon-trash"></span>
+            <button class="btn btn-success btn-lg" ng-click="addMember()">
+                <span class="glyphicon glyphicon-plus"></span>
+                Додати учасника
             </button>
-            <button class="btn btn-danger btn-lg" type="submit">Далі <span class="glyphicon glyphicon-arrow-right"></span>
+            <button class="btn btn-danger btn-lg" type="submit">
+                Далі <span class="glyphicon glyphicon-arrow-right"></span>
             </button>
         </div>
     </div>
 
-</form>
+</filedest>
+
+
+
+

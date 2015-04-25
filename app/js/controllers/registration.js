@@ -11,11 +11,19 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
     $scope.user = {};
     $scope.projects = [{}];
+    $scope.members = [{}];
 
     $scope.addProjects = function(){
         console.log('Add project');
         $scope.projects.push($scope.project);
     };
+
+    $scope.addMember = function(){
+        console.log('Add member');
+        $scope.members.push($scope.member);
+    };
+
+
 
 
     $scope.isSet = function(checkTab) {
@@ -151,6 +159,17 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
         }
     }
 
+    $scope.applicationType = function () {
+        if ($scope.user.type === "individual") {
+            $scope.individualShow = true;
+            $scope.collectiveShow = false;
+        }
+        else {
+            $scope.individualShow = false;
+            $scope.collectiveShow = true;
+
+        }
+    }
 }]);
 
 
@@ -179,5 +198,26 @@ artApp.directive('formStepFour', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-4.html'
+    }
+});
+
+artApp.directive('formCollective', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/registration/form-collective.html'
+    }
+});
+
+artApp.directive('formIndividual', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/registration/form-individual.html'
+    }
+});
+
+artApp.directive('formMember', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/registration/form-member.html'
     }
 });

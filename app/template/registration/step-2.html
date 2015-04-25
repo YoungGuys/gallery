@@ -8,15 +8,32 @@
 
         <div>
             <label class="radio-inline" for="individual">
-                <input name="ChoseType" type="radio" id="individual" value="individual" required="required" checked="checked" ng-model="user.type"/>
+                <input name="ChoseType"
+                       type="radio"
+                       id="individual"
+                       value="individual"
+                       required="required"
+                       checked="checked"
+                       ng-change="applicationType()"
+                       ng-model="user.type"/>
                 Індивідуальна
             </label>
             <label class="radio-inline" for="collective">
-                <input name="ChoseType" type="radio" id="collective" value="collective" required="required" ng-model="user.type">
+                <input name="ChoseType"
+                       type="radio"
+                       id="collective"
+                       value="collective"
+                       required="required"
+                       ng-change="applicationType()"
+                       ng-model="user.type">
                 Колективна
             </label>
         </div>
+
     </div>
+
+    <form-collective ng-show="collectiveShow"></form-collective>
+    <form-individual ng-show="individualShow"></form-individual>
 
 
 </section>
