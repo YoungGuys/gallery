@@ -1,6 +1,7 @@
+'use strict';
+
 var   gulp         = require('gulp')
     , csso         = require('gulp-csso')
-    , clean        = require('gulp-clean')
     , notify       = require("gulp-notify")
     , concat       = require('gulp-concat')
     , uglify       = require('gulp-uglify')
@@ -8,7 +9,39 @@ var   gulp         = require('gulp')
     , imagemin     = require('gulp-imagemin')
     , pngquant     = require('imagemin-pngquant')
     , autoprefixer = require('gulp-autoprefixer')
+
+    , source     = require('vinyl-source-stream')
+    , buffer     = require('vinyl-buffer')
+    , gutil      = require('gulp-util')
+    , assign     = require('lodash.assign')
+    , watchify   = require('watchify')
+    , browserify = require('browserify')
+    , sourcemaps = require('gulp-sourcemaps')
     ;
+
+/*
+var customOpts = {
+    entries: ['./app/js/'],
+    noparse: ['app.all', 'app.min'],
+    debug: true
+};
+var opts = assign({}, watchify.args, customOpts);
+var b = watchify(browserify(opts));
+
+gulp.task('js', bundle);
+b.on('update', bundle);
+b.on('log', gutil.log);
+
+function bundle() {
+    return b.bundle()
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+        .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./dist'));
+}
+*/
 
 
 //server
@@ -38,13 +71,23 @@ gulp.task('css',function(){
 
 //js
 gulp.task('js', function() {
-    gulp.src('./app/js/**/*.js')
+    gulp.src([
+            './app/js/app.js',
+            './app/js/route.js',
+            './app/js/controllers/*.js',
+            './app/js/directives.js',
+            './app/js/filters.js',
+            './app/js/services.js'
+        ])
+        .pipe(sourcemaps.init())
         .pipe(concat('app.all.js'))
         .pipe(gulp.dest('./app/js/'))
+        .pipe(sourcemaps.write())
         .pipe(connect.reload())
         .pipe(notify("Change js"));
 });
 
+//clean-js
 gulp.task('clean-js', function() {
     gulp.src('./app/js/app.all.js')
         .pipe(clean());
@@ -96,5 +139,5 @@ gulp.task('compress-image', function () {
 
 
 //gulp.task('default', ['server', 'html', 'css', 'clean-js', 'js', 'watch']);
-gulp.task('default', ['server', 'html', 'css', 'watch']);
+gulp.task('default', ['server', 'html', 'css', 'js', 'watch']);
 gulp.task('production', ['compress-js', 'compress-css', 'compress-image']);
