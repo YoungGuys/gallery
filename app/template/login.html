@@ -8,12 +8,25 @@
                     <div class="padding-top-bot-10">
                         <img src="images/logo.png">
                     </div>
-                    <form>
+                    <form name="formLogin" ng-submit="autorization()">
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Pass">
+                            <input type="password"
+                                   class="form-control"
+                                   placeholder="Login"
+                                   required="required"
+                                   ng-model="login"
+                            />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block"><span
-                                class="glyphicon glyphicon-user"></span>
+                        <div class="form-group">
+                            <input type="password"
+                                   class="form-control"
+                                   placeholder="Pass"
+                                   required="required"
+                                   ng-model="pass"
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span class="glyphicon glyphicon-user"></span>
                             Enter
                         </button>
                     </form>

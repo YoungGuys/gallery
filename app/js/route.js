@@ -31,9 +31,9 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/artist-list.html',
             controller: 'artistListCtrl'
         })
-        .when('/edit-artists', {
-            templateUrl: 'template/edit-artists.html',
-            controller: 'editArtistsCtrl'
+        .when('/edit-artist', {
+            templateUrl: '../template/edit-artist.html',
+            controller: 'editArtistCtrl'
         })
         .when('/edit-jury', {
             templateUrl: 'template/edit-jury.html',

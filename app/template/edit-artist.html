@@ -1,0 +1,42 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+
+                <menu></menu>
+
+                <h3 class="page-header">Edited Profil artist:</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label for="InputName">Name:</label>
+                        <input type="text" class="form-control" id="InputName" ng-model="painter.name">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputInformation">Information about the artist:</label>
+                        <textarea class="form-control" rows="10" id="InputInformation" ng-model="painter.bio"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Photo:</label>
+
+                        <div class="form-inline">
+                            <input type="text" class="form-control" ng-model="painter.photo">
+                            <button type="button" class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <input class="input-file" type="file" ng-model="painter.photo">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" class="btn btn-primary" ng-click="editPainter()">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                        Сохранить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

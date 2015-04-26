@@ -4,16 +4,71 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
     $scope.currentDate = new Date();
 
-    //painters
-    //painter.place
-    //painter.photoProject
-    //painter.name
-    //painter.nameProject
-    //painter.vote
+    $scope.painters = [
+        {
+            name: "MiKolka",
+            place: "1",
+            project: {
+                id: "1",
+                name: "Project-1",
+                photo: "img.jpg",
+                vote: "3"
+            }
+        },
+        {
+            name: "Andii",
+            place: "2",
+            project: {
+                id: "2",
+                name: "Project-2",
+                photo: "img.jpg",
+                vote: "2"
+            }
+        }
+    ];
 
-    //allJury
-    //jury.hoto
-    //jury.name
-    //jury.projectVote
+
+    $scope.allJury = [
+        {
+            photo: "img.jpg",
+            name: "Jury-1",
+            projects: [
+                {
+                    id: 1,
+                    name: "Project-1"
+                },
+                {
+                    id: 2,
+                    name: "Project-2"
+                },
+                {
+                    id: 3,
+                    name: "Project-3"
+                }
+            ]
+        },
+        {
+            photo: "img.jpg",
+            name: "Jury-2",
+            projects: [
+                {
+                    id: 1,
+                    name: "Project-1"
+                },
+                {
+                    id: 2,
+                    name: "Project-2"
+                }
+            ]
+        },
+        {
+            photo: "img.jpg",
+            name: "Jury-3",
+            projects: [{}]
+        }
+    ];
+    //jury.
+    //jury.
+    //jury.
 
 }]);

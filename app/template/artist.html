@@ -3,158 +3,63 @@
     <div class="row">
         <div class="col-md-9">
             <div class="container-fluid">
-                <!-- Admin nav -->
-                <nav class="top-nav">
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-list-alt"></span> Главная
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-user"></span> Художники
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-user"></span> Жюри
-                    </button>
-                    <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-star"></span> Рейтинг
-                    </button>
-                    <div class="user-login">
-                        Вы вошли как: Admin | <a href="#">Выйти</a>
-                    </div>
-                </nav>
-                <h3 class="page-header">Хужожник: Иванов Сергей</h3>
+
+                <menu></menu>
+
+                <h3 class="page-header">Painter: {{painter.name}}</h3>
 
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object" src="images/no-photo-artist.png" alt="">
+                            <img class="media-object" ng-src="images/{{painter.photo}}" alt="painter-photo">
                         </a>
                     </div>
                     <div class="media-body">
-                        <p class="media-heading">О художнике:</p>
+                        <p class="media-heading">About painter:</p>
 
-                        <div class="information">
-                            Здесь краткая биография художника
+                        <div class="information_">
+                            {{painter.bio}}
                         </div>
                     </div>
                 </div>
+
                 <hr>
-                <h3 class="page-header">Список проектов художника:</h3>
+
+                <h3 class="page-header">List all painter:</h3>
+
                 <table class="table table-striped">
                     <thead>
-                    <tr>
-                        <th>Фото</th>
-                        <th colspan="4">Название проектов</th>
-                    </tr>
+                        <tr>
+                            <th>Photo</th>
+                            <th colspan="4">Project name</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td scope="row">
-                            <a href="#">
-                                <img src="images/no-photo-project-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Название проекта №1
-                            </a>
-                        </td>
-                        <td width="160">
-                            <button type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> Смотреть проект
-                            </button>
-                        </td>
-                        <td width="195">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать проект
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">
-                            <a href="#">
-                                <img src="images/no-photo-project-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Название проекта №2
-                            </a>
-                        </td>
-                        <td width="160">
-                            <button type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> Смотреть проект
-                            </button>
-                        </td>
-                        <td width="195">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать проект
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">
-                            <a href="#">
-                                <img src="images/no-photo-project-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Название проекта №3
-                            </a>
-                        </td>
-                        <td width="160">
-                            <button type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> Смотреть проект
-                            </button>
-                        </td>
-                        <td width="195">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать проект
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">
-                            <a href="#">
-                                <img src="images/no-photo-project-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Название проекта №4
-                            </a>
-                        </td>
-                        <td width="160">
-                            <button type="button" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span> Смотреть проект
-                            </button>
-                        </td>
-                        <td width="195">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать проект
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
+                        <tr ng-repeat="painterProject in painterProjects">
+                            <td scope="row">
+                                <a href="#">
+                                    <img src="images/{{painterProject.photo}}" alt="project-photo">
+                                </a>
+                            </td>
+                            <td>
+                                {{painterProject.name}}
+                            </td>
+                            <td width="160">
+                                <a class="btn btn-primary" href="#/project/{{painterProject.id}}">
+                                    <span class="glyphicon glyphicon-search"></span> View project
+                                </a>
+                            </td>
+                            <td width="195">
+                                <a class="btn btn-success" href="#/edit-project/{{painterProject.id}}">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit project
+                                </a>
+                            </td>
+                            <td width="45">
+                                <button class="btn btn-danger" ng-click="deleteProject()" ng-model="painterProject.id">
+                                    <span class="glyphicon glyphicon-minus"> </span>
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
