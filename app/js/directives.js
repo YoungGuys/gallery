@@ -59,3 +59,21 @@ artApp.directive('menu', function() {
         templateUrl: 'template/menu.html'
     }
 });
+
+
+artApp.directive('uploadFile', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/upload-file.html',
+        controller: 'uploadFileCtrl'
+    }
+});
+
+
+//artApp.directive('uploadFileBtn', function() {
+//    return {
+//        restrict: 'E',
+//        templateUrl: 'template/upload-file-btn.html',
+//        controller: 'FileDestroyController'
+//    }
+//});

@@ -3,124 +3,46 @@
     <div class="row">
         <div class="col-md-9">
             <div class="container-fluid">
-                <!-- Admin nav -->
-                <nav class="top-nav">
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-list-alt"></span> Главная
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-user"></span> Художники
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-user"></span> Жюри
-                    </button>
-                    <button type="button" class="btn btn-success">
-                        <span class="glyphicon glyphicon-star"></span> Рейтинг
-                    </button>
-                    <div class="user-login">
-                        Вы вошли как: Admin | <a href="#">Выйти</a>
-                    </div>
-                </nav>
-                <h3 class="page-header">Список всех жюри:</h3>
+
+
+                <menu></menu>
+
+
+                <h3 class="page-header">List of all jury:</h3>
 
                 <table class="table table-striped">
                     <thead>
-                    <tr>
-                        <th>Фото</th>
-                        <th colspan="3">Ф.И.О.</th>
-                    </tr>
+                        <tr>
+                            <th>Photo</th>
+                            <th colspan="3">Name</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td scope="row" width="40">
-                            <a href="#">
-                                <img src="images/no-photo-artist-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Имя, Фамилия жюри
-                            </a>
-                        </td>
-                        <td width="155">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row" width="40">
-                            <a href="#">
-                                <img src="images/no-photo-artist-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Имя, Фамилия жюри
-                            </a>
-                        </td>
-                        <td width="155">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row" width="40">
-                            <a href="#">
-                                <img src="images/no-photo-artist-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Имя, Фамилия жюри
-                            </a>
-                        </td>
-                        <td width="155">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row" width="40">
-                            <a href="#">
-                                <img src="images/no-photo-artist-small.png" alt="">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#">
-                                Имя, Фамилия жюри
-                            </a>
-                        </td>
-                        <td width="155">
-                            <button type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-pencil"></span> Редактировать
-                            </button>
-                        </td>
-                        <td width="45">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-minus"> </span>
-                            </button>
-                        </td>
-                    </tr>
+                        <tr ng-repeat="j in jury">
+                            <td scope="row" width="40">
+                                <a href="#">
+                                    <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
+                                </a>
+                            </td>
+                            <td>
+                                <!--<a href="#">-->
+                                    j.name
+                                <!--</a>-->
+                            </td>
+                            <td width="155">
+                                <a href="#/edit-jury/{{j.id}}" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                                </a>
+                            </td>
+                            <!--<td width="45">-->
+                                <!--<button type="button" class="btn btn-danger">-->
+                                    <!--<span class="glyphicon glyphicon-minus"> </span>-->
+                                <!--</button>-->
+                            <!--</td>-->
+                        </tr>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

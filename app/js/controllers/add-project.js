@@ -2,26 +2,32 @@
 
 artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
+    $scope.multipleUpload = true;
+
+
     $scope.addProject = function () {
+
+        if ($scope.artist == undefined) {
+            alert('Виберіть художника');
+            return false;
+        }
 
         var data = {
             name: $scope.name,
             artist: $scope.artist,
             info: $scope.info,
-            file1: $scope.file1,
-            file2: $scope.file2,
-            file3: $scope.file3,
-            file4: $scope.file4
+            photo: $scope.photo
         };
-        console.log (data);
+        console.log(data);
 
-        $http.post('api/post/', data)
-            .success(function(data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
-            });
+        //$http.post('api/post/', {params: data})
+        //    .success(function(data, status, headers, config) {
+        //        console.log(data);
+        //    })
+        //    .error(function(data, status, headers, config) {
+        //        console.log('NOT OK')
+        //    });
 
     };
 

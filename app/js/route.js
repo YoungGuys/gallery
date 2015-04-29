@@ -12,8 +12,8 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'loginCtrl'
         })
         .when('/add-artist', {
-            templateUrl: 'template/add-artists.html',
-            controller: 'addArtistsCtrl'
+            templateUrl: 'template/add-artist.html',
+            controller: 'addArtistCtrl'
         })
         .when('/add-jury', {
             templateUrl: 'template/add-jury.html',
@@ -51,10 +51,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/jury-artists.html',
             controller: 'juryArtistsCtrl'
         })
-        .when('/jury-main', {
-            templateUrl: 'template/jury-main.html',
-            controller: 'juryMainCtrl'
-        })
         .when('/jury-project', {
             templateUrl: 'template/jury-project.html',
             controller: 'juryProjectCtrl'
@@ -71,6 +67,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
         })
+        .when('/admin', {
+            templateUrl: 'template/admin.html',
+            controller: 'adminCtrl'
+        })
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
@@ -78,6 +78,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/project', {
             templateUrl: 'template/project.html',
             controller: 'projectCtrl'
+        })
+        .when('/projects', {
+            templateUrl: 'template/projects.html',
+            controller: 'projectsCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',

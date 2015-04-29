@@ -2,6 +2,7 @@
 
 artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
     $scope.autorization = function () {
         if ($scope.formLogin.$valid) {
             var data = {
@@ -12,6 +13,7 @@ artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $
             $http.post('api/get/autorization', data)
                 .success(function(data, status, headers, config) {
                     console.log(data);
+                    //location.href = '#/jury-main';
                 })
                 .error(function(data, status, headers, config) {
                     console.log('NOT OK')

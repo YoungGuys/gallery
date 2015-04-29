@@ -1,0 +1,40 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+
+                <menu></menu>
+
+                <h3 class="page-header">Add a new artist:</h3>
+
+                <form>
+
+                    <div class="form-group">
+                        <label for="InputName">Name:</label>
+                        <input type="text" class="form-control" id="InputName" placeholder="Name" required="required" ng-model="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputInformation">Information about the artist:</label>
+                        <textarea class="form-control"
+                                  rows="10"
+                                  id="InputInformation"
+                                  ng-model="bio"
+                                  placeholder="Here is a brief biography of the artist"></textarea>
+                    </div>
+
+                    <upload-file></upload-file>
+
+                    <hr>
+
+                    <button type="button" class="btn btn-primary" ng-click="addPainter()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add artist
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+{
+  "image_about": {
+    "fields": {
+      "image": [
+        "image",
+        "Выбирете файл"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "about_case_image": {
+    "fields": {
+      "image": [
+        "image",
+        "Выбирете файл"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "text": {
+    "fields": {
+      "title": [
+        "text",
+        "Введите заголовок"
+      ],
+      "text": [
+        "text",
+        "Введите текст"
+      ],
+      "image": [
+        "image",
+        "Выбирете картинку"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "main": {
+    "fields": {
+      "title": [
+        "text",
+        "Введите заголовок"
+      ],
+      "text": [
+        "text",
+        "Введите текст"
+      ],
+      "image": [
+        "image",
+        "Выбирете картинку"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "footer": {
+    "fields": {
+      "copyright": [
+        "text",
+        "Введите копирайт"
+      ],
+      "phone1": [
+        "text",
+        "Введите первый телефон"
+      ],
+      "phone2": [
+        "text",
+        "Введите второй телефон"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "about_case": {
+    "fields": {
+      "text": [
+        "text",
+        "Введите текст"
+      ],
+      "image": [
+        "image",
+        "Выбирете картинку"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "contact": {
+    "fields": {
+      "customer": [
+        "text",
+        "Введите почту для клиентов"
+      ],
+      "public": [
+        "text",
+        "Введите публичную почту"
+      ],
+      "sales": [
+        "text",
+        "Введите почту для продаж"
+      ],
+      "address": [
+        "text",
+        "Введите адресс"
+      ],
+      "lat": [
+        "text",
+        "Input latitude"
+      ],
+      "lan": [
+        "text",
+        "Input longitude"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "buy": {
+    "fields": {
+      "price": [
+        "text",
+        "Введите цену"
+      ],
+      "text1": [
+        "text",
+        "Введите первый текст"
+      ],
+      "text2": [
+        "text",
+        "Введите второй текст"
+      ],
+      "image": [
+        "image",
+        "Выбирете картинку"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "coming_soon": {
+    "fields": {
+      "text": [
+        "text",
+        "Введите текст"
+      ],
+      "image": [
+        "image",
+        "Выбирете картинку"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  }
+
+}

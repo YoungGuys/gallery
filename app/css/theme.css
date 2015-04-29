@@ -247,3 +247,16 @@ img.media-object {
 .ng-valid.ng-dirty {
     border-color: green;
 }
+
+
+
+.img-preview__item {
+    display: inline-block;
+    vertical-align: top;
+    list-style-type: none;
+    float: none;
+}
+
+.img-preview {
+    padding: 0;
+}

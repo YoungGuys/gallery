@@ -1,0 +1,28 @@
+<div>
+    <p>Photo:</p>
+
+    <button class="btn btn-primary" ngf-select ng-model="files" ngf-multiple="multiple">
+        Select File<span ng-hide="!multipleUpload">s</span>
+    </button>
+
+    <span>
+        <label for="ad" class="btn btn-default" ng-hide="!multipleUpload">
+            <input type="checkbox" ng-model="multiple" id="ad"  />
+            upload multiple file
+        </label>
+    </span>
+
+    <ul class="row img-preview">
+        <li class="col-xs-6 col-md-4 img-preview__item" ng-repeat="f in files track by $index">
+            <figure class="thumbnail" ng-click="deleteImg($index)">
+                <img ngf-thumbnail="files[$index]" ng-src="images/no-photo-project.png" class="thumb">
+
+                <p>{{f.name}}</p>
+            </figure>
+        </li>
+    </ul>
+
+    <!--<div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div>-->
+
+    <!--<pre>{{log}}</pre>-->
+</div>

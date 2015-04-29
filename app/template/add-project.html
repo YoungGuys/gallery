@@ -18,7 +18,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <select class="form-control" ng-model="artist">
-                                    <option>Choose painters:</option>
+                                    <option value="" selected="selected">Choose painters:</option>
                                     <option ng-repeat="painter in painters" value="painter.id">{{painter.fio}}</option>
                                 </select>
                             </div>
@@ -30,13 +30,9 @@
                         <textarea class="form-control" rows="10" id="InputInformation" ng-model="info"></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label>Photo:</label>
-                        <input class="padding-top-bot-10" type="file" ng-model="file1">
-                        <input class="padding-top-bot-10" type="file" ng-model="file2">
-                        <input class="padding-top-bot-10" type="file" ng-model="file3">
-                        <input class="padding-top-bot-10" type="file" ng-model="file4">
-                    </div>
+
+                    <upload-file></upload-file>
+
 
                     <hr>
 

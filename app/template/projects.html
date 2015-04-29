@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="container-fluid">
+
+
+                <menu></menu>
+
+
+                <h3 class="page-header">List of all projects:</h3>
+
+                <pre>{{projects | json: 4}}</pre>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th colspan="3">Project name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="project in projects">
+                            <td scope="row" width="40">
+                                <a href="#/project/{{project.id}}">
+                                    <img src="images/img/{{project.photo}}" alt="">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#/project/{{project.id_project}}">
+                                    {{project.title_eng}}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#/artist{{project.id_user}}">
+                                    {{project.user}}
+                                </a>
+                            </td>
+                            <td width="155">
+                                <button type="button" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                                </button>
+                            </td>
+                            <td width="45">
+                                <button type="button" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-minus"> </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

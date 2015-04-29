@@ -2,6 +2,7 @@
 
 artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
     $scope.addJury = function () {
 
         var data = {
@@ -11,9 +12,9 @@ artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope,
             bio:   $scope.bio,
             photo: $scope.photo
         };
-        console.log (data);
+        console.log(data);
 
-        $http.post('api/post/addjury', data)
+        $http.get('/api/post/addjury', {params: data})
             .success(function(data, status, headers, config) {
                 console.log(data);
             })

@@ -1,0 +1,166 @@
+{
+  "image_about": {
+    "fields": {
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "about_case_image": {
+    "fields": {
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "text": {
+    "fields": {
+      "title": [
+        "text",
+        "Input title"
+      ],
+      "text": [
+        "text",
+        "Input text"
+      ],
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "main": {
+    "fields": {
+      "title": [
+        "text",
+        "Input title"
+      ],
+      "text": [
+        "text",
+        "Input name"
+      ],
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "footer": {
+    "fields": {
+      "copyright": [
+        "text",
+        "Input copyright"
+      ],
+      "phone1": [
+        "text",
+        "Input first phone"
+      ],
+      "phone2": [
+        "text",
+        "Input second phone"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "about_case": {
+    "fields": {
+      "text": [
+        "text",
+        "Input text"
+      ],
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "contact": {
+    "fields": {
+      "customer": [
+        "text",
+        "Input mail for customers"
+      ],
+      "public": [
+        "text",
+        "Input public mail"
+      ],
+      "sales": [
+        "text",
+        "Input mail for sales"
+      ],
+      "address": [
+        "text",
+        "Input address"
+      ],
+      "lat": [
+        "text",
+        "Input latitude"
+      ],
+      "lan": [
+        "text",
+        "Input longitude"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "buy": {
+    "fields": {
+      "price": [
+        "text",
+        "Input price"
+      ],
+      "text1": [
+        "text",
+        "Input first text"
+      ],
+      "text2": [
+        "text",
+        "Input second text"
+      ],
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  },
+  "coming_soon": {
+    "fields": {
+      "text": [
+        "text",
+        "Input text"
+      ],
+      "image": [
+        "image",
+        "Select image"
+      ]
+    },
+    "settings": {
+      "pk": "id"
+    }
+  }
+
+}

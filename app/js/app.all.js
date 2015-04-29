@@ -1,10 +1,82 @@
 'use strict';
 
+var isOnGitHub = window.location.hostname === 'blueimp.github.io',
+    url = isOnGitHub ? '//jquery-file-upload.appspot.com/' : 'server/php/';
+
 /* App Module */
-var artApp = angular.module('artApp', ['ngRoute']);
+var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload']);
+
+
+
+
+
+artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+
+    $scope.$watch('files', function () {
+        $scope.upload($scope.files);
+    });
+
+    $scope.log = '';
+
+
+    $scope.deleteImg = function (index) {
+        $scope.files.splice(index, 1);
+    };
+
+
+    $scope.upload = function (files) {
+
+        if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                Upload.upload({
+                    //url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                    //fields: {
+                    //    'username': $scope.username
+                    //},
+                    //file: file
+                    url: 'http://gallery.com/core/upload-image.php',
+                    headers: {'Content-Type': file.type},
+                    method: 'POST',
+                    data: file,
+                    file: file,
+
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+
+                    $scope.log = 'progress: ' + progressPercentage + '% ' +
+                    evt.config.file.name + '\n' + $scope.log;
+
+                }).success(function (data, status, headers, config) {
+                    $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
+
+
+                if (files.length == 1) {
+                    $scope.photo = files[0].name;
+                }
+                else {
+                    $scope.photo = [];
+                    for (var i = 0; i < files.length; i++) {
+                        $scope.photo[i] = files[i].name;
+                    }
+                }
+
+
+                });
+            }
+
+        }
+    };
+
+
+
+
+}]);
+
 
 //var URL = "http://gallery.com/";
-var URL = location.host;
+//var URL = location.host;
 
 'use strict';
 
@@ -20,8 +92,8 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'loginCtrl'
         })
         .when('/add-artist', {
-            templateUrl: 'template/add-artists.html',
-            controller: 'addArtistsCtrl'
+            templateUrl: 'template/add-artist.html',
+            controller: 'addArtistCtrl'
         })
         .when('/add-jury', {
             templateUrl: 'template/add-jury.html',
@@ -59,10 +131,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/jury-artists.html',
             controller: 'juryArtistsCtrl'
         })
-        .when('/jury-main', {
-            templateUrl: 'template/jury-main.html',
-            controller: 'juryMainCtrl'
-        })
         .when('/jury-project', {
             templateUrl: 'template/jury-project.html',
             controller: 'juryProjectCtrl'
@@ -79,6 +147,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
         })
+        .when('/admin', {
+            templateUrl: 'template/admin.html',
+            controller: 'adminCtrl'
+        })
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
@@ -86,6 +158,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/project', {
             templateUrl: 'template/project.html',
             controller: 'projectCtrl'
+        })
+        .when('/projects', {
+            templateUrl: 'template/projects.html',
+            controller: 'projectsCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',
@@ -103,12 +179,44 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
 }]);
 'use strict';
 
-artApp.controller('addArtistsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+
+    $scope.multipleUpload = false;
+
+    $scope.setFiles = function(name) {
+        $scope.photo = name || 0;
+
+        for (var i = 0; i < $scope.photo.length; i++) {
+            $scope.photo[i] = $scope.photo[i].name;
+        }
+        //console.log($scope.photo || null);
+    };
+
+
+    $scope.addPainter = function () {
+
+        var data = {
+            login: $scope.name,
+            bio:   $scope.bio,
+            photo: $scope.photo[0] || null
+        };
+        console.log(data);
+
+        //$http.get('/api/post/addpainter', {params: data})
+        //    .success(function(data, status, headers, config) {
+        //        console.log(data);
+        //    })
+        //    .error(function(data, status, headers, config) {
+        //        console.log('NOT OK')
+        //    });
+    };
+
 
 }]);
 'use strict';
 
 artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+
 
     $scope.addJury = function () {
 
@@ -119,9 +227,9 @@ artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope,
             bio:   $scope.bio,
             photo: $scope.photo
         };
-        console.log (data);
+        console.log(data);
 
-        $http.post('api/post/addjury', data)
+        $http.get('/api/post/addjury', {params: data})
             .success(function(data, status, headers, config) {
                 console.log(data);
             })
@@ -138,27 +246,58 @@ artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope,
 
 artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
+    $scope.multipleUpload = true;
+
+
     $scope.addProject = function () {
+
+        if ($scope.artist == undefined) {
+            alert('Виберіть художника');
+            return false;
+        }
 
         var data = {
             name: $scope.name,
             artist: $scope.artist,
             info: $scope.info,
-            file1: $scope.file1,
-            file2: $scope.file2,
-            file3: $scope.file3,
-            file4: $scope.file4
+            photo: $scope.photo
         };
-        console.log (data);
+        console.log(data);
 
-        $http.post('api/post/', data)
-            .success(function(data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
-            });
+        //$http.post('api/post/', {params: data})
+        //    .success(function(data, status, headers, config) {
+        //        console.log(data);
+        //    })
+        //    .error(function(data, status, headers, config) {
+        //        console.log('NOT OK')
+        //    });
 
+    };
+
+}]);
+'use strict';
+
+artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+
+
+    $scope.autorization = function () {
+        if ($scope.formLogin.$valid) {
+            var data = {
+                login: $scope.login,
+                pass: $scope.pass
+            };
+
+            $http.post('api/get/admin', {params: data})
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                    //location.href = '#/jury-main';
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
     };
 
 }]);
@@ -306,10 +445,16 @@ artApp.controller('juryArtistsCtrl',['$scope','$http', '$location', function($sc
 
 artApp.controller('juryListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
-}]);
-'use strict';
 
-artApp.controller('juryMainCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+    $http.get('api/get/jury')
+        .success(function(data, status, headers, config) {
+            //$scope.jury = data;
+            console.log(data);
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
+
 
 }]);
 'use strict';
@@ -327,6 +472,7 @@ artApp.controller('jurySelectedCtrl',['$scope','$http', '$location', function($s
 
 artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
     $scope.autorization = function () {
         if ($scope.formLogin.$valid) {
             var data = {
@@ -337,6 +483,7 @@ artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $
             $http.post('api/get/autorization', data)
                 .success(function(data, status, headers, config) {
                     console.log(data);
+                    //location.href = '#/jury-main';
                 })
                 .error(function(data, status, headers, config) {
                     console.log('NOT OK')
@@ -349,6 +496,14 @@ artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $
 'use strict';
 
 artApp.controller('mainCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+
+    $http.get('api/get/projects', {params: null})
+        .success(function(data, status, headers, config) {
+            console.log(data);
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
 
 }]);
 'use strict';
@@ -363,6 +518,20 @@ artApp.controller('projectCtrl',['$scope','$http', '$location', function($scope,
     //projectPhoto
     //prevProject
     //nextProject
+
+}]);
+'use strict';
+
+artApp.controller('projectsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+
+    $http.get('api/get/projects', {params: null})
+        .success(function(data, status, headers, config) {
+            console.log(data);
+            $scope.projects = data;
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
 
 }]);
 'use strict';
@@ -672,6 +841,24 @@ artApp.directive('menu', function() {
         templateUrl: 'template/menu.html'
     }
 });
+
+
+artApp.directive('uploadFile', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/upload-file.html',
+        controller: 'uploadFileCtrl'
+    }
+});
+
+
+//artApp.directive('uploadFileBtn', function() {
+//    return {
+//        restrict: 'E',
+//        templateUrl: 'template/upload-file-btn.html',
+//        controller: 'FileDestroyController'
+//    }
+//});
 'use strict';
 
 /* Filters */
