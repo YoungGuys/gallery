@@ -17,28 +17,24 @@
                             <th colspan="3">Name</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="j in jury">
-                            <td scope="row" width="40">
-                                <a href="#">
-                                    <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
-                                </a>
+                    <tbody class="js-juryList">
+                        <tr ng-repeat="j in jury track by $index">
+                            <td scope="row" width="150">
+                                <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
                             </td>
                             <td>
-                                <!--<a href="#">-->
-                                    j.name
-                                <!--</a>-->
+                                {{j.fio}}
                             </td>
-                            <td width="155">
-                                <a href="#/edit-jury/{{j.id}}" class="btn btn-success">
+                            <td width="55">
+                                <a href="#/edit-jury/{{j.id_jury}}" class="btn btn-success">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </a>
                             </td>
-                            <!--<td width="45">-->
-                                <!--<button type="button" class="btn btn-danger">-->
-                                    <!--<span class="glyphicon glyphicon-minus"> </span>-->
-                                <!--</button>-->
-                            <!--</td>-->
+                            <td width="45">
+                                <button type="button" class="btn btn-danger" ng-click="deleteJury(j.id_jury,  $index)">
+                                    <span class="glyphicon glyphicon-minus"> </span>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -47,3 +43,11 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+

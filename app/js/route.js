@@ -19,11 +19,11 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/add-jury.html',
             controller: 'addJuryCtrl'
         })
-        .when('/add-project', {
+        .when('/add-project/', {
             templateUrl: 'template/add-project.html',
             controller: 'addProjectCtrl'
         })
-        .when('/artist', {
+        .when('/artist/:id', {
             templateUrl: 'template/artist.html',
             controller: 'artistCtrl'
         })
@@ -35,11 +35,11 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: '../template/edit-artist.html',
             controller: 'editArtistCtrl'
         })
-        .when('/edit-jury', {
+        .when('/edit-jury/:id', {
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
         })
-        .when('/edit-project', {
+        .when('/edit-project/:id', {
             templateUrl: 'template/edit-project.html',
             controller: 'editProjectCtrl'
         })
@@ -75,7 +75,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
         })
-        .when('/project', {
+        .when('/project/:id', {
             templateUrl: 'template/project.html',
             controller: 'projectCtrl'
         })

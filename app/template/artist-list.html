@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="painter in painters">
+                        <tr ng-repeat="painter in painters track by $index">
                             <td scope="row">
                                 <img ng-src="images/{{painter.photo}} alt="photo-artist"/>
                             </td>
@@ -33,16 +33,16 @@
                                     <span class="glyphicon glyphicon-search"></span> View projects
                                 </a>
                             </td>
-                            <!--<td width="195">
-                                <a class="btn btn-success" href="#/edit/{{painter.project.id}}">
+                            <td width="55">
+                                <a class="btn btn-success" href="#/edit-artist/{{painter.project.id}}">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit project
                                 </a>
                             </td>
                             <td width="45">
-                                <button type="button" class="btn btn-danger">
+                                <button type="button" class="btn btn-danger" ng-click="deletePainter(painter.id, $index)">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
-                            </td>-->
+                            </td>
                         </tr>
                     </tbody>
                 </table>

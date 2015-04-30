@@ -1,34 +1,68 @@
 'use strict';
 
-artApp.controller('editJuryCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($scope, $http, $routeParams) {
 
-    //name
-    //pass
-    //info
-    //photo
+
+    $http.get('api/get/alljury')
+        .success(function(data, status, headers, config) {
+            console.log(data);
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].id_jury == $routeParams.id) {
+                    $scope.data = data[i];
+                    $scope.data.pass = null;
+                    $scope.photo = $scope.data.photo;
+                    //$scope.files = [];
+                    //$scope.files[0] = $scope.data.photo;
+                    console.log($scope.files);
+                }
+            }
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
+
 
     $scope.updateJury = function () {
 
-        var data = {
-            name: $scope.name,
-            pass: $scope.pass,
-            info: $scope.info,
-            photo: $scope.photo
-        };
+        if ($scope.formEditJury.$valid) {
 
-        $http.post('api/post/editjury', data)
-            .success(function(data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
-            });
+            if (!$scope.data.login) {
+                alert('Enter login');
+                return false;
+            }
+            else if (!$scope.data.pass) {
+                alert('Enter password');
+                return false;
+            }
+
+            var data = {
+                id_jury: $scope.data.id_jury,
+                fio: $scope.data.fio,
+                login: $scope.data.login,
+                pass: $scope.data.pass,
+                bio: $scope.data.bio,
+                photo: $scope.photo
+            };
+
+            console.log(data);
+            $http.get('api/put/jury', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
 
     };
 
 
     $scope.removePhoto = function () {
         $scope.photo = null;
+        $scope.files = null;
     };
+
 
 }]);

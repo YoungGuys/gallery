@@ -260,3 +260,7 @@ img.media-object {
 .img-preview {
     padding: 0;
 }
+
+img {
+    max-width: 100%;
+}

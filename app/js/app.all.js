@@ -11,7 +11,7 @@ var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload']);
 
 
 artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
-
+    console.log($scope.files);
     $scope.$watch('files', function () {
         $scope.upload($scope.files);
     });
@@ -99,11 +99,11 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/add-jury.html',
             controller: 'addJuryCtrl'
         })
-        .when('/add-project', {
+        .when('/add-project/', {
             templateUrl: 'template/add-project.html',
             controller: 'addProjectCtrl'
         })
-        .when('/artist', {
+        .when('/artist/:id', {
             templateUrl: 'template/artist.html',
             controller: 'artistCtrl'
         })
@@ -115,11 +115,11 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: '../template/edit-artist.html',
             controller: 'editArtistCtrl'
         })
-        .when('/edit-jury', {
+        .when('/edit-jury/:id', {
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
         })
-        .when('/edit-project', {
+        .when('/edit-project/:id', {
             templateUrl: 'template/edit-project.html',
             controller: 'editProjectCtrl'
         })
@@ -155,7 +155,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
         })
-        .when('/project', {
+        .when('/project/:id', {
             templateUrl: 'template/project.html',
             controller: 'projectCtrl'
         })
@@ -183,32 +183,36 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
     $scope.multipleUpload = false;
 
-    $scope.setFiles = function(name) {
-        $scope.photo = name || 0;
-
-        for (var i = 0; i < $scope.photo.length; i++) {
-            $scope.photo[i] = $scope.photo[i].name;
-        }
-        //console.log($scope.photo || null);
-    };
-
 
     $scope.addPainter = function () {
 
-        var data = {
-            login: $scope.name,
-            bio:   $scope.bio,
-            photo: $scope.photo[0] || null
-        };
-        console.log(data);
+        //if ($scope.formAddPainter.$valid && $scope.photo) {
 
-        //$http.get('/api/post/addpainter', {params: data})
-        //    .success(function(data, status, headers, config) {
-        //        console.log(data);
-        //    })
-        //    .error(function(data, status, headers, config) {
-        //        console.log('NOT OK')
-        //    });
+        if ($scope.formAddPainter.$valid) {
+
+            var data = {
+                fio_eng: $scope.name,
+                bio: $scope.bio,
+                photo: $scope.photo || null
+            };
+            console.log(data);
+
+            $http.get('api/post/addArtist', {params: data})
+                .success(function (data, status, headers, config) {
+                    console.log(data);
+
+                    if (data) {
+                        $scope.name = null;
+                        $scope.bio = null;
+                        $scope.photo = null;
+                        $scope.files = null;
+                    }
+                })
+                .error(function (data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
     };
 
 
@@ -306,13 +310,35 @@ artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $
 artApp.controller('artistListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 
-    $http.post('api/post/artist', data)
+    $http.get('api/get/projects', {params: null})
         .success(function(data, status, headers, config) {
             console.log(data);
+            $scope.painters = data;
         })
         .error(function(data, status, headers, config) {
             console.log('NOT OK')
         });
+
+
+    $scope.deletePainter = function (id, index) {
+
+        if (confirm('Delete painter?')) {
+
+            $http.post('api/delete/project', {params: id})
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                    if (data) {
+                        $('.js-listProject tr').eq(index).hide(300);
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
+
+
+    }
 
 
 }]);
@@ -372,36 +398,70 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$location', function($sco
 }]);
 'use strict';
 
-artApp.controller('editJuryCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($scope, $http, $routeParams) {
 
-    //name
-    //pass
-    //info
-    //photo
+
+    $http.get('api/get/alljury')
+        .success(function(data, status, headers, config) {
+            console.log(data);
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].id_jury == $routeParams.id) {
+                    $scope.data = data[i];
+                    $scope.data.pass = null;
+                    $scope.photo = $scope.data.photo;
+                    //$scope.files = [];
+                    //$scope.files[0] = $scope.data.photo;
+                    console.log($scope.files);
+                }
+            }
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
+
 
     $scope.updateJury = function () {
 
-        var data = {
-            name: $scope.name,
-            pass: $scope.pass,
-            info: $scope.info,
-            photo: $scope.photo
-        };
+        if ($scope.formEditJury.$valid) {
 
-        $http.post('api/post/editjury', data)
-            .success(function(data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
-            });
+            if (!$scope.data.login) {
+                alert('Enter login');
+                return false;
+            }
+            else if (!$scope.data.pass) {
+                alert('Enter password');
+                return false;
+            }
+
+            var data = {
+                id_jury: $scope.data.id_jury,
+                fio: $scope.data.fio,
+                login: $scope.data.login,
+                pass: $scope.data.pass,
+                bio: $scope.data.bio,
+                photo: $scope.photo
+            };
+
+            console.log(data);
+            $http.get('api/put/jury', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
 
     };
 
 
     $scope.removePhoto = function () {
         $scope.photo = null;
+        $scope.files = null;
     };
+
 
 }]);
 'use strict';
@@ -446,15 +506,31 @@ artApp.controller('juryArtistsCtrl',['$scope','$http', '$location', function($sc
 artApp.controller('juryListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 
-    $http.get('api/get/jury')
+    $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
-            //$scope.jury = data;
+            $scope.jury = data;
             console.log(data);
         })
         .error(function(data, status, headers, config) {
             console.log('NOT OK')
         });
 
+
+    $scope.deleteJury = function(id, index) {
+
+        if (!confirm('Ви дійсно бажаєте видалити журі?')) {
+            return false;
+        }
+
+        var data = {'id_jury': id};
+        $http.get('api/delete/jury', {params: data})
+            .success(function(data, status, headers, config) {
+                console.log(data);
+                if (data) {
+                    $('.js-juryList tr').eq(index).hide(300);
+                }
+            });
+    }
 
 }]);
 'use strict';
@@ -524,6 +600,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$location', function($scope,
 
 artApp.controller('projectsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
+
     $http.get('api/get/projects', {params: null})
         .success(function(data, status, headers, config) {
             console.log(data);
@@ -532,6 +609,26 @@ artApp.controller('projectsCtrl',['$scope','$http', '$location', function($scope
         .error(function(data, status, headers, config) {
             console.log('NOT OK')
         });
+
+
+    $scope.deleteProject = function (id, index) {
+
+        if (confirm('Delete project?')) {
+
+            $http.post('api/delete/project', {params: id})
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                    if (data) {
+                        $('.js-listProject tr').eq(index).hide(300);
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
+
+    }
 
 }]);
 'use strict';

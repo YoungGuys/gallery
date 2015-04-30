@@ -11,7 +11,7 @@ var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload']);
 
 
 artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
-
+    console.log($scope.files);
     $scope.$watch('files', function () {
         $scope.upload($scope.files);
     });
