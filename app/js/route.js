@@ -8,7 +8,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
 
     $routeProvider
         .when('/', {
-            templateUrl: 'template/login.html',
+            templateUrl: 'template/main.html',
             controller: 'loginCtrl'
         })
 
@@ -39,6 +39,16 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
         })
+        .when('/jury-list', {
+            templateUrl: 'template/jury-list.html',
+            controller: 'juryListCtrl'
+        })
+        .when('/jury-selected/:id', {
+            templateUrl: 'template/jury-selected.html',
+            controller: 'jurySelectedCtrl'
+        })
+
+        //project
         .when('/add-project/', {
             templateUrl: 'template/add-project.html',
             controller: 'addProjectCtrl'
@@ -47,22 +57,16 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/edit-project.html',
             controller: 'editProjectCtrl'
         })
-        .when('/jury-artist', {
-            templateUrl: 'template/jury-artist.html',
-            controller: 'juryArtistCtrl'
+        .when('/project/:id', {
+            templateUrl: 'template/project.html',
+            controller: 'projectCtrl'
         })
-        .when('/jury-project', {
-            templateUrl: 'template/jury-project.html',
-            controller: 'juryProjectCtrl'
+        .when('/project-list', {
+            templateUrl: 'template/project-list.html',
+            controller: 'projectsCtrl'
         })
-        .when('/jury-selected', {
-            templateUrl: 'template/jury-selected.html',
-            controller: 'jurySelectedCtrl'
-        })
-        .when('/jury-list', {
-            templateUrl: 'template/jury-list.html',
-            controller: 'juryListCtrl'
-        })
+
+        //autorization
         .when('/login', {
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
@@ -71,22 +75,18 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/admin.html',
             controller: 'adminCtrl'
         })
+
+        //page
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
-        })
-        .when('/project/:id', {
-            templateUrl: 'template/project.html',
-            controller: 'projectCtrl'
-        })
-        .when('/projects', {
-            templateUrl: 'template/projects.html',
-            controller: 'projectsCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',
             controller: 'ratingCtrl'
         })
+
+
         .when('/registration', {
             templateUrl: 'template/registration.html',
             controller: 'registrationCtrl'

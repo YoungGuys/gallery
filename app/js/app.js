@@ -52,7 +52,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
 
-                if (files.length == 1) {
+                if (files.length == 1 && !$scope.multipleUpload) {
                     $scope.photo = files[0].name;
                 }
                 else {
