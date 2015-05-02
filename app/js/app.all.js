@@ -52,7 +52,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
 
-                if (files.length == 1) {
+                if (files.length == 1 && !$scope.multipleUpload) {
                     $scope.photo = files[0].name;
                 }
                 else {
@@ -91,18 +91,8 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
         })
-        .when('/add-artist', {
-            templateUrl: 'template/add-artist.html',
-            controller: 'addArtistCtrl'
-        })
-        .when('/add-jury', {
-            templateUrl: 'template/add-jury.html',
-            controller: 'addJuryCtrl'
-        })
-        .when('/add-project/', {
-            templateUrl: 'template/add-project.html',
-            controller: 'addProjectCtrl'
-        })
+
+        //artist
         .when('/artist/:id', {
             templateUrl: 'template/artist.html',
             controller: 'artistCtrl'
@@ -111,13 +101,27 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/artist-list.html',
             controller: 'artistListCtrl'
         })
-        .when('/edit-artist', {
+        .when('/add-artist', {
+            templateUrl: 'template/add-artist.html',
+            controller: 'addArtistCtrl'
+        })
+        .when('/edit-artist/:id', {
             templateUrl: '../template/edit-artist.html',
             controller: 'editArtistCtrl'
+        })
+
+        //jury
+        .when('/add-jury', {
+            templateUrl: 'template/add-jury.html',
+            controller: 'addJuryCtrl'
         })
         .when('/edit-jury/:id', {
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
+        })
+        .when('/add-project/', {
+            templateUrl: 'template/add-project.html',
+            controller: 'addProjectCtrl'
         })
         .when('/edit-project/:id', {
             templateUrl: 'template/edit-project.html',
@@ -126,10 +130,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/jury-artist', {
             templateUrl: 'template/jury-artist.html',
             controller: 'juryArtistCtrl'
-        })
-        .when('/jury-artists', {
-            templateUrl: 'template/jury-artists.html',
-            controller: 'juryArtistsCtrl'
         })
         .when('/jury-project', {
             templateUrl: 'template/jury-project.html',
@@ -427,18 +427,55 @@ artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($sco
 }]);
 'use strict';
 
-artApp.controller('editArtistCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($scope, $http, $routeParams) {
 
-    $scope.editPainter = function () {
-        $http.post('api/post/artist', data)
-            .success(function(data, status, headers, config) {
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
-            });
-    }
 
+    $http.get('api/get/allusers')
+        .success(function(data, status, headers, config) {
+            console.log(data);
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].id_jury == $routeParams.id) {
+                    $scope.painter = data[i];
+                    $scope.photo = $scope.data.photo;
+                    console.log($scope.files);
+                }
+            }
+        })
+        .error(function(data, status, headers, config) {
+            console.log('NOT OK')
+        });
+
+
+    $scope.updatePainter = function () {
+
+        if ($scope.formEditJury.$valid) {
+
+            var data = {
+                id_user: $routeParams.id,
+                fio: $scope.painter.fio,
+                bio: $scope.painter.bio,
+                photo: $scope.photo
+            };
+
+            console.log(data);
+            $http.get('api/put/jury', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log(data);
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('NOT OK')
+                });
+
+        }
+
+    };
+
+
+    $scope.removePhoto = function () {
+        $scope.photo = null;
+        $scope.files = null;
+    };
 
 }]);
 'use strict';
@@ -568,16 +605,6 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
     };
 
 
-
-}]);
-'use strict';
-
-artApp.controller('juryArtistCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
-
-}]);
-'use strict';
-
-artApp.controller('juryArtistsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 }]);
 'use strict';
