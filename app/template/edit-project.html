@@ -15,12 +15,17 @@
                             <label class="col-xs-12" for="InputNameProject">Project name:</label>
 
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="InputNameProject" ng-model="project.name">
+                                <input type="text" class="form-control" id="InputNameProject" ng-model="project.title_eng">
                             </div>
+
                             <div class="col-xs-6">
-                                <select class="form-control" ng-model="project.author">
-                                    <option>Select an artist</option>
-                                    <option ng-repeat="painter in painters" value="painter.id">{{painter.name}}</option>
+                                <select class="form-control" ng-model="project.id_user">
+                                    <option value="null">Select an painter</option>
+                                    <option ng-repeat="painter in painters"
+                                            ng-selected="{{project.id_user == painter.id_user}}"
+                                            value="{{painter.id_user}}">
+                                        {{painter.fio_eng}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -28,28 +33,12 @@
 
                     <div class="form-group">
                         <label for="InputInformation">Information about the project:</label>
-                        <textarea class="form-control" rows="10" id="InputInformation">{{project.info}}</textarea>
+                        <textarea class="form-control" rows="10" id="InputInformation">{{project.description_eng}}</textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label>Photo:</label>
 
-                        <div class="form-inline" ng-repeat="photo in project.photo track by $index">
-                            <input type="text" class="form-control" ng-model="photo" name="photo-{{$index}}">
+                    <upload-file></upload-file>
 
-                            <button type="button" class="btn btn-danger btn-xs">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-
-                            <input class="input-file" type="file" ng-model="photo" name="" ng-change="changePhoto()">
-                        </div>
-
-                        <button class="btn btn-primary" ng-click="addPhoto()">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Add photo
-                        </button>
-
-                    </div>
 
                     <hr>
 

@@ -6,7 +6,7 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">Painter: {{painter.name}}</h3>
+                <h3 class="page-header">Painter: {{painter.fio_eng}}</h3>
 
                 <div class="media">
                     <div class="media-left">
@@ -25,7 +25,7 @@
 
                 <hr>
 
-                <h3 class="page-header">List all painter:</h3>
+                <h3 class="page-header">List all project:</h3>
 
                 <table class="table table-striped">
                     <thead>
@@ -35,33 +35,80 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="painterProject in painterProjects">
+                        <tr ng-repeat="project in projects">
                             <td scope="row">
-                                <a href="#">
-                                    <img src="images/{{painterProject.photo}}" alt="project-photo">
-                                </a>
+                                <img src="images/img/{{project.photo}}" alt="project-photo">
                             </td>
                             <td>
-                                {{painterProject.name}}
+                                {{project.title_eng}}
                             </td>
-                            <td width="160">
-                                <a class="btn btn-primary" href="#/project/{{painterProject.id}}">
+                            <td width="85">
+                                <button class="btn btn-primary" ng-click="setTab($index)">
                                     <span class="glyphicon glyphicon-search"></span> View project
-                                </a>
+                                </button>
                             </td>
-                            <td width="195">
-                                <a class="btn btn-success" href="#/edit-project/{{painterProject.id}}">
+                            <td width="55">
+                                <a class="btn btn-success" href="#/edit-project/{{project.id_project}}">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit project
                                 </a>
                             </td>
                             <td width="45">
-                                <button class="btn btn-danger" ng-click="deleteProject()" ng-model="painterProject.id">
+                                <button class="btn btn-danger" ng-click="deleteProject(project.id_project)">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+
+                <ul class="project-list">
+                    <li ng-repeat="project in projects track by $index" ng-show="isSet($index)">
+                        <h3 class="page-header">Project: "{{project.title_eng}}"</h3>
+
+                        <!--<div class="row text-center padding-top-bot-10">-->
+                            <!--<div class="col-md-4" ng-repeat="photo in project.photo">-->
+                                <!--<a data-gallery="multiimages"-->
+                                   <!--data-toggle="lightbox"-->
+                                   <!--href="images/img/{{photo}}">-->
+                                    <!--<img ng-src="images/img/{{photo}}">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <p class="page-header">Project description:</p>
+
+                        <div class="information">
+                            {{project.description_eng}}
+                        </div>
+
+                        <hr>
+
+                        <nav>
+                            <ul class="pager">
+                                <li class="previous">
+                                    <a ng-click="setTab(project.prevProject)" href="">
+                                        <span aria-hidden="true">&larr;</span>
+                                        Previous project the artist
+                                    </a>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-danger" ng-click="chooseProject(project.id_project)">
+                                        <span class="glyphicon glyphicon-heart"> </span> Choose project
+                                    </button>
+                                </li>
+                                <li class="next">
+                                    <a ng-click="setTab(project.nextProject)" href="">
+                                        The next project of the artist
+                                        <span aria-hidden="true">&rarr;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </li>
+                </ul>
+
+
             </div>
         </div>
     </div>

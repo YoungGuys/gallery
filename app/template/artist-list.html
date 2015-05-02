@@ -12,34 +12,29 @@
                         <tr>
                             <th>Photo</th>
                             <th>Name</th>
-                            <th>Projects</th>
+                            <!--<th>Projects</th>-->
+                            <th> </th>
                             <th> </th>
                             <!--<th colspan="2">Edit profіl</th>-->
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="js-lsit">
                         <tr ng-repeat="painter in painters track by $index">
-                            <td scope="row">
-                                <img ng-src="images/{{painter.photo}} alt="photo-artist"/>
+                            <td>
+                                <img ng-src="images/img/{{painter.photo}} alt="photo-artist"/>
                             </td>
                             <td>
-                                {{painter.name}}
-                            </td>
-                            <td>
-                                {{painter.project.length}}
-                            </td>
-                            <td width="160">
-                                <a class="btn btn-primary" href="#/artist/{{painter.id}}">
-                                    <span class="glyphicon glyphicon-search"></span> View projects
+                                <a href="#/artist/{{painter.id_user}}" class="">
+                                    {{painter.fio_eng}}
                                 </a>
                             </td>
                             <td width="55">
-                                <a class="btn btn-success" href="#/edit-artist/{{painter.project.id}}">
-                                    <span class="glyphicon glyphicon-pencil"></span> Edit project
+                                <a class="btn btn-success" href="#/edit-artist/{{painter.id_user}}">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit painter
                                 </a>
                             </td>
                             <td width="45">
-                                <button type="button" class="btn btn-danger" ng-click="deletePainter(painter.id, $index)">
+                                <button type="button" class="btn btn-danger" ng-click="deletePainter(painter.id_user, $index)">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
                             </td>

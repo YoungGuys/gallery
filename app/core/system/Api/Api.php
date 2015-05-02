@@ -36,13 +36,20 @@ class Api {
 
         public function get_jury() {
                 $this->result = $this->db->select("jury", false,
-                    ['login' => $_GET['login'], 'pass' => md5($_GET['pass'])]);
+                    [
+                        'login' => $_GET['login'],
+                        'pass' => md5($_GET['pass'])
+                    ]);
                 setcookie("id", $this->result['id_jury']);
                 setcookie("token", md5("balon".$this->result['id_jury']));
         }
 
         public function get_allJury() {
                 $this->result = $this->db->select("jury");
+        }
+
+        public function get_allUsers() {
+            $this->result = $this->db->select('users');
         }
 
         public function get_projects() {
@@ -309,12 +316,12 @@ class Api {
 
         public function post_project() {
                 if ($_GET['id_user']) {
-                        $id = $_GET['id_user'];
-                        $column = "id_user";
+                    $id = $_GET['id_user'];
+                    $column = "id_user";
                 }
                 else {
-                        $id = $_GET['id_group'];
-                        $column = "id_group";
+                    $id = $_GET['id_group'];
+                    $column = "id_group";
                 }
                 $id_statement = $this->db->select("statements", "id_statement", [ $column => $id]);
                 $val = $_GET;
@@ -333,27 +340,27 @@ class Api {
                         "owner" => $val['owner'],
                     ], true);
                 if ($val['photos']) {
-                        foreach ($val['photos'] as $k => $v) {
-                                $this->db->insert("project_photos",
-                                    [
-                                        "id_project" => $id_project,
-                                        "src" => $v['src']
-                                    ]);
-                        }
+                    foreach ($val['photos'] as $k => $v) {
+                        $this->db->insert("project_photos",
+                            [
+                                "id_project" => $id_project,
+                                "src" => $v['src']
+                            ]);
+                    }
                 }
                 $this->result = $id_project;
         }
 
         public function put_jury() {
-                self::trueAdmin();
-                $this->db->update("jury",
-                    [
-                        'fio' => $_GET['fio'],
-                        'bio' => $_GET['bio'],
-                        'login' => $_GET['login'],
-                        'pass' => md5($_GET['pass']),
-                        'photo' => $_GET['photo'],
-                    ], ["id_jury" => $_GET['id_jury']]);
+            self::trueAdmin();
+            $this->db->update("jury",
+                [
+                    'fio' => $_GET['fio'],
+                    'bio' => $_GET['bio'],
+                    'login' => $_GET['login'],
+                    'pass' => md5($_GET['pass']),
+                    'photo' => $_GET['photo'],
+                ], ["id_jury" => $_GET['id_jury']]);
 
         }
 

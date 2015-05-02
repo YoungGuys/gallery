@@ -24,43 +24,7 @@
 
                 <hr>
 
-                <h3 class="page-header">Project: "{{projectName}}"</h3>
 
-                <div class="row text-center padding-top-bot-10">
-                    <div class="col-md-4" ng-repeat="projectPhotoItem in projectPhoto">
-                        <a data-footer="About the project"
-                           data-gallery="multiimages"
-                           data-toggle="lightbox"
-                           href="images/no-photo-project.png">
-                            <img ng-src="images/{{projectPhotoItem}}">
-                        </a>
-                    </div>
-                </div>
-
-                <p class="page-header">Project description:</p>
-
-                <div class="information">
-                    {{description}}
-                </div>
-
-                <hr>
-
-                <nav>
-                    <ul class="pager">
-                        <li class="previous">
-                            <a href="#/{{prevProject}}">
-                                <span aria-hidden="true">&larr;</span>
-                                Previous project the artist
-                            </a>
-                        </li>
-                        <li class="next">
-                            <a href="#/{{nextProject}}">
-                                The next project of the artist
-                                <span aria-hidden="true">&rarr;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
 
             </div>
         </div>

@@ -16,12 +16,15 @@
                         <div class="row">
                             <label  class="col-xs-12" for="InputNameProject">Project name:</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="InputNameProject" ng-model="name"/>
+                                <input type="text" class="form-control" id="InputNameProject" ng-model="project.name"/>
                             </div>
                             <div class="col-xs-6">
-                                <select class="form-control" ng-model="artist">
-                                    <option value="" selected="selected">Choose painters:</option>
-                                    <option ng-repeat="painter in painters" value="painter.id">{{painter.fio}}</option>
+                                <select class="form-control" ng-model="project.id_user">
+                                    <option value="null" selected="selected">Select an painter</option>
+                                    <option ng-repeat="painter in painters"
+                                            value="{{painter.id_user}}">
+                                        {{painter.fio_eng}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -29,7 +32,7 @@
 
                     <div class="form-group">
                         <label for="InputInformation">About project:</label>
-                        <textarea class="form-control" rows="10" id="InputInformation" ng-model="info"></textarea>
+                        <textarea class="form-control" rows="10" id="InputInformation" ng-model="project.description"></textarea>
                     </div>
 
 

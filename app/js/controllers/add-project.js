@@ -5,29 +5,37 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
     $scope.multipleUpload = true;
 
+    $http.get('api/get/allusers')
+        .success(function(data, status, headers, config) {
+            console.log(data);
+
+            $scope.painters = data;
+
+        });
+
 
     $scope.addProject = function () {
 
-        if ($scope.artist == undefined) {
-            alert('Виберіть художника');
+        if ($scope.project.id_user == "null") {
+            alert('Choose painter!');
             return false;
         }
 
         var data = {
-            name: $scope.name,
-            artist: $scope.artist,
-            info: $scope.info,
-            photo: $scope.photo
+            id_user:         $scope.project.id_user,
+            title_eng:       $scope.project.name,
+            description_eng: $scope.project.description,
+            photo:           $scope.photo
         };
         console.log(data);
 
-        //$http.post('api/post/', {params: data})
-        //    .success(function(data, status, headers, config) {
-        //        console.log(data);
-        //    })
-        //    .error(function(data, status, headers, config) {
-        //        console.log('NOT OK')
-        //    });
+        $http.get('api/post/project', {params: data})
+            .success(function(data, status, headers, config) {
+                console.log(data);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('NOT OK')
+            });
 
     };
 
