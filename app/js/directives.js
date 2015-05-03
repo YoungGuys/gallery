@@ -10,12 +10,14 @@ artApp.directive('formStepOne', function() {
     }
 });
 
+
 artApp.directive('formStepTwo', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-2.html'
     }
 });
+
 
 artApp.directive('formStepThree', function() {
     return {
@@ -24,12 +26,14 @@ artApp.directive('formStepThree', function() {
     }
 });
 
+
 artApp.directive('formStepFour', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-4.html'
     }
 });
+
 
 artApp.directive('formCollective', function() {
     return {
@@ -38,12 +42,14 @@ artApp.directive('formCollective', function() {
     }
 });
 
+
 artApp.directive('formIndividual', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/form-individual.html'
     }
 });
+
 
 artApp.directive('formMember', function() {
     return {
@@ -53,10 +59,11 @@ artApp.directive('formMember', function() {
 });
 
 
-artApp.directive('menu', function() {
+artApp.directive('menu', function($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: 'template/menu.html'
+        templateUrl: 'template/menu.html',
+        controller: 'menuCtrl'
     }
 });
 
@@ -68,12 +75,3 @@ artApp.directive('uploadFile', function() {
         controller: 'uploadFileCtrl'
     }
 });
-
-
-//artApp.directive('uploadFileBtn', function() {
-//    return {
-//        restrict: 'E',
-//        templateUrl: 'template/upload-file-btn.html',
-//        controller: 'FileDestroyController'
-//    }
-//});

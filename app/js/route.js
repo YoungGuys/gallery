@@ -80,6 +80,9 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
+        }).when('/home', {
+            templateUrl: 'template/main.html',
+            controller: 'mainCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',

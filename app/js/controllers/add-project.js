@@ -28,9 +28,12 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             description_eng: $scope.project.description,
             photo:           $scope.photo
         };
+
+        //data = "json=" + JSON.stringify(data);
+        data = {"json": JSON.stringify(data)};
         console.log(data);
 
-        $http.get('api/post/project', {params: data})
+        $http.get('api/post/project', data)
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);

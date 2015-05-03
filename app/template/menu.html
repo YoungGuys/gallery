@@ -1,21 +1,33 @@
 
 <nav class="top-nav">
+
     <a class="btn btn-primary" href="#/main">
         <span class="glyphicon glyphicon-list-alt"></span> Main
     </a>
+
+    <a class="btn btn-primary" href="#/main">
+        <span class="glyphicon glyphicon-list-alt"></span> Home
+    </a>
+
     <a class="btn btn-primary" href="#/artist-list">
         <span class="glyphicon glyphicon-user"></span> Painters
     </a>
+
     <a class="btn btn-primary" href="#/jury-list">
         <span class="glyphicon glyphicon-user"></span> Jury
     </a>
+
     <a class="btn btn-success" href="#/rating">
         <span class="glyphicon glyphicon-star"></span> Rating
     </a>
-    <a class="btn btn-success" href="#/project-list">
-        <span class="glyphicon glyphicon-star"></span> Projects
+
+    <a class="btn btn-primary" href="#/project-list">
+        <span class="glyphicon glyphicon-list-alt"></span> Projects
     </a>
+
     <div class="user-login">
-        You are logged in as: {{userName}} | <a href="#">Exit</a>
+        You are logged in as: {{userName || ""}}
+        |
+        <a href="#/login" ng-click="exit()">Exit</a>
     </div>
 </nav>

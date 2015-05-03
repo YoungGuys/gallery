@@ -5,11 +5,9 @@ artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scop
 
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
-            $scope.jury = data;
+            console.log('\nAll jury');
             console.log(data);
-        })
-        .error(function(data, status, headers, config) {
-            console.log('NOT OK')
+            $scope.jury = data;
         });
 
 
@@ -20,12 +18,16 @@ artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scop
         }
 
         var data = {'id_jury': id};
+
         $http.get('api/delete/jury', {params: data})
             .success(function(data, status, headers, config) {
+                console.log('\nAnswer delete jury');
                 console.log(data);
+
                 if (data) {
                     $('.js-juryList tr').eq(index).hide(300);
                 }
+
             });
     }
 

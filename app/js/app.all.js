@@ -88,6 +88,9 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
+        }).when('/home', {
+            templateUrl: 'template/main.html',
+            controller: 'mainCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',
@@ -206,9 +209,12 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             description_eng: $scope.project.description,
             photo:           $scope.photo
         };
+
+        //data = "json=" + JSON.stringify(data);
+        data = {"json": JSON.stringify(data)};
         console.log(data);
 
-        $http.get('api/post/project', {params: data})
+        $http.get('api/post/project',  {params: data})
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);
@@ -327,7 +333,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         });
 
 
-
     $http.get('api/get/artistprojects', {params: {artist: $routeParams.id} })
         .success(function(data, status, headers, config) {
             console.log('\nArtist projects');
@@ -349,13 +354,13 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             id_project: id
         };
 
-        $http.get('api/post/rating', {parse: data})
+        $http.get('api/post/rating', {params: data} )
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add rating');
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('NOT OK')
+                console.log('Answer add rating "Error"');
             });
 
     };
@@ -365,9 +370,10 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         var remove = confirm('Видалити проект?');
 
         if (remove) {
+
             var data = {
                 id_project: id
-            }
+            };
 
             $http.get('api/delete/project', {params: data} )
                 .success(function(data, status, headers, config) {
@@ -382,6 +388,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
                     console.log('NOT OK')
                 });
         }
+
     }
 
 }]);
@@ -582,11 +589,9 @@ artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scop
 
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
-            $scope.jury = data;
+            console.log('\nAll jury');
             console.log(data);
-        })
-        .error(function(data, status, headers, config) {
-            console.log('NOT OK')
+            $scope.jury = data;
         });
 
 
@@ -597,12 +602,16 @@ artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scop
         }
 
         var data = {'id_jury': id};
+
         $http.get('api/delete/jury', {params: data})
             .success(function(data, status, headers, config) {
+                console.log('\nAnswer delete jury');
                 console.log(data);
+
                 if (data) {
                     $('.js-juryList tr').eq(index).hide(300);
                 }
+
             });
     }
 
@@ -614,24 +623,30 @@ artApp.controller('jurySelectedCtrl',['$scope','$http', '$location', function($s
 }]);
 'use strict';
 
-artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('loginCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
 
 
     $scope.autorization = function () {
 
         if ($scope.formLogin.$valid) {
+
             var data = {
                 login: $scope.login,
                 pass: $scope.pass
             };
 
-            $http.get('api/get/jury', {params: data})
+            $http.get('api/get/jury', {params: data} )
                 .success(function(data, status, headers, config) {
                     console.log('\nJury autorization');
                     console.log(data);
 
                     if (data.login == $scope.login) {
+
+                        $rootScope.userName = data.login;
+                        $rootScope.idJury = data.id_jury;
+
                         location.href = '#/main';
+
                     }
 
                 })
@@ -649,11 +664,24 @@ artApp.controller('mainCtrl',['$scope','$http', '$rootScope', function($scope, $
 
     $http.get('api/get/projects', {params: null})
         .success(function(data, status, headers, config) {
+            console.log('\nProjects');
             console.log(data);
         })
-        .error(function(data, status, headers, config) {
-            console.log('NOT OK')
-        });
+
+}]);
+'use strict';
+
+artApp.controller('menuCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
+
+
+    $scope.exit = function() {
+
+        $rootScope.userName = null;
+        $rootScope.admin = false;
+
+        console.log($rootScope.userName);
+
+    }
 
 }]);
 'use strict';
@@ -1048,12 +1076,14 @@ artApp.directive('formStepOne', function() {
     }
 });
 
+
 artApp.directive('formStepTwo', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-2.html'
     }
 });
+
 
 artApp.directive('formStepThree', function() {
     return {
@@ -1062,12 +1092,14 @@ artApp.directive('formStepThree', function() {
     }
 });
 
+
 artApp.directive('formStepFour', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-4.html'
     }
 });
+
 
 artApp.directive('formCollective', function() {
     return {
@@ -1076,12 +1108,14 @@ artApp.directive('formCollective', function() {
     }
 });
 
+
 artApp.directive('formIndividual', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/form-individual.html'
     }
 });
+
 
 artApp.directive('formMember', function() {
     return {
@@ -1091,10 +1125,11 @@ artApp.directive('formMember', function() {
 });
 
 
-artApp.directive('menu', function() {
+artApp.directive('menu', function($rootScope) {
     return {
         restrict: 'E',
-        templateUrl: 'template/menu.html'
+        templateUrl: 'template/menu.html',
+        controller: 'menuCtrl'
     }
 });
 
@@ -1106,15 +1141,6 @@ artApp.directive('uploadFile', function() {
         controller: 'uploadFileCtrl'
     }
 });
-
-
-//artApp.directive('uploadFileBtn', function() {
-//    return {
-//        restrict: 'E',
-//        templateUrl: 'template/upload-file-btn.html',
-//        controller: 'FileDestroyController'
-//    }
-//});
 'use strict';
 
 /* Filters */

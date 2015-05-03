@@ -27,7 +27,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         });
 
 
-
     $http.get('api/get/artistprojects', {params: {artist: $routeParams.id} })
         .success(function(data, status, headers, config) {
             console.log('\nArtist projects');
@@ -49,13 +48,13 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             id_project: id
         };
 
-        $http.get('api/post/rating', {parse: data})
+        $http.get('api/post/rating', {params: data} )
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add rating');
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('NOT OK')
+                console.log('Answer add rating "Error"');
             });
 
     };
@@ -65,9 +64,10 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         var remove = confirm('Видалити проект?');
 
         if (remove) {
+
             var data = {
                 id_project: id
-            }
+            };
 
             $http.get('api/delete/project', {params: data} )
                 .success(function(data, status, headers, config) {
@@ -82,6 +82,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
                     console.log('NOT OK')
                 });
         }
+
     }
 
 }]);
