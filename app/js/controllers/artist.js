@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
 
     $scope.isSet = function(checkTab) {
@@ -14,6 +14,7 @@ artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($sco
 
     $http.get('api/get/allusers')
         .success(function(data, status, headers, config) {
+            console.log('\nAll users');
             console.log(data);
 
             data.forEach(function(item, i){
@@ -29,6 +30,7 @@ artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($sco
 
     $http.get('api/get/artistprojects', {params: {artist: $routeParams.id} })
         .success(function(data, status, headers, config) {
+            console.log('\nArtist projects');
             console.log(data);
 
             data.forEach(function(item, i){
@@ -47,8 +49,9 @@ artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($sco
             id_project: id
         };
 
-        $http.post('api/post/rating', {parse: data})
+        $http.get('api/post/rating', {parse: data})
             .success(function(data, status, headers, config) {
+                console.log('\nAnswer add rating');
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
@@ -58,13 +61,22 @@ artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($sco
     };
 
 
-    $scope.deleteProject = function () {
+    $scope.deleteProject = function (id, i) {
         var remove = confirm('Видалити проект?');
 
         if (remove) {
-            $http.post('api/post/deleteProject', data)
+            var data = {
+                id_project: id
+            }
+
+            $http.get('api/delete/project', {params: data} )
                 .success(function(data, status, headers, config) {
+                    console.log('Answer delete project');
                     console.log(data);
+
+                    if (data) {
+                        $('.js-listProject tr').eq(i).hide(300);
+                    }
                 })
                 .error(function(data, status, headers, config) {
                     console.log('NOT OK')

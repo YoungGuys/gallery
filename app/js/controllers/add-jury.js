@@ -16,10 +16,11 @@ artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope,
 
         $http.get('/api/post/addjury', {params: data})
             .success(function(data, status, headers, config) {
+                console.log('\nAnswer add jury');
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('NOT OK')
+                console.log('\nAnswer add jury "Error"')
             });
     };
 

@@ -5,6 +5,7 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
 
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
+            console.log('\nAll jury');
             console.log(data);
 
             for (var i = 0; i < data.length; i++) {
@@ -19,7 +20,7 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
             }
         })
         .error(function(data, status, headers, config) {
-            console.log('NOT OK')
+            console.log('All jury error')
         });
 
 
@@ -44,14 +45,16 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
                 bio: $scope.data.bio,
                 photo: $scope.photo
             };
-
+            console.log('\nUpdate jury');
             console.log(data);
+
             $http.get('api/put/jury', {params: data} )
                 .success(function(data, status, headers, config) {
+                    console.log('\nAnswer update jury');
                     console.log(data);
                 })
                 .error(function(data, status, headers, config) {
-                    console.log('NOT OK')
+                    console.log('Answer update jury "Error"')
                 });
 
         }

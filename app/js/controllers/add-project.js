@@ -7,6 +7,7 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
     $http.get('api/get/allusers')
         .success(function(data, status, headers, config) {
+            console.log('\nAll users');
             console.log(data);
 
             $scope.painters = data;
@@ -31,10 +32,11 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
         $http.get('api/post/project', {params: data})
             .success(function(data, status, headers, config) {
+                console.log('\nAnswer add project');
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('NOT OK')
+                console.log('\nAnswer add project "Error"')
             });
 
     };

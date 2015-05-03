@@ -13,15 +13,16 @@ artApp.controller('loginCtrl',['$scope','$http', '$location', function($scope, $
 
             $http.get('api/get/jury', {params: data})
                 .success(function(data, status, headers, config) {
+                    console.log('\nJury autorization');
                     console.log(data);
 
-                    if (data[0].login == $scope.login) {
+                    if (data.login == $scope.login) {
                         location.href = '#/main';
                     }
 
                 })
                 .error(function(data, status, headers, config) {
-                    console.log('NOT OK')
+                    console.log('Jury autorization Error')
                 });
 
         }

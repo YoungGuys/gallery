@@ -29,12 +29,17 @@
                                 </a>
                             </td>
                             <td width="55">
-                                <a class="btn btn-success" href="#/edit-artist/{{painter.id_user}}">
+                                <a class="btn btn-success"
+                                   href="#/edit-artist/{{painter.id_user}}"
+                                   ng-if="admin">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit painter
                                 </a>
                             </td>
                             <td width="45">
-                                <button type="button" class="btn btn-danger" ng-click="deletePainter(painter.id_user, $index)">
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        ng-click="deletePainter(painter.id_user, $index)"
+                                        ng-if="admin">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
                             </td>

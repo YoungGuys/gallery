@@ -11,7 +11,7 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object" ng-src="images/{{painter.photo}}" alt="painter-photo">
+                            <img class="media-object" ng-src="images/img/{{painter.photo}}" alt="painter-photo">
                         </a>
                     </div>
                     <div class="media-body">
@@ -34,9 +34,9 @@
                             <th colspan="4">Project name</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="project in projects">
-                            <td scope="row">
+                    <tbody class="js-listProject">
+                        <tr ng-repeat="project in projects track by $index">
+                            <td width="150">
                                 <img src="images/img/{{project.photo}}" alt="project-photo">
                             </td>
                             <td>
@@ -47,13 +47,15 @@
                                     <span class="glyphicon glyphicon-search"></span> View project
                                 </button>
                             </td>
-                            <td width="55">
-                                <a class="btn btn-success" href="#/edit-project/{{project.id_project}}">
+                            <td width="55" ng-if="admin">
+                                <a class="btn btn-success"
+                                   href="#/edit-project/{{project.id_project}}">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit project
                                 </a>
                             </td>
-                            <td width="45">
-                                <button class="btn btn-danger" ng-click="deleteProject(project.id_project)">
+                            <td width="45" ng-if="admin">
+                                <button class="btn btn-danger"
+                                        ng-click="deleteProject(project.id_project, $index)">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
                             </td>
@@ -78,9 +80,17 @@
 
                         <p class="page-header">Project description:</p>
 
-                        <div class="information">
+                        <div>
                             {{project.description_eng}}
                         </div>
+
+                        <!--<ul class="row img-preview project-list__images">
+                            <li class="col-xs-6 col-md-3 img-preview__item" ng-repeat="photo in project.photo">
+                                <figure class="thumbnail">
+                                    <img ng-src="images/{{photo}}" class="thumb">
+                                </figure>
+                            </li>
+                        </ul>-->
 
                         <hr>
 
@@ -93,7 +103,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-danger" ng-click="chooseProject(project.id_project)">
+                                    <button type="button" class="btn btn-danger"
+                                            ng-click="chooseProject(project.id_project)">
                                         <span class="glyphicon glyphicon-heart"> </span> Choose project
                                     </button>
                                 </li>
