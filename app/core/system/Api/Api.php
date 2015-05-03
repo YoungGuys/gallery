@@ -351,7 +351,7 @@ class Api {
                 $this->db->insert("project_photos",
                     [
                         "id_project" => $id_project,
-                        "src" => $v['src']
+                        "src" => $v
                     ]);
             }
         }
