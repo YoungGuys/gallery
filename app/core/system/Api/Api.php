@@ -145,7 +145,7 @@ class Api {
     }
 
     public function post_statement() {
-        $obj = json_decode($_GET['object']);
+        $obj = json_decode($_GET['object'], true);
         /*$obj = [
             'group' => [
                 "name_ukr" => 'name_ukr',
@@ -322,8 +322,7 @@ class Api {
     }
 
     public function post_project() {
-        $_GET = json_decode($_GET['json']);
-
+        $_GET = json_decode($_GET['json'], true);
         if ($_GET['id_user']) {
             $id = $_GET['id_user'];
             $column = "id_user";
@@ -373,7 +372,7 @@ class Api {
     }
 
     public function put_project() {
-        $val = json_decode($_GET['json']);
+        $val = json_decode($_GET['json'], true);
         $this->db->update("projects",
             [
                 "title_ukr" => $val['title_ukr'],
