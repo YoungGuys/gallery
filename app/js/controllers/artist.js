@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
 
     $scope.isSet = function(checkTab) {

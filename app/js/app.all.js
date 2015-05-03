@@ -255,7 +255,7 @@ artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, 
 }]);
 'use strict';
 
-artApp.controller('artistListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('artistListCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
 
 
     $http.get('api/get/allusers', {params: null})
@@ -300,7 +300,7 @@ artApp.controller('artistListCtrl',['$scope','$http', '$location', function($sco
 }]);
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
 
     $scope.isSet = function(checkTab) {
@@ -577,7 +577,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
 }]);
 'use strict';
 
-artApp.controller('juryListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
 
 
     $http.get('api/get/alljury')

@@ -27,13 +27,13 @@
                                     {{j.fio}}
                                 </a>
                             </td>
-                            <td width="55">
+                            <td width="55" ng-if="admin">
                                 <a href="#/edit-jury/{{j.id_jury}}" class="btn btn-success">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </a>
                             </td>
-                            <td width="45">
-                                <button type="button" class="btn btn-danger" ng-click="deleteJury(j.id_jury,  $index)">
+                            <td width="45" ng-if="admin">
+                                <button type="button" class="btn btn-danger" ng-click="deleteJury(j.id_jury, $index)">
                                     <span class="glyphicon glyphicon-minus"> </span>
                                 </button>
                             </td>

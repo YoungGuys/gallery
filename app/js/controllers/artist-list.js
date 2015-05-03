@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('artistListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('artistListCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
 
 
     $http.get('api/get/allusers', {params: null})
