@@ -20,6 +20,7 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
             $http.get('api/post/addArtist', {params: data})
                 .success(function (data, status, headers, config) {
+                    console.log('\nAnswer add artist');
                     console.log(data);
 
                     if (data) {
@@ -30,7 +31,7 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
                     }
                 })
                 .error(function (data, status, headers, config) {
-                    console.log('NOT OK')
+                    console.log('Answer add artist "Error"')
                 });
 
         }

@@ -30,9 +30,6 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             });
 
         })
-        .error(function(data, status, headers, config) {
-            console.log('NOT OK')
-        });
 
 
     $scope.saveChange = function () {
@@ -59,7 +56,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('NOT OK')
+                console.log('Answer update project "Error"')
             });
 
     };

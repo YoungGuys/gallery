@@ -6,8 +6,8 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">DashBoard</h3>
-                <div class="well text-center">
+                <h3 ng-if="admin" class="page-header">DashBoard</h3>
+                <div class="well text-center" ng-if="admin">
                     <div class="row">
                         <div class="col-md-4">
                             <a href="#/add-project" class="btn btn-success">
@@ -27,11 +27,7 @@
                     </div>
                 </div>
 
-                <h3 class="page-header">Добро пожаловать на конкурс Мухи-2015!</h3>
-                <p class="text-muted">Подсказка:</p>
-                <div class="information">
-                    Текст как пользоваться сайтом
-                </div>
+                <h3 class="page-header">Good flies pozhalovat contest 2015!</h3>
 
 
 

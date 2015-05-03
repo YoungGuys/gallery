@@ -86,11 +86,11 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'ratingCtrl'
         })
 
-
         .when('/registration', {
             templateUrl: 'template/registration.html',
             controller: 'registrationCtrl'
         })
+
         .otherwise({
             redirectTo: '/'
         });
