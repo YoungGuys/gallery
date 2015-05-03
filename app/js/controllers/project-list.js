@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('projectsCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('projectListCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 
     $http.get('api/get/projects', {params: null})

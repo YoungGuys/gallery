@@ -5,7 +5,9 @@ artApp.controller('artistListCtrl',['$scope','$http', '$location', function($sco
 
     $http.get('api/get/allusers', {params: null})
         .success(function(data, status, headers, config) {
+            console.log('\nAll users');
             console.log(data);
+
             $scope.painters = data;
         })
         .error(function(data, status, headers, config) {
@@ -13,15 +15,21 @@ artApp.controller('artistListCtrl',['$scope','$http', '$location', function($sco
         });
 
 
-    $scope.deletePainter = function (id, index) {
+    $scope.deletePainter = function (id, i) {
 
         if (confirm('Delete painter?')) {
 
-            $http.post('api/delete/user', {params: id})
+            var data = {
+                id_user: id
+            }
+
+            $http.get('api/delete/user', {params: data} )
                 .success(function(data, status, headers, config) {
+                    console.log('\nAnswer delete user');
                     console.log(data);
+
                     if (data) {
-                        $('.js-lsit tr').eq(index).hide(300);
+                        $('.js-lsit tr').eq(i).hide(300);
                     }
                 })
                 .error(function(data, status, headers, config) {

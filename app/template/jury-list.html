@@ -23,7 +23,9 @@
                                 <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
                             </td>
                             <td>
-                                <a href="/jury-list"></a>{{j.fio}}
+                                <a href="#/jury-selected/{{j.id_jury}}">
+                                    {{j.fio}}
+                                </a>
                             </td>
                             <td width="55">
                                 <a href="#/edit-jury/{{j.id_jury}}" class="btn btn-success">
