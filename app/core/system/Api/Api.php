@@ -322,7 +322,7 @@ class Api {
     }
 
     public function post_project() {
-        $_GET = json_decode($_GET['json'], true);
+        $_GET = json_decode($_GET['json'], true)['json'];
         if ($_GET['id_user']) {
             $id = $_GET['id_user'];
             $column = "id_user";
