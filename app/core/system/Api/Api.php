@@ -52,6 +52,12 @@ class Api {
         $this->result = $this->db->select('users');
     }
 
+    public function get_user() {
+        $id = $_GET['id_user'];
+        $sql = "SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user WHERE u.id_user = $id";
+        $this->result = $this->db->send_query($sql)[0];
+    }
+
     public function get_projects() {
         $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`";
         $this->result = $this->db->send_query($sql);
@@ -316,6 +322,7 @@ class Api {
     }
 
     public function post_project() {
+        $_GET = json_decode($_GET['json']);
         if ($_GET['id_user']) {
             $id = $_GET['id_user'];
             $column = "id_user";
@@ -365,7 +372,7 @@ class Api {
     }
 
     public function put_project() {
-        $val = $_GET;
+        $val = json_decode($_GET['json']);
         $this->db->update("projects",
             [
                 "title_ukr" => $val['title_ukr'],
@@ -380,7 +387,7 @@ class Api {
                 "owner" => $val['owner'],
             ], ["id_project" => $_GET['id_project']]);
         $this->result = true;
-        /*if ($val['photos']) {
+        if ($val['photos']) {
             foreach ($val['photos'] as $k => $v) {
                 $this->db->insert("project_photos",
                     [
@@ -388,7 +395,7 @@ class Api {
                         "src" => $v['src']
                     ]);
             }
-        }*/
+        }
     }
 
 
