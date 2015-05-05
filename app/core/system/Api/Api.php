@@ -59,8 +59,23 @@ class Api {
     }
 
     public function get_projects() {
-        $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`";
-        $this->result = $this->db->send_query($sql);
+        $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
+          LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
+        $result = $this->db->send_query($sql);
+        $newResult = [];
+        foreach ($result as $key => $val) {
+            $newResult[$val['id_project']] = $val;
+            echo $val['id_project'];
+            $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
+            //print_r ($arr);
+            //$newResult[$val['id_project']]['photos'] = 2;//['id' => $val['id_photo'], 'src' => $val['src']];
+            unset($newResult[$val['id_project']]['src']);
+            unset($newResult[$val['id_project']]['id_photo']);
+        }
+        foreach ($newResult as $key => &$val) {
+            $val['photos'] = $arr[$val['id_project']];
+        }
+        $this->result = $newResult;
     }
 
     public function get_project() {
