@@ -432,7 +432,7 @@ class Api {
                 'bio' => $_GET['bio'],
                 'participant' => $_GET['participant'],
                 'exhibition_list' => $_GET['exhibition_list'],
-            ], ['id' => $_GET['id_user']]);
+            ], ['id_user' => $_GET['id_user']]);
     }
 
     public function put_project() {
