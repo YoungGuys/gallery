@@ -49,7 +49,7 @@ class Api {
     }
 
     public function get_allUsers() {
-        $this->result = $this->db->select('users');
+        $this->result = $this->db->send_query("SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user");
     }
 
     public function get_user() {
