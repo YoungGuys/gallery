@@ -105,13 +105,26 @@ class Api {
         if ($group_id['id_group']) {
             $searchId = $group_id['id_group'];
         } else $searchId = $group_id['id_user'];
-        $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement` WHERE s.";
+        $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`";
+        $sql .= " LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
+        $sql .= " WHERE s.";
         if ($group_id['id_group'])
-            $sql .= "`id_group`"; else $sql .= "`id_user`";
+            $sql .= "`id_group`";
+        else $sql .= "`id_user`";
         $sql .= " = ";
         if ($group_id['id_group'])
-            $sql .= $group_id['id_group']; else $sql .= $group_id['id_user'];
-        $this->result = $this->db->send_query($sql);
+            $sql .= $group_id['id_group'];
+        else $sql .= $group_id['id_user'];
+        $result = $this->db->send_query($sql);
+        foreach ($result as $key => $val) {
+            $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
+            unset($result[$key]['src']);
+            unset($result[$key]['id_photo']);
+        }
+        foreach ($result as $key => &$val) {
+            $val['photos'] = $arr[$val['id_project']];
+        }
+        $this->result = $result;
         //$this->result = $group_id;
     }
 
