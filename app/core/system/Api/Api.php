@@ -115,7 +115,7 @@ class Api {
         //$this->result = $group_id;
     }
 
-    public function get_myProject() {
+    public function get_myRateProject() {
         $my_id = $_COOKIE['id'];
         //echo $my_id;
         //$my_id = 1;
@@ -123,7 +123,6 @@ class Api {
           LEFT JOIN `statements` as s ON p.`id_statement` = s.id_statement
           LEFT JOIN `rating` as r ON r.id_project = p.id_project
           WHERE r.id_jury = $my_id";
-        echo $sql;
         $this->result = $this->db->send_query($sql);
     }
 
@@ -392,6 +391,35 @@ class Api {
                 'photo' => $_GET['photo'],
             ], ["id_jury" => $_GET['id_jury']]);
 
+    }
+
+
+    public function put_user() {
+        $this->db->update("users",
+            [
+                "fio_ukr" => $_GET['fio_ukr'],
+                'fio_eng' => $_GET['fio_eng'],
+                'birthday' => $_GET['birthday'],
+                'education' => $_GET['education'],
+                'country' => $_GET['country'],
+                'region' => $_GET['region'],
+                'town' => $_GET['town'],
+                'address' => $_GET['address'],
+                'phone' => $_GET['phone'],
+                'passport_seria' => $_GET['passport_seria'],
+                'passport_number' => $_GET['passport_number'],
+                'passport_who' => $_GET['passport_who'],
+                'passport_when' => $_GET['passport_when'],
+            ], ['id' => $_GET['id_user']]);
+        $this->db->update("statements",
+            [
+                "phone" => $_GET['phone'],
+                'photo' => $_GET['photo'],
+                'email' => $_GET['email'],
+                'bio' => $_GET['bio'],
+                'participant' => $_GET['participant'],
+                'exhibition_list' => $_GET['exhibition_list'],
+            ], ['id' => $_GET['id_user']]);
     }
 
     public function put_project() {
