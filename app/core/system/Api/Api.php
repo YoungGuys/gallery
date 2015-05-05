@@ -65,7 +65,6 @@ class Api {
         $newResult = [];
         foreach ($result as $key => $val) {
             $newResult[$val['id_project']] = $val;
-            echo $val['id_project'];
             $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
             //print_r ($arr);
             //$newResult[$val['id_project']]['photos'] = 2;//['id' => $val['id_photo'], 'src' => $val['src']];
