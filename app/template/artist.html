@@ -8,13 +8,11 @@
 
                 <h3 class="page-header">Painter: {{painter.fio_eng}}</h3>
 
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" ng-src="images/img/{{painter.photo}}" alt="painter-photo">
-                        </a>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="media-object" ng-src="images/img/{{painter.photo}}" alt="painter-photo">
                     </div>
-                    <div class="media-body">
+                    <div class="col-md-9">
                         <p class="media-heading">About painter:</p>
 
                         <div class="information_">
@@ -37,7 +35,7 @@
                     <tbody class="js-listProject">
                         <tr ng-repeat="project in projects track by $index">
                             <td width="150">
-                                <img src="images/img/{{project.photo}}" alt="project-photo">
+                                <img src="images/img/{{project.photos[0].src}}" alt="project-photo">
                             </td>
                             <td>
                                 {{project.title_eng}}
@@ -65,18 +63,8 @@
 
 
                 <ul class="project-list">
-                    <li ng-repeat="project in projects track by $index" ng-show="isSet($index)">
+                    <li ng-repeat="project in projects" ng-show="isSet($index)">
                         <h3 class="page-header">Project: "{{project.title_eng}}"</h3>
-
-                        <!--<div class="row text-center padding-top-bot-10">-->
-                            <!--<div class="col-md-4" ng-repeat="photo in project.photo">-->
-                                <!--<a data-gallery="multiimages"-->
-                                   <!--data-toggle="lightbox"-->
-                                   <!--href="images/img/{{photo}}">-->
-                                    <!--<img ng-src="images/img/{{photo}}">-->
-                                <!--</a>-->
-                            <!--</div>-->
-                        <!--</div>-->
 
                         <p class="page-header">Project description:</p>
 
@@ -84,13 +72,16 @@
                             {{project.description_eng}}
                         </div>
 
-                        <!--<ul class="row img-preview project-list__images">
-                            <li class="col-xs-6 col-md-3 img-preview__item" ng-repeat="photo in project.photo">
-                                <figure class="thumbnail">
-                                    <img ng-src="images/{{photo}}" class="thumb">
-                                </figure>
+                        <hr>
+
+                        <ul class="row img-preview project-list__images">
+                            <li class="col-xs-6 col-md-4 img-preview__item"
+                                ng-repeat="photo in project.photos track by $index">
+                                <a class="thumbnail" ng-click="Lightbox.openModal(project.photos, $index)">
+                                    <img ng-src="images/img/{{photo.src}}" alt="project-photo">
+                                </a>
                             </li>
-                        </ul>-->
+                        </ul>
 
                         <hr>
 
@@ -116,9 +107,9 @@
                                 </li>
                             </ul>
                         </nav>
+
                     </li>
                 </ul>
-
 
             </div>
         </div>

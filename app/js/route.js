@@ -63,7 +63,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         })
         .when('/project-list', {
             templateUrl: 'template/project-list.html',
-            controller: 'projectsCtrl'
+            controller: 'projectListCtrl'
         })
 
         //autorization

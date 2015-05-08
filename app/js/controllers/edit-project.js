@@ -16,20 +16,20 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
         });
 
 
-    $http.get('api/get/projects')
+    $http.get('api/get/project', {params: {id_project: $routeParams.id} } )
         .success(function(data, status, headers, config) {
-            console.log('\nProjects');
+            console.log('\nProject id = ' + $routeParams.id);
             console.log(data);
 
-            data.forEach(function(item, i){
-                if ( item.id_project == $routeParams.id ) {
-                    $scope.project = item;
-                    $scope.photo = item.photo;
-                    return false;
-                }
-            });
+            //data.forEach(function(item, i){
+            //    if ( item.id_project == $routeParams.id ) {
+                    $scope.project = data.statement;
+                    $scope.photo = data.statement.photo;
+                    //return false;
+                //}
+            //});
 
-        })
+        });
 
 
     $scope.saveChange = function () {
@@ -46,11 +46,12 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             description_eng: $scope.project.description_eng,
             photo:           $scope.photo
         };
+        data = {"json": JSON.stringify(data)};
         console.log('\nSend server data update project');
         console.log(data);
 
 
-        $http.get('api/put/project', {params: data })
+        $http.get('api/put/project', {params: data})
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer update project');
                 console.log(data);

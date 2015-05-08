@@ -1,7 +1,8 @@
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', 'Lightbox', function($scope, $rootScope, $http, $routeParams, Lightbox) {
 
+    $scope.Lightbox = Lightbox;
 
     $scope.isSet = function(checkTab) {
         return $scope.tab === checkTab;
@@ -12,17 +13,19 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
     };
 
 
-    $http.get('api/get/allusers')
+    $http.get('api/get/myRateProject')
         .success(function(data, status, headers, config) {
-            console.log('\nAll users');
+            console.log('\nJury rate project');
+            console.log(data);
+        });
+
+
+    $http.get('api/get/user', {params: {id_user: $routeParams.id}} )
+        .success(function(data, status, headers, config) {
+            console.log('\nUser id = ' + $routeParams.id);
             console.log(data);
 
-            data.forEach(function(item, i){
-                if ( item.id_user == $routeParams.id ) {
-                    $scope.painter = item;
-                    return false;
-                }
-            });
+            if (data) $scope.painter = data;
 
         });
 
@@ -32,10 +35,12 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             console.log('\nArtist projects');
             console.log(data);
 
-            data.forEach(function(item, i){
-                item.prevProject = data.length == i + 1 ? 0 : i + 1;
-                item.nextProject = data.length == i + 1 ? 0 : i + 1;
-            });
+            if (data) {
+                data.forEach(function(item, i){
+                    item.prevProject = data.length == i + 1 ? 0 : i + 1;
+                    item.nextProject = data.length == i + 1 ? 0 : i + 1;
+                });
+            }
 
             $scope.projects = data;
 
@@ -83,6 +88,10 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
                 });
         }
 
-    }
+    };
+
+
+
+
 
 }]);

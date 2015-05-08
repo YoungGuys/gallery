@@ -270,3 +270,16 @@ img {
     list-style-type: none;
     padding: 0;
 }
+
+menu {
+    padding: 0;
+}
+
+.column-photo {
+    width: 150px;
+}
+
+.thumbnail {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}

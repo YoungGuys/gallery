@@ -19,6 +19,7 @@ artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, 
                     console.log(data);
                     if (data) {
                         $rootScope.admin = true;
+                        $rootScope.userName = 'Admin';
                         location.href = '#/main';
                     }
                 })

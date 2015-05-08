@@ -6,6 +6,7 @@
     "angular": "~1.x.x",
     "angular-mocks": "~1.x.x",
     "angular-route": "~1.x.x",
+    "angular-bootstrap-lightbox": "0.6.0",
     "jquery": "~2.x.x",
     "bootstrap": "~3.x.x",
     "gulp": "^3.8.11",

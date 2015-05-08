@@ -20,8 +20,8 @@
                     </thead>
                     <tbody class="js-lsit">
                         <tr ng-repeat="painter in painters track by $index">
-                            <td>
-                                <img ng-src="images/img/{{painter.photo}} alt="photo-artist"/>
+                            <td class="column-photo">
+                                <img ng-src="images/img/{{painter.photo}}" alt="painter-photo">
                             </td>
                             <td>
                                 <a href="#/artist/{{painter.id_user}}" class="">

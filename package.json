@@ -32,6 +32,7 @@
     "watchify": "^3.1.2"
   },
   "dependencies": {
+    "angular-bootstrap-lightbox": "^0.6.0",
     "imagemin-pngquant": "^4.0.0"
   }
 }

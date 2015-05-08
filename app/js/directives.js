@@ -75,3 +75,12 @@ artApp.directive('uploadFile', function() {
         controller: 'uploadFileCtrl'
     }
 });
+
+
+artApp.directive('modal', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/modal.html',
+        controller: 'uploadFileCtrl'
+    }
+});

@@ -21,7 +21,7 @@ artApp.controller('artistListCtrl',['$scope','$http', '$rootScope', function($sc
 
             var data = {
                 id_user: id
-            }
+            };
 
             $http.get('api/delete/user', {params: data} )
                 .success(function(data, status, headers, config) {
