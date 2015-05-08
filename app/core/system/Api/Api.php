@@ -15,7 +15,7 @@ class Api {
 
     public $db;
 
-    public $result;
+    public $result;function
 
     function __construct() {
         $this->db = DBProc::instance();

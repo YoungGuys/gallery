@@ -217,7 +217,7 @@ class DBProc {
             return $this->mysqli->error;
         }*/
     }
-
+    
 
     public function delete($table, $where = false) {
         $table = $_SESSION['table'] . $table;
