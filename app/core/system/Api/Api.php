@@ -64,6 +64,7 @@ class Api {
         $result = $this->db->send_query($sql);
         $newResult = [];
         $b = 0;
+
         foreach ($result as $key => $val) {
             $newResult[$val['id_project']] = $val;
             $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
