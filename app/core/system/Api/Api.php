@@ -63,6 +63,7 @@ class Api {
           LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
         $result = $this->db->send_query($sql);
         $newResult = [];
+        $b = 0;
         foreach ($result as $key => $val) {
             $newResult[$val['id_project']] = $val;
             $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
@@ -71,10 +72,12 @@ class Api {
             unset($newResult[$val['id_project']]['src']);
             unset($newResult[$val['id_project']]['id_photo']);
         }
+        $result = [];
         foreach ($newResult as $key => &$val) {
             $val['photos'] = $arr[$val['id_project']];
+            $result[] = $val;
         }
-        $this->result = $newResult;
+        $this->result = $result;
     }
 
     public function get_project() {

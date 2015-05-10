@@ -6,25 +6,13 @@
     "angular": "~1.x.x",
     "angular-mocks": "~1.x.x",
     "angular-route": "~1.x.x",
-    "angular-bootstrap-lightbox": "0.6.0",
+    "angular-bootstrap-lightbox": "^0.6.0",
     "jquery": "~2.x.x",
     "bootstrap": "~3.x.x",
-    "gulp": "^3.8.11",
-    "gulp-autoprefixer": "^2.1.0",
-    "gulp-clean": "^0.3.1",
-    "gulp-concat": "^2.5.2",
-    "gulp-concat-css": "^2.2.0",
-    "gulp-csso": "^1.0.0",
-    "gulp-imagemin": "^2.2.1",
-    "gulp-livereload": "^3.8.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-uglify": "^1.1.0",
-    "karma": "^0.12.16",
+    "karma": "~0.x.x",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "protractor": "~1.0.0",
-    "shelljs": "^0.2.6",
-    "tmp": "0.0.23",
-    "vinyl-fs": "^1.0.0"
+    "shelljs": "^0.2.6"
   }
 }
