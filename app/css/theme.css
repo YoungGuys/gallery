@@ -283,3 +283,20 @@ menu {
     -ms-word-wrap: break-word;
     word-wrap: break-word;
 }
+
+.navbar {
+    clear: both;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+
+html, body {
+    min-width: 768px !important;
+}
+
+.menu-logo img {
+    max-width: 125%;
+}

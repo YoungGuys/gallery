@@ -29,7 +29,6 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             photos:          $scope.photo
         };
 
-        //data = "json=" + JSON.stringify(data);
         data = {"json": JSON.stringify(data)};
         console.log('\nSend server data add project');
         console.log(data);

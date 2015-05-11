@@ -481,7 +481,6 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             photos:          $scope.photo
         };
 
-        //data = "json=" + JSON.stringify(data);
         data = {"json": JSON.stringify(data)};
         console.log('\nSend server data add project');
         console.log(data);
@@ -819,8 +818,9 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
 
             //data.forEach(function(item, i){
             //    if ( item.id_project == $routeParams.id ) {
-                    $scope.project = data.statement;
-                    $scope.photo = data.statement.photo;
+                    $scope.project = data.project;
+                    $scope.project.id_user = data.statement.id_user;
+                    //$scope.photo = data.statement.photo;
                     //return false;
                 //}
             //});
@@ -840,8 +840,9 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             id_user:         $scope.project.id_user,
             title_eng:       $scope.project.title_eng,
             description_eng: $scope.project.description_eng,
-            photo:           $scope.photo
+            photos:          $scope.photo
         };
+
         data = {"json": JSON.stringify(data)};
         console.log('\nSend server data update project');
         console.log(data);
@@ -853,7 +854,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('Answer update project "Error"')
+                console.log('\nAnswer update project "Error"')
             });
 
     };
@@ -1006,40 +1007,43 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 }]);
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', 'Lightbox', function($scope, $http, $routeParams, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 'Lightbox', function($scope, $http, $routeParams, $location, Lightbox) {
 
     $scope.Lightbox = Lightbox;
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
+            console.log('\nAll project');
             console.log(data);
 
-            //data.forEach(function(item, i){
-            //    if ( item.id_project == $routeParams.id ) {
-            //        $scope.project = item;
-            //        return false;
-            //    }
-            //});
+            //$scope.data = data;
+            //dataPage(data, $routeParams.id);
 
-            for (var item in data) {
-                if ( item === $routeParams.id ) {
-                    $scope.project = data[item];
+            data.forEach(function(item, i){
+                if ( item.id_project ==  $routeParams.id) {
+                    $scope.project = item;
+                    $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
+                    $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
                     return false;
                 }
-            }
+            });
+            //console.log($scope.project);
 
-            //$scope.project.prevProject = data.length == i + 1 ? 0 : i + 1;
-            //$scope.project.nextProject = data.length == i + 1 ? 0 : i + 1;
         });
 
 
-    //title_eng
-    //photo
-    //description
-    //projectName
-    //projectPhoto
-    //prevProject
-    //nextProject
+    $scope.setProject = function(id) {
+    //    $location.path("/project/"+ id).replace().reload(false);
+    //    alert(id);
+    //    history.replaceState({}, '', 'http://gallery.com/#/project/' + id);
+    //    dataPage($scope.data, id)
+    };
+
+
+    //function dataPage (data, id) {
+
+    //}
+
 
 }]);
 'use strict';

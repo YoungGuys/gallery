@@ -23,8 +23,9 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
 
             //data.forEach(function(item, i){
             //    if ( item.id_project == $routeParams.id ) {
-                    $scope.project = data.statement;
-                    $scope.photo = data.statement.photo;
+                    $scope.project = data.project;
+                    $scope.project.id_user = data.statement.id_user;
+                    //$scope.photo = data.statement.photo;
                     //return false;
                 //}
             //});
@@ -44,8 +45,9 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             id_user:         $scope.project.id_user,
             title_eng:       $scope.project.title_eng,
             description_eng: $scope.project.description_eng,
-            photo:           $scope.photo
+            photos:          $scope.photo
         };
+
         data = {"json": JSON.stringify(data)};
         console.log('\nSend server data update project');
         console.log(data);
@@ -57,7 +59,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
                 console.log(data);
             })
             .error(function(data, status, headers, config) {
-                console.log('Answer update project "Error"')
+                console.log('\nAnswer update project "Error"')
             });
 
     };

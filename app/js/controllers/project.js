@@ -1,38 +1,41 @@
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', 'Lightbox', function($scope, $http, $routeParams, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 'Lightbox', function($scope, $http, $routeParams, $location, Lightbox) {
 
     $scope.Lightbox = Lightbox;
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
+            console.log('\nAll project');
             console.log(data);
 
-            //data.forEach(function(item, i){
-            //    if ( item.id_project == $routeParams.id ) {
-            //        $scope.project = item;
-            //        return false;
-            //    }
-            //});
+            //$scope.data = data;
+            //dataPage(data, $routeParams.id);
 
-            for (var item in data) {
-                if ( item === $routeParams.id ) {
-                    $scope.project = data[item];
+            data.forEach(function(item, i){
+                if ( item.id_project ==  $routeParams.id) {
+                    $scope.project = item;
+                    $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
+                    $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
                     return false;
                 }
-            }
+            });
+            //console.log($scope.project);
 
-            //$scope.project.prevProject = data.length == i + 1 ? 0 : i + 1;
-            //$scope.project.nextProject = data.length == i + 1 ? 0 : i + 1;
         });
 
 
-    //title_eng
-    //photo
-    //description
-    //projectName
-    //projectPhoto
-    //prevProject
-    //nextProject
+    $scope.setProject = function(id) {
+    //    $location.path("/project/"+ id).replace().reload(false);
+    //    alert(id);
+    //    history.replaceState({}, '', 'http://gallery.com/#/project/' + id);
+    //    dataPage($scope.data, id)
+    };
+
+
+    //function dataPage (data, id) {
+
+    //}
+
 
 }]);

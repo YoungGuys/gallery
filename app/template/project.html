@@ -30,7 +30,7 @@
                 <nav>
                     <ul class="pager">
                         <li class="previous">
-                            <a ng-click="setTab(project.prevProject)" href="">
+                            <a ng-click="setProject(project.prevProject)" href="#/project/{{project.prevProject}}">
                                 <span aria-hidden="true">&larr;</span>
                                 Previous project the artist
                             </a>
@@ -42,7 +42,7 @@
                             </button>
                         </li>
                         <li class="next">
-                            <a ng-click="setTab(project.nextProject)" href="">
+                            <a ng-click="setProject(project.nextProject)" href="#/project/{{project.nextProject}}">
                                 The next project of the artist
                                 <span aria-hidden="true">&rarr;</span>
                             </a>
