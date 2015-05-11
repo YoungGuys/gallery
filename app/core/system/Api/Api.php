@@ -85,6 +85,8 @@ class Api {
         $id = $_GET['id_project'];
         $sql = "SELECT * FROM `projects` as p WHERE p.id_project = $id";
         $project = $this->db->send_query($sql)[0];
+        $sql = "SELECT `src` FROM `project_photos` as p WHERE p.id_project = $id";
+        $photos = $this->db->send_query($sql);
         $id_statement = $project['id_statement'];
         $sql = "SELECT * FROM `statements` as s WHERE s.`id_statement` = $id_statement";
         $statement = $this->db->send_query($sql)[0];
@@ -92,13 +94,14 @@ class Api {
             if ($statement['id_user']) {
                 $user = $this->db->select("users", false, ['id_user' => $statement['id_user']])[0];
                 $this->result = [
-                    "project" => $project,'statement' => $statement, 'user' => $user
+                    "project" => $project,"photos" => $photos,'statement' => $statement, 'user' => $user
                 ];
             } elseif ($statement['id_group']) {
                 $group = $this->db->select("group", false, ['id' => $statement['id_group']])[0];
                 $users[0] = $this->db->select("users", false, ['id_group' => $statement['id_group']])[0];
                 $this->result = [
                     "project" => $project,
+                    "photos" => $photos,
                     "statement" => $statement,
                     "group" => $group,
                     "users" => $users
