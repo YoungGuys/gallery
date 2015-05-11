@@ -219,7 +219,7 @@ class DBProc {
     }
     
 
-    public function delete($table, $where = false) {
+    public function delete($table, $where = []) {
         $table = $_SESSION['table'] . $table;
         $explode = $this->new_explode_where($where);
         $whr = $explode[0];
@@ -242,7 +242,7 @@ class DBProc {
         }
     }
 
-    public function update($table, $values = false, $where = false) {
+    public function update($table, $values = [], $where = []) {
         $table = $_SESSION['table'] . $table;
         if ($values) {
             $value = "";
