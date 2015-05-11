@@ -59,7 +59,7 @@ class Api {
     }
 
     public function get_projects() {
-        $sql = "SELECT * FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
+        $sql = "SELECT *.projects, *.statements, *.project_photos,  FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
           LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
         $result = $this->db->send_query($sql);
         $newResult = [];
@@ -122,12 +122,12 @@ class Api {
         $result = $this->db->send_query($sql);
         foreach ($result as $key => $val) {
             $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
-            unset($result[$key]['src']);
-            unset($result[$key]['id_photo']);
+            $newResult[$val['id_project']] = $val;
         }
-        foreach ($result as $key => &$val) {
+        foreach ($newResult as $key => &$val) {
             $val['photos'] = $arr[$val['id_project']];
         }
+        $result = array_values($newResult);
         $this->result = $result;
         //$this->result = $group_id;
     }
