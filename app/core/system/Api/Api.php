@@ -83,18 +83,22 @@ class Api {
 
     public function get_project() {
         $id = $_GET['id_project'];
-        $sql = "SELECT * FROM `projects` as p
-          LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
-          WHERE p.id_project = $id";
+        $sql = "SELECT * FROM `projects` as p WHERE p.id_project = $id";
+        $project = $this->db->send_query($sql)[0];
+        $id_statement = $project['id_statement'];
+        $sql = "SELECT * FROM `statements` as s WHERE s.`id_statement` = $id_statement";
         $statement = $this->db->send_query($sql)[0];
         if ($statement) {
             if ($statement['id_user']) {
                 $user = $this->db->select("users", false, ['id_user' => $statement['id_user']])[0];
-                $this->result = ['statement' => $statement, 'user' => $user];
+                $this->result = [
+                    "project" => $project,'statement' => $statement, 'user' => $user
+                ];
             } elseif ($statement['id_group']) {
                 $group = $this->db->select("group", false, ['id' => $statement['id_group']])[0];
                 $users[0] = $this->db->select("users", false, ['id_group' => $statement['id_group']])[0];
                 $this->result = [
+                    "project" => $project,
                     "statement" => $statement,
                     "group" => $group,
                     "users" => $users
