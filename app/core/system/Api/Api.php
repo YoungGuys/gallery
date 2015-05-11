@@ -453,7 +453,7 @@ class Api {
                 "sizes" => $val['sizes'],
                 'recomendation' => $val['recomendation'],
                 "owner" => $val['owner'],
-            ], ["id_project" => $_GET['id_project']]);
+            ], ["id_project" => $val['id_project']]);
         $this->result = true;
         if ($val['photos']) {
             foreach ($val['photos'] as $k => $v) {

@@ -274,6 +274,7 @@ class DBProc {
         }
         if ($table && $value) {
             $sql = "UPDATE `$table` SET $value $where";
+            //echo $sql;
             try {
                 $query = $this->pdo->prepare($sql);
                 $query->execute($exec);
