@@ -45,7 +45,25 @@ class Api {
     }
 
     public function get_allJury() {
-        $this->result = $this->db->select("jury");
+        $sql = "SELECT j.*, r.id_project, p.title_eng, p.title_ukr FROM `jury` AS j LEFT JOIN `rating` AS r ON j.id_jury = r.id_jury LEFT JOIN `projects` AS p ON p.id_project = r.id_project";
+        $result = $this->db->send_query($sql);
+        $newResult = [];
+        foreach ($result as $key => $val) {
+            if (!$newResult[$val['id_jury']]) $newResult[$val['id_jury']] = $result[$key];
+            if ($val['id_project']) {
+                $newResult[$val['id_jury']]['projects'][] = [
+                    "id_project" => $val['id_project'],
+                    "title_ukr" => $val['title_ukr'],
+                    "title_eng" => $val['title_eng']
+                ];
+            }
+            else {
+                $newResult[$val['id_jury']]['projects'][] = [];
+            }
+            unset($newResult[$val['id_jury']]['id_project']);
+        }
+        $this->result = $newResult;
+        print_r($this->result);
     }
 
     public function get_allUsers() {
@@ -149,6 +167,18 @@ class Api {
           LEFT JOIN `rating` as r ON r.id_project = p.id_project
           WHERE r.id_jury = $my_id";
         $this->result = $this->db->send_query($sql);
+    }
+
+    public function get_ratingVisibility()
+    {
+        $array = file_get_contents("settings.json");
+        $array = json_decode($array, true);
+        if ($array['rating_visibility'] != 0) {
+            $this->result = true;
+        }
+        else {
+            $this->result = false;
+        }
     }
 
     public function post_addJury() {
@@ -403,6 +433,17 @@ class Api {
             }
         }
         $this->result = $id_project;
+    }
+
+    public function put_settings()
+    {
+        self::trueAdmin();
+        $array = [
+            "rating_visibility" => $_GET['ratingVisibility']
+        ];
+        $json = json_encode($array);
+        file_put_contents('settings.json', $json);
+        $this->result = true;
     }
 
     public function put_jury() {
