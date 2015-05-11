@@ -445,7 +445,7 @@ class Api {
 
     public function put_project() {
         $val = json_decode($_GET['json'], true);
-        $val = json_decode('{"id_project":"36","id_user":"8","title_eng":"My cats","description_eng":"cats, cats ...123","photo":["cat2.jpg","cat.jpeg"]}', true);
+        //$val = json_decode('{"id_project":"36","id_user":"8","title_eng":"My cats","description_eng":"cats, cats ...123","photos":["cat2.jpg","cat.jpeg"]}', true);
         $this->db->update("projects",
             [
                 "title_ukr" => $val['title_ukr'],
@@ -464,7 +464,7 @@ class Api {
             foreach ($val['photos'] as $k => $v) {
                 $this->db->insert("project_photos",
                     [
-                        "id_project" => $_GET['id_project'],
+                        "id_project" => $val['id_project'],
                         "src" => $v['src']
                     ]);
             }
