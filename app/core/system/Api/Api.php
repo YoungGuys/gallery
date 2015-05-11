@@ -59,8 +59,9 @@ class Api {
     }
 
     public function get_projects() {
-        $sql = "SELECT p.*, s.*, pp.*  FROM `projects` as p LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
-          LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
+        $sql = "SELECT p.*, s.*, pp.*, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project) AS rate FROM `projects` as p
+            LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
+            LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project ";
         $result = $this->db->send_query($sql);
         $newResult = [];
         $b = 0;
