@@ -44,6 +44,15 @@ class Api {
         setcookie("token", md5("balon" . $this->result['id_jury']), time() + 60 * 60 * 24 * 360, "/");
     }
 
+    public function get_juryProjects()
+    {
+        $id = $_GET['id_jury'];
+        $sql = "SELECT projects.* FROM rating LEFT JOIN projects ON rating.id_project = projects.id_project
+                WHERE rating.id_jury=$id";
+        $array = $this->db->send_query($sql);
+        $this->result = $array;
+    }
+
     public function get_allJury() {
         $sql = "SELECT j.*, r.id_project, p.title_eng, p.title_ukr FROM `jury` AS j LEFT JOIN `rating` AS r ON j.id_jury = r.id_jury LEFT JOIN `projects` AS p ON p.id_project = r.id_project";
         $result = $this->db->send_query($sql);
