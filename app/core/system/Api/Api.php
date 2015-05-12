@@ -63,7 +63,6 @@ class Api {
             unset($newResult[$val['id_jury']]['id_project']);
         }
         $this->result = $newResult;
-        print_r($this->result);
     }
 
     public function get_allUsers() {
