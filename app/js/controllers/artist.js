@@ -13,13 +13,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
     };
 
 
-    $http.get('api/get/myRateProject')
-        .success(function(data, status, headers, config) {
-            console.log('\nJury rate project');
-            console.log(data);
-        });
-
-
     $http.get('api/get/user', {params: {id_user: $routeParams.id}} )
         .success(function(data, status, headers, config) {
             console.log('\nUser id = ' + $routeParams.id);
@@ -44,6 +37,25 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
             $scope.projects = data;
 
+        });
+
+
+    $http.get('api/get/myRateProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nJury rate project');
+            console.log(data);
+
+            for (var i in data) {
+                if (data[i].id_jury == $rootScope.idJury) {
+                    console.log(data[i].id_jury);
+                    $scope.projects.forEach(function(item, j){
+                        if (item.id_project == data[i].id_project) {
+                            $scope.projects[j].rate = true;
+                            console.log($scope.projects[j].rate);
+                        }
+                    });
+                }
+            }
         });
 
 
@@ -89,7 +101,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         }
 
     };
-
 
 
 

@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 'Lightbox', function($scope, $http, $routeParams, $location, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', 'Lightbox', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
 
     $scope.Lightbox = Lightbox;
 
@@ -36,6 +36,44 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 
     //function dataPage (data, id) {
 
     //}
+    $http.get('api/get/alljury')
+        .success(function(data, status, headers, config) {
+            console.log('\nAll jury');
+            console.log(data);
+
+            //for (var i = 0; i < data.length; i++) {
+            for (var i in data) {
+                if (data[i].login == $rootScope.userName) {
+                    data[i].projects.forEach(function(item, i){
+                        if (item.id_project == $routeParams.id) {
+                            $scope.rate = true;
+                            console.log($scope.rate);
+                        }
+                    });
+                }
+            }
+        })
+        .error(function(data, status, headers, config) {
+            console.log('All jury error')
+        });
+
+
+    $scope.chooseProject = function(id) {
+
+        var data = {
+            id_project: id
+        };
+
+        $http.get('api/post/rating', {params: data} )
+            .success(function(data, status, headers, config) {
+                console.log('\nAnswer add rating');
+                console.log(data);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('Answer add rating "Error"');
+            });
+
+    };
 
 
 }]);

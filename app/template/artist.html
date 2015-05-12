@@ -88,19 +88,22 @@
                         <nav>
                             <ul class="pager">
                                 <li class="previous">
-                                    <a ng-click="setTab(project.prevProject)" href="">
+                                    <a ng-if="$index > 0"
+                                       ng-click="setTab(project.prevProject)" href="">
                                         <span aria-hidden="true">&larr;</span>
                                         Previous project the artist
                                     </a>
                                 </li>
                                 <li>
                                     <button type="button" class="btn btn-danger"
+                                            ng-disabled="project.rate"
                                             ng-click="chooseProject(project.id_project)">
                                         <span class="glyphicon glyphicon-heart"> </span> Choose project
                                     </button>
                                 </li>
                                 <li class="next">
-                                    <a ng-click="setTab(project.nextProject)" href="">
+                                    <a ng-if="$index > 0"
+                                       ng-click="setTab(project.nextProject)" href="">
                                         The next project of the artist
                                         <span aria-hidden="true">&rarr;</span>
                                     </a>

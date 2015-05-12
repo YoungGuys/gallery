@@ -59,7 +59,7 @@ artApp.directive('formMember', function() {
 });
 
 
-artApp.directive('menu', function($rootScope) {
+artApp.directive('menu', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/menu.html',
@@ -82,5 +82,14 @@ artApp.directive('modal', function() {
         restrict: 'E',
         templateUrl: 'template/modal.html',
         controller: 'uploadFileCtrl'
+    }
+});
+
+
+artApp.directive('jurySelectProject', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/jury-select-project.html',
+        controller: 'homeCtrl'
     }
 });

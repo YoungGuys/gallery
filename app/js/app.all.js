@@ -323,8 +323,8 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'juryListCtrl'
         })
         .when('/jury-selected/:id', {
-            templateUrl: 'template/jury-selected.html',
-            controller: 'jurySelectedCtrl'
+            templateUrl: 'template/jury-selected.html'
+            //controller: 'jurySelectedCtrl'
         })
 
         //project
@@ -359,9 +359,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
-        }).when('/home', {
-            templateUrl: 'template/main.html',
-            controller: 'mainCtrl'
+        })
+        .when('/home', {
+            templateUrl: 'template/home.html'
+            //controller: 'homeCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',
@@ -591,13 +592,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
     };
 
 
-    $http.get('api/get/myRateProject')
-        .success(function(data, status, headers, config) {
-            console.log('\nJury rate project');
-            console.log(data);
-        });
-
-
     $http.get('api/get/user', {params: {id_user: $routeParams.id}} )
         .success(function(data, status, headers, config) {
             console.log('\nUser id = ' + $routeParams.id);
@@ -622,6 +616,25 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
             $scope.projects = data;
 
+        });
+
+
+    $http.get('api/get/myRateProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nJury rate project');
+            console.log(data);
+
+            for (var i in data) {
+                if (data[i].id_jury == $rootScope.idJury) {
+                    console.log(data[i].id_jury);
+                    $scope.projects.forEach(function(item, j){
+                        if (item.id_project == data[i].id_project) {
+                            $scope.projects[j].rate = true;
+                            console.log($scope.projects[j].rate);
+                        }
+                    });
+                }
+            }
         });
 
 
@@ -667,7 +680,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         }
 
     };
-
 
 
 
@@ -732,14 +744,15 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
             console.log('\nAll jury');
             console.log(data);
 
-            for (var i = 0; i < data.length; i++) {
+            //for (var i = 0; i < data.length; i++) {
+            for (var i in data) {
                 if (data[i].id_jury == $routeParams.id) {
                     $scope.data = data[i];
                     $scope.data.pass = null;
                     $scope.photo = $scope.data.photo;
                     //$scope.files = [];
                     //$scope.files[0] = $scope.data.photo;
-                    console.log($scope.files);
+                    console.log($scope.data);
                 }
             }
         })
@@ -859,6 +872,45 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
 
     };
 
+
+
+}]);
+'use strict';
+
+artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope) {
+
+
+    $scope.idJury = $routeParams.id || $rootScope.idJury;
+    //console.log()
+
+
+    $http.get('api/get/projects')
+        .success(function(data, status, headers, config) {
+            console.log('\nAll project');
+            console.log(data);
+
+            $scope.data = data;
+        });
+
+
+    $http.get('api/get/myRateProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nJury rate project');
+            console.log(data);
+
+            $scope.projects = {};
+
+            for (var i in data) {
+                if (data[i].id_jury == $scope.idJury) {
+                    $scope.data.forEach(function(item, j){
+                        if (item.id_project == data[i].id_project) {
+                            $scope.projects[item.id_project] = item;
+                        }
+                    });
+                }
+            }
+            console.log($scope.projects);
+        });
 
 
 }]);
@@ -1007,7 +1059,7 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 }]);
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 'Lightbox', function($scope, $http, $routeParams, $location, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', 'Lightbox', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
 
     $scope.Lightbox = Lightbox;
 
@@ -1043,6 +1095,44 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$location', 
     //function dataPage (data, id) {
 
     //}
+    $http.get('api/get/alljury')
+        .success(function(data, status, headers, config) {
+            console.log('\nAll jury');
+            console.log(data);
+
+            //for (var i = 0; i < data.length; i++) {
+            for (var i in data) {
+                if (data[i].login == $rootScope.userName) {
+                    data[i].projects.forEach(function(item, i){
+                        if (item.id_project == $routeParams.id) {
+                            $scope.rate = true;
+                            console.log($scope.rate);
+                        }
+                    });
+                }
+            }
+        })
+        .error(function(data, status, headers, config) {
+            console.log('All jury error')
+        });
+
+
+    $scope.chooseProject = function(id) {
+
+        var data = {
+            id_project: id
+        };
+
+        $http.get('api/post/rating', {params: data} )
+            .success(function(data, status, headers, config) {
+                console.log('\nAnswer add rating');
+                console.log(data);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('Answer add rating "Error"');
+            });
+
+    };
 
 
 }]);
@@ -1052,72 +1142,25 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
     $scope.currentDate = new Date();
 
-    $scope.painters = [
-        {
-            name: "MiKolka",
-            place: "1",
-            project: {
-                id: "1",
-                name: "Project-1",
-                photo: "img.jpg",
-                vote: "3"
-            }
-        },
-        {
-            name: "Andii",
-            place: "2",
-            project: {
-                id: "2",
-                name: "Project-2",
-                photo: "img.jpg",
-                vote: "2"
-            }
-        }
-    ];
+
+    $http.get('api/get/alljury')
+        .success(function(data, status, headers, config) {
+            console.log('\nAll jury');
+            console.log(data);
+            $scope.allJury = data;
+        });
 
 
-    $scope.allJury = [
-        {
-            photo: "img.jpg",
-            name: "Jury-1",
-            projects: [
-                {
-                    id: 1,
-                    name: "Project-1"
-                },
-                {
-                    id: 2,
-                    name: "Project-2"
-                },
-                {
-                    id: 3,
-                    name: "Project-3"
-                }
-            ]
-        },
-        {
-            photo: "img.jpg",
-            name: "Jury-2",
-            projects: [
-                {
-                    id: 1,
-                    name: "Project-1"
-                },
-                {
-                    id: 2,
-                    name: "Project-2"
-                }
-            ]
-        },
-        {
-            photo: "img.jpg",
-            name: "Jury-3",
-            projects: [{}]
-        }
-    ];
-    //jury.
-    //jury.
-    //jury.
+    $http.get('api/get/projects', {params: null})
+        .success(function(data, status, headers, config) {
+            console.log('\nProjects');
+            console.log(data);
+
+            $scope.projects = data;
+
+        })
+
+
 
 }]);
 
@@ -1416,7 +1459,7 @@ artApp.directive('formMember', function() {
 });
 
 
-artApp.directive('menu', function($rootScope) {
+artApp.directive('menu', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/menu.html',
@@ -1439,6 +1482,15 @@ artApp.directive('modal', function() {
         restrict: 'E',
         templateUrl: 'template/modal.html',
         controller: 'uploadFileCtrl'
+    }
+});
+
+
+artApp.directive('jurySelectProject', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'template/jury-select-project.html',
+        controller: 'homeCtrl'
     }
 });
 'use strict';
