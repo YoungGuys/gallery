@@ -6,19 +6,34 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     $scope.tab = 1;
     $scope.district = false;
 
+    $scope.individualShow = true;
+
 
     $scope.user = {};
     $scope.projects = [{}];
     $scope.members = [{}];
+
 
     $scope.addProjects = function(){
         console.log('Add project');
         $scope.projects.push($scope.project);
     };
 
+
+    $scope.removeProject = function(){
+        console.log('Remove project');
+        //$scope.projects.push($scope.project);
+    };
+
+
     $scope.addMember = function(){
         console.log('Add member');
         $scope.members.push($scope.member);
+    };
+
+    $scope.removeMember = function(i){
+        console.log('Remove member');
+        //$scope.members[i] = null;
     };
 
 
@@ -29,7 +44,13 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
     $scope.setTab = function(setTab) {
+
+        if (!$scope.rulesModel) return false;
+
+
         $scope.tab = setTab;
+
+
     };
 
 
@@ -39,10 +60,10 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     });
 
 
-    $scope.changeCountry = function () {
+    $scope.changeCountry = function (i) {
         console.log($scope.user.country);
         if ($scope.user.country === 'Україна') {
-            $scope.district = true;
+            $scope.district[i] = true;
 
             $http.get('template/ukraine-district.json').success(function(data){
                 $scope.ukraineDistrict = data;
@@ -155,7 +176,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
             //    alert(err);
             //});
         }
-    }
+    };
 
     $scope.applicationType = function () {
         if ($scope.user.type === "individual") {

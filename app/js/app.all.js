@@ -889,28 +889,46 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             console.log('\nAll project');
             console.log(data);
 
-            $scope.data = data;
+            $scope.dataProjects = data;
         });
 
 
-    $http.get('api/get/myRateProject')
+    $http.get('api/get/juryProjects', {params: {id_jury: $scope.idJury}} )
         .success(function(data, status, headers, config) {
-            console.log('\nJury rate project');
+            console.log('\njuryProjects');
             console.log(data);
 
-            $scope.projects = {};
+            $scope.projects = [];
 
             for (var i in data) {
-                if (data[i].id_jury == $scope.idJury) {
-                    $scope.data.forEach(function(item, j){
-                        if (item.id_project == data[i].id_project) {
-                            $scope.projects[item.id_project] = item;
-                        }
-                    });
+                for (var j in $scope.dataProjects) {
+                    if (data[i].id_project == $scope.dataProjects[j].id_project) {
+                        $scope.projects[i] = $scope.dataProjects[j];
+                    }
                 }
             }
             console.log($scope.projects);
         });
+
+
+    //$http.get('api/get/myRateProject')
+    //    .success(function(data, status, headers, config) {
+    //        console.log('\nJury rate project');
+    //        console.log(data);
+    //
+    //        $scope.projects = {};
+    //
+    //        for (var i in data) {
+    //            if (data[i].id_jury == $scope.idJury) {
+    //                $scope.data.forEach(function(item, j){
+    //                    if (item.id_project == data[i].id_project) {
+    //                        $scope.projects[item.id_project] = item;
+    //                    }
+    //                });
+    //            }
+    //        }
+    //        console.log($scope.projects);
+    //    });
 
 
 }]);
@@ -1171,19 +1189,34 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     $scope.tab = 1;
     $scope.district = false;
 
+    $scope.individualShow = true;
+
 
     $scope.user = {};
     $scope.projects = [{}];
     $scope.members = [{}];
+
 
     $scope.addProjects = function(){
         console.log('Add project');
         $scope.projects.push($scope.project);
     };
 
+
+    $scope.removeProject = function(){
+        console.log('Remove project');
+        //$scope.projects.push($scope.project);
+    };
+
+
     $scope.addMember = function(){
         console.log('Add member');
         $scope.members.push($scope.member);
+    };
+
+    $scope.removeMember = function(i){
+        console.log('Remove member');
+        //$scope.members[i] = null;
     };
 
 
@@ -1194,7 +1227,13 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
     $scope.setTab = function(setTab) {
+
+        if (!$scope.rulesModel) return false;
+
+
         $scope.tab = setTab;
+
+
     };
 
 
@@ -1204,10 +1243,10 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     });
 
 
-    $scope.changeCountry = function () {
+    $scope.changeCountry = function (i) {
         console.log($scope.user.country);
         if ($scope.user.country === 'Україна') {
-            $scope.district = true;
+            $scope.district[i] = true;
 
             $http.get('template/ukraine-district.json').success(function(data){
                 $scope.ukraineDistrict = data;
@@ -1320,7 +1359,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
             //    alert(err);
             //});
         }
-    }
+    };
 
     $scope.applicationType = function () {
         if ($scope.user.type === "individual") {
