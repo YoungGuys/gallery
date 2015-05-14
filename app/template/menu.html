@@ -39,7 +39,7 @@
     </figure>
 
     <div class="col-md-10 col-xs-10">
-        <div class="navbar-form pull-right">
+        <div ng-if="userName" class="navbar-form pull-right">
             <div class="user-login">
                 You are logged in as: {{userName || ""}}
                 |

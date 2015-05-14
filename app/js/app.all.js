@@ -994,6 +994,7 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', function($scope, 
 
                         $rootScope.userName = data.login;
                         $rootScope.idJury = data.id_jury;
+                        $rootScope.jury = true;
 
                         location.href = '#/main';
 
@@ -1080,6 +1081,7 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', 'Lightbox', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
 
     $scope.Lightbox = Lightbox;
+
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {

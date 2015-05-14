@@ -21,6 +21,7 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', function($scope, 
 
                         $rootScope.userName = data.login;
                         $rootScope.idJury = data.id_jury;
+                        $rootScope.jury = true;
 
                         location.href = '#/main';
 

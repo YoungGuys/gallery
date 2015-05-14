@@ -4,6 +4,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 
     $scope.Lightbox = Lightbox;
 
+
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
             console.log('\nAll project');
