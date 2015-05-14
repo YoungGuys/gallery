@@ -406,7 +406,7 @@ class Api {
         "images(1).jpeg",
         "images.jpeg"
     ]
-}';*/
+}';*/ 
         $_GET = json_decode($_GET['json'], true);
         if ($_GET['id_user']) {
             $id = $_GET['id_user'];
@@ -541,7 +541,7 @@ class Api {
 
     public function delete_rate() {
         $id_project = $_GET['id_project'];
-        $this->db->delete("rating", ['id_project' => $id_project, "id_jury" => $_COOKIE['id']]);
+        $this->db->delete("rating", ['id_project' => $id_project, "id_jury" => $_GET['id']]);
         $this->result = true;
     }
 
