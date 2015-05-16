@@ -64,12 +64,9 @@ artApp.directive('menu', function() {
         restrict: 'E',
         templateUrl: 'template/menu.html',
         controller: function($scope, $rootScope, $cookieStore) {
-                $scope.userName = $rootScope.userName;
-                $scope.admin = $rootScope.admin;
-
-                $scope.exit = function() {
-                    $cookieStore.put('authorization', false);
-                };
+            $scope.exit = function() {
+                $cookieStore.put('authorization', false);
+            };
         }
     }
 });

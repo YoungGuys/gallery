@@ -53,7 +53,18 @@ artApp.run(function ($rootScope, $location, $cookieStore) {
             //if (!AuthService.isAuthenticated()) {
                 $location.url("/login");
         }
-    })
+        else {
+            if (!$rootScope.userName) {
+                console.log($rootScope.userName);
+
+                $rootScope.jury = $cookieStore.get('jury');
+                $rootScope.admin = $cookieStore.get('admin');
+                $rootScope.idJury = $cookieStore.get('idJury');
+                $rootScope.userName = $cookieStore.get('login');
+
+            }
+        }
+    });
 });
 //
 //
@@ -180,10 +191,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         .when('/login', {
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
-        })
-        .when('/admin', {
-            templateUrl: 'template/admin.html',
-            controller: 'adminCtrl'
         })
 
         //page
@@ -325,40 +332,6 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             .error(function(data, status, headers, config) {
                 console.log('\nAnswer add project "Error"')
             });
-
-    };
-
-}]);
-'use strict';
-
-artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
-
-
-    $scope.autorization = function () {
-
-        if ($scope.formAdmin.$valid) {
-
-            var data = {
-                login: $scope.login,
-                pass: $scope.pass
-            };
-            console.log(data);
-
-            $http.get('api/get/admin', {params: data} )
-                .success(function(data, status, headers, config) {
-                    console.log('\nAdmin autorization');
-                    console.log(data);
-                    if (data) {
-                        $rootScope.admin = true;
-                        $rootScope.userName = 'Admin';
-                        location.href = '#/main';
-                    }
-                })
-                .error(function(data, status, headers, config) {
-                    console.log('\nAdmin autorization "Error"')
-                });
-
-        }
 
     };
 
@@ -816,27 +789,48 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', '$cookieStore', '
                 pass: $scope.pass
             };
 
-            $http.get('api/get/jury', {params: data} )
-                .success(function(data, status, headers, config) {
-                    console.log('\nJury autorization');
-                    console.log(data);
+            if ($scope.login === 'Admin') {
 
-                    if (data.login == $scope.login) {
+                $http.get('api/get/admin', {params: data} )
+                    .success(function(data, status, headers, config) {
+                        console.log('\nAdmin autorization');
+                        console.log(data);
 
-                        $rootScope.userName = data.login;
-                        $rootScope.idJury = data.id_jury;
-                        $rootScope.jury = true;
+                        if (data) {
 
-                        $cookieStore.put('authorization', true);
+                            $cookieStore.put('authorization', true);
+                            $cookieStore.put('admin', true);
+                            $cookieStore.put('login', 'Admin');
 
-                        $location.url('/main');
+                        }
+                    });
 
-                    }
+            }
 
-                })
-                .error(function(data, status, headers, config) {
-                    console.log('Jury autorization Error')
-                });
+            else {
+
+                $http.get('api/get/jury', {params: data} )
+                    .success(function(data, status, headers, config) {
+                        console.log('\nJury autorization');
+                        console.log(data);
+
+                        if (data.login == $scope.login) {
+
+                            $cookieStore.put('authorization', true);
+                            $cookieStore.put('jury', true);
+                            $cookieStore.put('login', data.login);
+                            $cookieStore.put('idJury', data.id_jury);
+
+                        }
+
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.log('Jury autorization Error')
+                    });
+
+            }
+
+            $location.url('/main');
 
         }
     };
@@ -1319,12 +1313,9 @@ artApp.directive('menu', function() {
         restrict: 'E',
         templateUrl: 'template/menu.html',
         controller: function($scope, $rootScope, $cookieStore) {
-                $scope.userName = $rootScope.userName;
-                $scope.admin = $rootScope.admin;
-
-                $scope.exit = function() {
-                    $cookieStore.put('authorization', false);
-                };
+            $scope.exit = function() {
+                $cookieStore.put('authorization', false);
+            };
         }
     }
 });

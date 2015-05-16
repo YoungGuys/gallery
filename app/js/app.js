@@ -55,6 +55,7 @@ artApp.run(function ($rootScope, $location, $cookieStore) {
         }
         else {
             if (!$rootScope.userName) {
+                console.log($rootScope.userName);
 
                 $rootScope.jury = $cookieStore.get('jury');
                 $rootScope.admin = $cookieStore.get('admin');

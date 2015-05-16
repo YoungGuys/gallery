@@ -71,10 +71,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
         })
-        .when('/admin', {
-            templateUrl: 'template/admin.html',
-            controller: 'adminCtrl'
-        })
 
         //page
         .when('/main', {
