@@ -63,7 +63,14 @@ artApp.directive('menu', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/menu.html',
-        controller: 'menuCtrl'
+        controller: function($scope, $rootScope, $cookieStore) {
+                $scope.userName = $rootScope.userName;
+                $scope.admin = $rootScope.admin;
+
+                $scope.exit = function() {
+                    $cookieStore.put('authorization', false);
+                };
+        }
     }
 });
 
@@ -77,13 +84,13 @@ artApp.directive('uploadFile', function() {
 });
 
 
-artApp.directive('modal', function() {
-    return {
-        restrict: 'E',
-        templateUrl: 'template/modal.html',
-        controller: 'uploadFileCtrl'
-    }
-});
+//artApp.directive('modal', function() {
+//    return {
+//        restrict: 'E',
+//        templateUrl: 'template/modal.html',
+//        controller: 'uploadFileCtrl'
+//    }
+//});
 
 
 artApp.directive('jurySelectProject', function() {

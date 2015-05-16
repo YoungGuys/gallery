@@ -1,11 +1,7 @@
 'use strict';
 
-artApp.controller('mainCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
+artApp.controller('mainCtrl',['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
 
-    //$http.get('api/get/projects')
-    //    .success(function(data, status, headers, config) {
-    //        console.log('\nProjects');
-    //        console.log(data);
-    //    })
+
 
 }]);

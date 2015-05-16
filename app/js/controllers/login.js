@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('loginCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
+artApp.controller('loginCtrl',['$scope','$http', '$rootScope', '$cookieStore', '$location', function($scope, $http, $rootScope, $cookieStore, $location) {
 
 
     $scope.autorization = function () {
@@ -19,11 +19,12 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', function($scope, 
 
                     if (data.login == $scope.login) {
 
-                        $rootScope.userName = data.login;
-                        $rootScope.idJury = data.id_jury;
-                        $rootScope.jury = true;
+                        $cookieStore.put('authorization', true);
+                        $cookieStore.put('jury', true);
+                        $cookieStore.put('login', data.login);
+                        $cookieStore.put('idJury', data.id_jury);
 
-                        location.href = '#/main';
+                        $location.url('/main');
 
                     }
 

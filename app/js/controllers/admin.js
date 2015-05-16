@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
+artApp.controller('adminCtrl',['$scope','$rootScope', '$http', '$cookieStore', function($scope, $rootScope, $http, $cookieStore) {
 
 
     $scope.autorization = function () {
@@ -17,9 +17,13 @@ artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, 
                 .success(function(data, status, headers, config) {
                     console.log('\nAdmin autorization');
                     console.log(data);
+
                     if (data) {
-                        $rootScope.admin = true;
-                        $rootScope.userName = 'Admin';
+
+                        $cookieStore.put('authorization', true);
+                        $cookieStore.put('admin', true);
+                        $cookieStore.put('login', 'Admin');
+
                         location.href = '#/main';
                     }
                 })
@@ -30,5 +34,6 @@ artApp.controller('adminCtrl',['$scope','$rootScope', '$http', function($scope, 
         }
 
     };
+
 
 }]);
