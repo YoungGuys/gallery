@@ -300,3 +300,11 @@ html, body {
 .menu-logo img {
     max-width: 106%;
 }
+
+.navbar {
+    min-height: 20px;
+}
+
+.nav > li > a {
+    color: #000;
+}

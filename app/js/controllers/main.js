@@ -1,7 +1,6 @@
 'use strict';
 
-artApp.controller('mainCtrl',['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
-
+artApp.controller('mainCtrl',['$scope','$rootScope', '$cookieStore', function($scope, $rootScope, $cookieStore) {
 
 
 }]);

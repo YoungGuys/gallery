@@ -45,17 +45,19 @@ artApp.config(function (LightboxProvider) {
 });
 
 
-//var app = angular.module('app', []);
 artApp.run(function ($rootScope, $location, $cookieStore) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        //if (next.authenticate) {
+        var url = $location.path().split('/')[1];
+
+        if (url === 'registration') {
+            return false;
+        }
+
         if (!$cookieStore.get('authorization')) {
-            //if (!AuthService.isAuthenticated()) {
                 $location.url("/login");
         }
         else {
             if (!$rootScope.userName) {
-                console.log($rootScope.userName);
 
                 $rootScope.jury = $cookieStore.get('jury');
                 $rootScope.admin = $cookieStore.get('admin');
@@ -66,55 +68,3 @@ artApp.run(function ($rootScope, $location, $cookieStore) {
         }
     });
 });
-//
-//
-//app.factory('AuthService', function ($http, $q, $window, $cookieStore) {
-//    var factory = {};
-//    var loginUrl = 'http://gallery.com/#/login';
-//    var authUrl = 'http://gallery.com/#/login';
-//    var email;
-//    var token;
-//    factory.Authenticate = function (email, password) {
-//        console.log("AuthService -" + email);
-//        var deferred = $q.defer();
-//        var user = {
-//            email: window.btoa(email),
-//            password: window.btoa(password)
-//        };
-//        $http({
-//            method: 'POST',
-//            url: loginUrl,
-//            data: user
-//        }).success(function (data) {
-//            console.log("AuthService - " + data);
-//            token = data.replace('"', '').replace('"', '');
-//            email = user.email;
-//            deferred.resolve(token);
-//            $cookieStore.put('token', token);
-//            $cookieStore.put('email',user.email);
-//        }).error(function () {
-//            deferred.reject();
-//        });
-//        return deferred.promise;
-//    };
-//    factory.Email = email;
-//    factory.Token = token;
-//    factory.isAuthenticated = function () {
-//        var request = $http({
-//            method: 'GET',
-//            url: authUrl,
-//            headers: { 'Authorization': 'Token '+ $cookieStore.get('email') + ":"+ $cookieStore.get('token') }
-//        }).then(function () {
-//                return true;
-//            }
-//            ,function () {
-//                return false;
-//            });
-//    };
-//    return factory;
-//
-//});
-
-
-
-

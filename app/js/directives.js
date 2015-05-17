@@ -63,9 +63,21 @@ artApp.directive('menu', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/menu.html',
-        controller: function($scope, $rootScope, $cookieStore) {
+        controller: function($scope, $rootScope, $location, $cookieStore) {
+
+            var url = $location.path().split('/')[1];
+
+            $scope.page = function (page) {
+                return url == page ? 'active' : '';
+            };
+
             $scope.exit = function() {
                 $cookieStore.put('authorization', false);
+                $cookieStore.put('admin', false);
+
+                //$cookieStore.put('jury', false);
+                //$cookieStore.put('login', false);
+                //$cookieStore.put('idJury', false);
             };
         }
     }

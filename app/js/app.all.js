@@ -45,17 +45,19 @@ artApp.config(function (LightboxProvider) {
 });
 
 
-//var app = angular.module('app', []);
 artApp.run(function ($rootScope, $location, $cookieStore) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        //if (next.authenticate) {
+        var url = $location.path().split('/')[1];
+
+        if (url === 'registration') {
+            return false;
+        }
+
         if (!$cookieStore.get('authorization')) {
-            //if (!AuthService.isAuthenticated()) {
                 $location.url("/login");
         }
         else {
             if (!$rootScope.userName) {
-                console.log($rootScope.userName);
 
                 $rootScope.jury = $cookieStore.get('jury');
                 $rootScope.admin = $cookieStore.get('admin');
@@ -66,58 +68,6 @@ artApp.run(function ($rootScope, $location, $cookieStore) {
         }
     });
 });
-//
-//
-//app.factory('AuthService', function ($http, $q, $window, $cookieStore) {
-//    var factory = {};
-//    var loginUrl = 'http://gallery.com/#/login';
-//    var authUrl = 'http://gallery.com/#/login';
-//    var email;
-//    var token;
-//    factory.Authenticate = function (email, password) {
-//        console.log("AuthService -" + email);
-//        var deferred = $q.defer();
-//        var user = {
-//            email: window.btoa(email),
-//            password: window.btoa(password)
-//        };
-//        $http({
-//            method: 'POST',
-//            url: loginUrl,
-//            data: user
-//        }).success(function (data) {
-//            console.log("AuthService - " + data);
-//            token = data.replace('"', '').replace('"', '');
-//            email = user.email;
-//            deferred.resolve(token);
-//            $cookieStore.put('token', token);
-//            $cookieStore.put('email',user.email);
-//        }).error(function () {
-//            deferred.reject();
-//        });
-//        return deferred.promise;
-//    };
-//    factory.Email = email;
-//    factory.Token = token;
-//    factory.isAuthenticated = function () {
-//        var request = $http({
-//            method: 'GET',
-//            url: authUrl,
-//            headers: { 'Authorization': 'Token '+ $cookieStore.get('email') + ":"+ $cookieStore.get('token') }
-//        }).then(function () {
-//                return true;
-//            }
-//            ,function () {
-//                return false;
-//            });
-//    };
-//    return factory;
-//
-//});
-
-
-
-
 
 'use strict';
 
@@ -789,19 +739,27 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', '$cookieStore', '
                 pass: $scope.pass
             };
 
-            if ($scope.login === 'Admin') {
+            if ($scope.login === 'admin') {
 
                 $http.get('api/get/admin', {params: data} )
                     .success(function(data, status, headers, config) {
                         console.log('\nAdmin autorization');
                         console.log(data);
 
-                        if (data) {
+                        if (data[0].login == 'admin') {
 
                             $cookieStore.put('authorization', true);
                             $cookieStore.put('admin', true);
                             $cookieStore.put('login', 'Admin');
 
+                            $rootScope.admin = true;
+                            $rootScope.userName = 'Admin';
+
+                            $location.url('/main');
+
+                        }
+                        else {
+                            _alert();
                         }
                     });
 
@@ -817,10 +775,20 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', '$cookieStore', '
                         if (data.login == $scope.login) {
 
                             $cookieStore.put('authorization', true);
+                            $cookieStore.put('admin', false);
                             $cookieStore.put('jury', true);
                             $cookieStore.put('login', data.login);
                             $cookieStore.put('idJury', data.id_jury);
 
+                            $rootScope.admin = false;
+                            $rootScope.jury = true;
+                            $rootScope.idJury = data.id_jury
+                            $rootScope.userName = data.login;
+
+                            $location.url('/main');
+                        }
+                        else {
+                            _alert();
                         }
 
                     })
@@ -830,16 +798,22 @@ artApp.controller('loginCtrl',['$scope','$http', '$rootScope', '$cookieStore', '
 
             }
 
-            $location.url('/main');
-
         }
     };
+
+
+    function _alert() {
+        $scope.alert = 'Incorrect login or password';
+
+        setTimeout(function () {
+            $scope.alert = '';
+        }, 2000);
+    }
 
 }]);
 'use strict';
 
-artApp.controller('mainCtrl',['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
-
+artApp.controller('mainCtrl',['$scope','$rootScope', '$cookieStore', function($scope, $rootScope, $cookieStore) {
 
 
 }]);
@@ -1312,9 +1286,21 @@ artApp.directive('menu', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/menu.html',
-        controller: function($scope, $rootScope, $cookieStore) {
+        controller: function($scope, $rootScope, $location, $cookieStore) {
+
+            var url = $location.path().split('/')[1];
+
+            $scope.page = function (page) {
+                return url == page ? 'active' : '';
+            };
+
             $scope.exit = function() {
                 $cookieStore.put('authorization', false);
+                $cookieStore.put('admin', false);
+
+                //$cookieStore.put('jury', false);
+                //$cookieStore.put('login', false);
+                //$cookieStore.put('idJury', false);
             };
         }
     }
