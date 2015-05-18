@@ -1,7 +1,16 @@
 'use strict';
 
 /* App Module */
-var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload', 'ngCookies', 'bootstrapLightbox']);
+var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload', 'ngCookies', 'bootstrapLightbox', 'ngAnimate', 'chieffancypants.loadingBar']);
+
+//artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+//    cfpLoadingBarProvider.latencyThreshold = 500;
+//}]);
+
+artApp.config(function(cfpLoadingBarProvider) {
+    // true is the default, but I left this here as an example:
+    cfpLoadingBarProvider.includeSpinner = true;
+});
 
 artApp.config(function (LightboxProvider) {
     // set a custom template
