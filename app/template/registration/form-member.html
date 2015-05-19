@@ -65,8 +65,7 @@
             <select class="form-control"
                     id="GroupMember1country-{{$index}}"
                     required="required"
-                    ng-model="user.member[$index].country"
-                    ng-change="changeCountry()">
+                    ng-model="user.member[$index].country">
                 <option ng-repeat="countryItem in country"
                         value="{{countryItem}}">
                     {{countryItem}}
@@ -84,9 +83,9 @@
             <select class="form-control"
                     id="GroupMember1region-{{$index}}"
                     required="required"
-                    ng-disabled="!district"
+                    ng-disabled="user.member[$index].country != 'Україна' "
                     ng-model="user.member[$index].district">
-                <option ng-repeat="districtItem in ukraineDistrict"
+                <option ng-repeat="districtItem in ukraineDistrict" 
                         value="{{districtItem}}">
                     {{districtItem}}
                 </option>

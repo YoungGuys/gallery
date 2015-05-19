@@ -4,6 +4,16 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 
     $scope.Lightbox = Lightbox;
 
+    //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
+
+    $scope.options = {
+        width: '100%',
+        height: 400,
+        loop: true,
+        keyboard: true,
+        nav: 'thumbs'
+    };
+
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
@@ -18,6 +28,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     $scope.project = item;
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
+
+                    $scope.project.photos.forEach(function(item, i){
+                        $scope.project.photos[i] = {img: 'images/' + item.src};
+                    });
+
+                    console.log($scope.project);
+
                     return false;
                 }
             });

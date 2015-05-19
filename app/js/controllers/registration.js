@@ -20,9 +20,9 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
 
-    $scope.removeProject = function(){
+    $scope.removeProject = function(i){
         console.log('Remove project');
-        //$scope.projects.push($scope.project);
+        $scope.projects.splice(i, 1);
     };
 
 
@@ -33,7 +33,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
     $scope.removeMember = function(i){
         console.log('Remove member');
-        //$scope.members[i] = null;
+        $scope.members.splice(i, 1);
     };
 
 
@@ -60,22 +60,26 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     });
 
 
-    $scope.changeCountry = function (i) {
-        console.log($scope.user.country);
-        if ($scope.user.country === 'Україна') {
-            $scope.district[i] = true;
+    //$scope.changeCountry = function (i) {
+    //    console.log($scope.user.country);
+    //    if ($scope.user.country === 'Україна') {
+    //        $scope.district[i] = true;
+    //
+    //        $http.get('template/ukraine-district.json').success(function(data){
+    //            $scope.ukraineDistrict = data;
+    //            //console.log($scope.country);
+    //        });
+    //
+    //    }
+    //    else {
+    //        $scope.district = false;
+    //    }
+    //};
 
-            $http.get('template/ukraine-district.json').success(function(data){
-                $scope.ukraineDistrict = data;
-                //console.log($scope.country);
-            });
-
-        }
-        else {
-            $scope.district = false;
-        }
-    };
-
+    $http.get('template/ukraine-district.json').success(function(data){
+            $scope.ukraineDistrict = data;
+            //console.log($scope.country);
+        });
 
     //var arrDay = [];
     //

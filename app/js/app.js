@@ -1,7 +1,16 @@
 'use strict';
 
 /* App Module */
-var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload', 'ngCookies', 'bootstrapLightbox', 'ngAnimate', 'chieffancypants.loadingBar']);
+var artApp = angular.module('artApp',
+    [
+        'ngRoute',
+        'ngFileUpload',
+        'ngCookies',
+        'bootstrapLightbox',
+        'ngAnimate',
+        'chieffancypants.loadingBar',
+        'ap.fotorama'
+    ]);
 
 //artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 //    cfpLoadingBarProvider.latencyThreshold = 500;

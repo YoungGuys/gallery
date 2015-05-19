@@ -1,7 +1,16 @@
 'use strict';
 
 /* App Module */
-var artApp = angular.module('artApp', ['ngRoute', 'ngFileUpload', 'ngCookies', 'bootstrapLightbox', 'ngAnimate', 'chieffancypants.loadingBar']);
+var artApp = angular.module('artApp',
+    [
+        'ngRoute',
+        'ngFileUpload',
+        'ngCookies',
+        'bootstrapLightbox',
+        'ngAnimate',
+        'chieffancypants.loadingBar',
+        'ap.fotorama'
+    ]);
 
 //artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 //    cfpLoadingBarProvider.latencyThreshold = 500;
@@ -873,6 +882,16 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 
     $scope.Lightbox = Lightbox;
 
+    //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
+
+    $scope.options = {
+        width: '100%',
+        height: 400,
+        loop: true,
+        keyboard: true,
+        nav: 'thumbs'
+    };
+
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
@@ -887,6 +906,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     $scope.project = item;
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
+
+                    $scope.project.photos.forEach(function(item, i){
+                        $scope.project.photos[i] = {img: 'images/' + item.src};
+                    });
+
+                    console.log($scope.project);
+
                     return false;
                 }
             });
@@ -996,9 +1022,9 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
 
-    $scope.removeProject = function(){
+    $scope.removeProject = function(i){
         console.log('Remove project');
-        //$scope.projects.push($scope.project);
+        $scope.projects.splice(i, 1);
     };
 
 
@@ -1009,7 +1035,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
     $scope.removeMember = function(i){
         console.log('Remove member');
-        //$scope.members[i] = null;
+        $scope.members.splice(i, 1);
     };
 
 
@@ -1036,22 +1062,26 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     });
 
 
-    $scope.changeCountry = function (i) {
-        console.log($scope.user.country);
-        if ($scope.user.country === 'Україна') {
-            $scope.district[i] = true;
+    //$scope.changeCountry = function (i) {
+    //    console.log($scope.user.country);
+    //    if ($scope.user.country === 'Україна') {
+    //        $scope.district[i] = true;
+    //
+    //        $http.get('template/ukraine-district.json').success(function(data){
+    //            $scope.ukraineDistrict = data;
+    //            //console.log($scope.country);
+    //        });
+    //
+    //    }
+    //    else {
+    //        $scope.district = false;
+    //    }
+    //};
 
-            $http.get('template/ukraine-district.json').success(function(data){
-                $scope.ukraineDistrict = data;
-                //console.log($scope.country);
-            });
-
-        }
-        else {
-            $scope.district = false;
-        }
-    };
-
+    $http.get('template/ukraine-district.json').success(function(data){
+            $scope.ukraineDistrict = data;
+            //console.log($scope.country);
+        });
 
     //var arrDay = [];
     //

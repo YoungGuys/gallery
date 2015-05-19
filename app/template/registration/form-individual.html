@@ -65,7 +65,7 @@
         </label>
 
         <div class="col-sm-8">
-            <select class="form-control" id="country" required="required" ng-model="user.country" ng-change="changeCountry($index)">
+            <select class="form-control" id="country" required="required" ng-model="user.country">
                 <option ng-repeat="countryItem in country" value="{{countryItem}}">{{countryItem}}</option>
             </select>
         </div>
@@ -77,7 +77,10 @@
         </label>
 
         <div class="col-sm-8">
-            <select class="form-control" id="region" required="required" ng-disabled="!district[$index]" ng-model="user.district[$index]">
+            <!--<select class="form-control" id="region" required="required" ng-disabled="!district[$index]" ng-model="user.district[$index]">-->
+                <!--<option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>-->
+            <!--</select>-->
+            <select class="form-control" id="region" required="required" ng-disabled="user.country != 'Україна'" ng-model="user.district">
                 <option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>
             </select>
         </div>
