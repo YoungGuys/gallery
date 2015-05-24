@@ -27,26 +27,6 @@
         <div class="col-sm-3">
             <input type="date" class="form-control" id="BidthDay"  ng-model="user.bidthDay"/>
         </div>
-        <!--<div class="col-sm-2">-->
-        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
-        <!--<select class="form-control" id="BidthDay" required="required">-->
-        <!--<option ng-repeat="day in arrayDay" value="{{day}}">{{day}}</option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--<div class="col-sm-4">-->
-        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
-        <!--<select class="form-control" id="BidthDay" required="required">-->
-        <!--<option></option>-->
-        <!--<option ng-repeat="month in arrayMonth track by $index" value="{{$index}}">{{month}}</option>-->
-        <!--</select>-->
-        <!--</div>-->
-        <!--<div class="col-sm-2">-->
-        <!--&lt;!&ndash; add class="tcal" to your input field &ndash;&gt;-->
-        <!--<select class="form-control" id="BidthDay" required="required">-->
-        <!--<option></option>-->
-        <!--<option ng-repeat="year in arrayYear" value="{{year}}">{{year}}</option>-->
-        <!--</select>-->
-        <!--</div>-->
     </div>
 
     <div class="form-group">
@@ -65,8 +45,11 @@
         </label>
 
         <div class="col-sm-8">
-            <select class="form-control" id="country" required="required" ng-model="user.country">
-                <option ng-repeat="countryItem in country" value="{{countryItem}}">{{countryItem}}</option>
+            <select class="form-control"
+                    id="country"
+                    required="required"
+                    ng-model="user.country"
+                    ng-options="countryItem for countryItem in country track by countryItem">
             </select>
         </div>
     </div>
@@ -77,11 +60,12 @@
         </label>
 
         <div class="col-sm-8">
-            <!--<select class="form-control" id="region" required="required" ng-disabled="!district[$index]" ng-model="user.district[$index]">-->
-                <!--<option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>-->
-            <!--</select>-->
-            <select class="form-control" id="region" required="required" ng-disabled="user.country != 'Україна'" ng-model="user.district">
-                <option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>
+            <select class="form-control"
+                    id="region"
+                    required="required"
+                    ng-disabled="user.country != 'Україна'"
+                    ng-model="user.district"
+                    ng-options="districtItem for districtItem in ukraineDistrict track by districtItem">
             </select>
         </div>
     </div>

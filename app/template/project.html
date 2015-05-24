@@ -27,7 +27,14 @@
 
                 <hr/>
 
-                <div ap-fotorama="options" ng-model="project.photos">
+                <!--<div ap-fotorama="fotoramaoptions" ng-model="project.photos">-->
+                <!--<ui-fancybox ng-model="project.photos"></ui-fancybox>-->
+                <div class="fotorama">
+                    <img fotorama-img
+                         ng-repeat="photo in photos"
+                         ng-src="images/img/{{photo.src}}"
+                         alt="project-photo"/>
+                </div>
 
                 <hr>
 

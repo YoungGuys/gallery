@@ -93,19 +93,34 @@ artApp.directive('uploadFile', function() {
 });
 
 
-//artApp.directive('modal', function() {
-//    return {
-//        restrict: 'E',
-//        templateUrl: 'template/modal.html',
-//        controller: 'uploadFileCtrl'
-//    }
-//});
-
-
 artApp.directive('jurySelectProject', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/jury-select-project.html',
         controller: 'homeCtrl'
+    }
+});
+
+
+artApp.directive('fotoramaImg', function () {
+    return {
+        link: function(scope, element, attrs) {
+            if (scope.$last) {
+                setTimeout(function(){
+                    $('.fotorama')
+                        .on('fotorama:ready', function (e, fotorama) {
+                            fotorama.show();
+                        })
+                        .fotorama({
+                            width: '100%',
+                            height: 400,
+                            loop: true,
+                            keyboard: true,
+                            nav: 'thumbs',
+                            allowfullscreen: true
+                        });
+                });
+            }
+        }
     }
 });

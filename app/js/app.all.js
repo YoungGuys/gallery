@@ -15,6 +15,40 @@ var artApp = angular.module('artApp',
 //artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 //    cfpLoadingBarProvider.latencyThreshold = 500;
 //}]);
+angular.module('ui.fancybox', [])
+    .value('uiFancyboxConfig', {
+        helpers: {
+            title: {
+                type: 'inside'
+            }
+        },
+        openEffect	: 'none',
+        closeEffect	: 'none',
+        fancyboxGroup: 'group'
+    })
+    .directive('uiFancybox', ['uiFancyboxConfig', function (uiFancyboxConfig) {
+
+        return {
+            link: function(scope, element, attrs) {
+
+                var opts = {};
+
+                angular.extend(opts, uiFancyboxConfig);
+
+                if (opts.fancyboxGroup) element.attr('data-fancybox-group', opts.fancyboxGroup);
+
+                //scope.$watch(attrs.oiFile, function (newVal, oldVal) {
+                //    opts = angular.extend({}, uiFancyboxConfig, newVal);
+                //}, true);
+
+                //Ïðèâÿçûâàåì ëàéòáîêñ ê ýëåìåíòó
+                element.fancybox(opts);
+
+            }
+        };
+    }]);
+
+
 
 artApp.config(function(cfpLoadingBarProvider) {
     // true is the default, but I left this here as an example:
@@ -96,10 +130,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     //});
 
     $routeProvider
-        .when('/', {
-            templateUrl: 'template/main.html',
-            controller: 'loginCtrl'
-        })
+        //.when('/', {
+        //    templateUrl: 'template/main.html',
+        //    controller: 'loginCtrl'
+        //})
 
         //artist
         .when('/artist/:id', {
@@ -181,7 +215,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         })
 
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/main'
         });
 
     //$locationProvider.html5Mode(true);
@@ -878,19 +912,12 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 }]);
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', 'Lightbox', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
 
-    $scope.Lightbox = Lightbox;
+    //$scope.Lightbox = Lightbox;
 
     //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
 
-    $scope.options = {
-        width: '100%',
-        height: 400,
-        loop: true,
-        keyboard: true,
-        nav: 'thumbs'
-    };
 
 
     $http.get('api/get/projects')
@@ -907,11 +934,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
 
-                    $scope.project.photos.forEach(function(item, i){
-                        $scope.project.photos[i] = {img: 'images/' + item.src};
-                    });
-
-                    console.log($scope.project);
+                    $scope.photos = $scope.project.photos; //fotorama directive
 
                     return false;
                 }
@@ -1022,9 +1045,16 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
 
-    $scope.removeProject = function(i){
+    $scope.removeProject = function(index){
         console.log('Remove project');
-        $scope.projects.splice(i, 1);
+        console.log(index);
+
+        console.log($scope.projects);
+        for (var i = index; i < $scope.projects.length - 1; i++) {
+            $scope.projects[i] = $scope.projects[i + 1]
+        }
+
+        $scope.projects.splice($scope.projects.length - 1, 1);
     };
 
 
@@ -1355,20 +1385,35 @@ artApp.directive('uploadFile', function() {
 });
 
 
-//artApp.directive('modal', function() {
-//    return {
-//        restrict: 'E',
-//        templateUrl: 'template/modal.html',
-//        controller: 'uploadFileCtrl'
-//    }
-//});
-
-
 artApp.directive('jurySelectProject', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/jury-select-project.html',
         controller: 'homeCtrl'
+    }
+});
+
+
+artApp.directive('fotoramaImg', function () {
+    return {
+        link: function(scope, element, attrs) {
+            if (scope.$last) {
+                setTimeout(function(){
+                    $('.fotorama')
+                        .on('fotorama:ready', function (e, fotorama) {
+                            fotorama.show();
+                        })
+                        .fotorama({
+                            width: '100%',
+                            height: 400,
+                            loop: true,
+                            keyboard: true,
+                            nav: 'thumbs',
+                            allowfullscreen: true
+                        });
+                });
+            }
+        }
     }
 });
 'use strict';

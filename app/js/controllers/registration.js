@@ -20,9 +20,16 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
 
-    $scope.removeProject = function(i){
+    $scope.removeProject = function(index){
         console.log('Remove project');
-        $scope.projects.splice(i, 1);
+        console.log(index);
+
+        console.log($scope.projects);
+        for (var i = index; i < $scope.projects.length - 1; i++) {
+            $scope.projects[i] = $scope.projects[i + 1]
+        }
+
+        $scope.projects.splice($scope.projects.length - 1, 1);
     };
 
 

@@ -10,8 +10,7 @@
                 Робота / Проект {{$index + 1}}:
                 <button class="btn btn-danger btn-sm pull-right glyphicon glyphicon-remove"
                         ng-if="$index > 0"
-                        ng-click="removeProject($index)"
-                        ></button>
+                        ng-click="removeProject($index)"></button>
             </h4>
 
             <div class="form-group">
@@ -66,13 +65,16 @@
             </div>
 
             <div class="form-group">
-                <label for="Project1TypeOfWork" class="col-sm-4 control-label">
+                <label for="Project1TypeOfWork-{{$index}}" class="col-sm-4 control-label">
                     Тип роботи<span class="needs">*</span>
                 </label>
 
                 <div class="col-sm-8">
-                    <select class="form-control" id="Project1TypeOfWork" required="required" ng-model="user.project[$index].type">
-                        <option ng-repeat="type in types" value="{{type}}">{{type}}</option>
+                    <select class="form-control"
+                            id="Project1TypeOfWork-{{$index}}"
+                            required="required"
+                            ng-model="user.project[$index].type"
+                            ng-options="type for type in types track by type">
                     </select>
                 </div>
             </div>
@@ -82,11 +84,9 @@
 
                 <div class="col-sm-5">
                     <div class="form-inline">
-                        <!--<label for="Project1InputFoto1" class="col-sm-1">1.</label>-->
                         <input type="file" ng-model="user.project[$index].file1">
                     </div>
                     <div class="form-inline">
-                        <!--<label for="Project1InputFoto2" class="col-sm-1">2.</label>-->
                         <input type="file" ng-model="user.project[$index].file2">
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                                ng-model="user.project[$index].video1">
                     </label>
 
-                    <label for="Project1InputVideo2-{{$index}}" class="col-xs-5">
+                    <label for="Project1InputVideo2-{{$index}}" class="col-xs-5 col-xs-offset-1">
                         <input id="Project1InputVideo2-{{$index}}"
                                class="form-control pull-left"
                                type="text"

@@ -15,6 +15,40 @@ var artApp = angular.module('artApp',
 //artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
 //    cfpLoadingBarProvider.latencyThreshold = 500;
 //}]);
+angular.module('ui.fancybox', [])
+    .value('uiFancyboxConfig', {
+        helpers: {
+            title: {
+                type: 'inside'
+            }
+        },
+        openEffect	: 'none',
+        closeEffect	: 'none',
+        fancyboxGroup: 'group'
+    })
+    .directive('uiFancybox', ['uiFancyboxConfig', function (uiFancyboxConfig) {
+
+        return {
+            link: function(scope, element, attrs) {
+
+                var opts = {};
+
+                angular.extend(opts, uiFancyboxConfig);
+
+                if (opts.fancyboxGroup) element.attr('data-fancybox-group', opts.fancyboxGroup);
+
+                //scope.$watch(attrs.oiFile, function (newVal, oldVal) {
+                //    opts = angular.extend({}, uiFancyboxConfig, newVal);
+                //}, true);
+
+                //Ïðèâÿçûâàåì ëàéòáîêñ ê ýëåìåíòó
+                element.fancybox(opts);
+
+            }
+        };
+    }]);
+
+
 
 artApp.config(function(cfpLoadingBarProvider) {
     // true is the default, but I left this here as an example:

@@ -7,10 +7,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     //});
 
     $routeProvider
-        .when('/', {
-            templateUrl: 'template/main.html',
-            controller: 'loginCtrl'
-        })
+        //.when('/', {
+        //    templateUrl: 'template/main.html',
+        //    controller: 'loginCtrl'
+        //})
 
         //artist
         .when('/artist/:id', {
@@ -92,7 +92,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         })
 
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/main'
         });
 
     //$locationProvider.html5Mode(true);

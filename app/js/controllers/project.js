@@ -1,18 +1,11 @@
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', 'Lightbox', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
 
-    $scope.Lightbox = Lightbox;
+    //$scope.Lightbox = Lightbox;
 
     //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
 
-    $scope.options = {
-        width: '100%',
-        height: 400,
-        loop: true,
-        keyboard: true,
-        nav: 'thumbs'
-    };
 
 
     $http.get('api/get/projects')
@@ -29,11 +22,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
 
-                    $scope.project.photos.forEach(function(item, i){
-                        $scope.project.photos[i] = {img: 'images/' + item.src};
-                    });
-
-                    console.log($scope.project);
+                    $scope.photos = $scope.project.photos; //fotorama directive
 
                     return false;
                 }
