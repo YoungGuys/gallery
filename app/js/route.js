@@ -30,20 +30,20 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'editArtistCtrl'
         })
 
-        //jury
-        .when('/add-jury', {
+        //expert
+        .when('/add-expert', {
             templateUrl: 'template/add-jury.html',
             controller: 'addJuryCtrl'
         })
-        .when('/edit-jury/:id', {
+        .when('/edit-expert/:id', {
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
         })
-        .when('/jury-list', {
+        .when('/expert-list', {
             templateUrl: 'template/jury-list.html',
             controller: 'juryListCtrl'
         })
-        .when('/jury-selected/:id', {
+        .when('/expert-selected/:id', {
             templateUrl: 'template/jury-selected.html'
             //controller: 'jurySelectedCtrl'
         })

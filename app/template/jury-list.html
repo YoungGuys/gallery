@@ -8,7 +8,7 @@
                 <menu></menu>
 
 
-                <h3 class="page-header">List of all jury:</h3>
+                <h3 class="page-header">List of all experts:</h3>
 
                 <table class="table table-striped">
                     <thead>
@@ -23,12 +23,12 @@
                                 <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
                             </td>
                             <td>
-                                <a href="#/jury-selected/{{j.id_jury}}">
+                                <a href="#/expert-selected/{{j.id_jury}}">
                                     {{j.fio}}
                                 </a>
                             </td>
                             <td width="55" ng-if="admin">
-                                <a href="#/edit-jury/{{j.id_jury}}" class="btn btn-success">
+                                <a href="#/edit-expert/{{j.id_jury}}" class="btn btn-success">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit
                                 </a>
                             </td>
