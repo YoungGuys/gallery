@@ -6,48 +6,9 @@ var artApp = angular.module('artApp',
         'ngRoute',
         'ngFileUpload',
         'ngCookies',
-        'bootstrapLightbox',
         'ngAnimate',
-        'chieffancypants.loadingBar',
-        'ap.fotorama'
+        'chieffancypants.loadingBar'
     ]);
-
-//artApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-//    cfpLoadingBarProvider.latencyThreshold = 500;
-//}]);
-angular.module('ui.fancybox', [])
-    .value('uiFancyboxConfig', {
-        helpers: {
-            title: {
-                type: 'inside'
-            }
-        },
-        openEffect	: 'none',
-        closeEffect	: 'none',
-        fancyboxGroup: 'group'
-    })
-    .directive('uiFancybox', ['uiFancyboxConfig', function (uiFancyboxConfig) {
-
-        return {
-            link: function(scope, element, attrs) {
-
-                var opts = {};
-
-                angular.extend(opts, uiFancyboxConfig);
-
-                if (opts.fancyboxGroup) element.attr('data-fancybox-group', opts.fancyboxGroup);
-
-                //scope.$watch(attrs.oiFile, function (newVal, oldVal) {
-                //    opts = angular.extend({}, uiFancyboxConfig, newVal);
-                //}, true);
-
-                //Ïðèâÿçûâàåì ëàéòáîêñ ê ýëåìåíòó
-                element.fancybox(opts);
-
-            }
-        };
-    }]);
-
 
 
 artApp.config(function(cfpLoadingBarProvider) {
@@ -55,46 +16,47 @@ artApp.config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
 });
 
-artApp.config(function (LightboxProvider) {
-    // set a custom template
-    LightboxProvider.templateUrl = 'template/modal.html';
-
-    // our images array is not in the default format, so we have to write this
-    // custom method
-    LightboxProvider.getImageUrl = function (imageUrl) {
-        return 'images/img/' + imageUrl.src;
-    };
-
-    // set the caption of each image as its text color
-    //LightboxProvider.getImageCaption = function (imageUrl) {
-    //    return '#' + imageUrl.src.match(/00\/(\w+)/)[1];
-    //};
-
-    // increase the maximum display height of the image
-    LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
-        return {
-            'maxWidth': dimensions.windowWidth >= 768 ? // default
-            dimensions.windowWidth - 92 :
-            dimensions.windowWidth - 52,
-            'maxHeight': 1600                           // custom
-        };
-    };
-
-    // the modal height calculation has to be changed since our custom template is
-    // taller than the default template
-    LightboxProvider.calculateModalDimensions = function (dimensions) {
-        var width = Math.max(400, dimensions.imageDisplayWidth + 32);
-
-        if (width >= dimensions.windowWidth - 20 || dimensions.windowWidth < 768) {
-            width = 'auto';
-        }
-
-        return {
-            'width': width,                             // default
-            'height': 'auto'                            // custom
-        };
-    };
-});
+//
+//artApp.config(function (LightboxProvider) {
+//    // set a custom template
+//    LightboxProvider.templateUrl = 'template/modal.html';
+//
+//    // our images array is not in the default format, so we have to write this
+//    // custom method
+//    LightboxProvider.getImageUrl = function (imageUrl) {
+//        return 'images/img/' + imageUrl.src;
+//    };
+//
+//    // set the caption of each image as its text color
+//    //LightboxProvider.getImageCaption = function (imageUrl) {
+//    //    return '#' + imageUrl.src.match(/00\/(\w+)/)[1];
+//    //};
+//
+//    // increase the maximum display height of the image
+//    LightboxProvider.calculateImageDimensionLimits = function (dimensions) {
+//        return {
+//            'maxWidth': dimensions.windowWidth >= 768 ? // default
+//            dimensions.windowWidth - 92 :
+//            dimensions.windowWidth - 52,
+//            'maxHeight': 1600                           // custom
+//        };
+//    };
+//
+//    // the modal height calculation has to be changed since our custom template is
+//    // taller than the default template
+//    LightboxProvider.calculateModalDimensions = function (dimensions) {
+//        var width = Math.max(400, dimensions.imageDisplayWidth + 32);
+//
+//        if (width >= dimensions.windowWidth - 20 || dimensions.windowWidth < 768) {
+//            width = 'auto';
+//        }
+//
+//        return {
+//            'width': width,                             // default
+//            'height': 'auto'                            // custom
+//        };
+//    };
+//});
 
 
 artApp.run(function ($rootScope, $location, $cookieStore) {
@@ -218,7 +180,6 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             redirectTo: '/main'
         });
 
-    //$locationProvider.html5Mode(true);
 }]);
 'use strict';
 
@@ -385,9 +346,7 @@ artApp.controller('artistListCtrl',['$scope','$http', function($scope, $http) {
 }]);
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', 'Lightbox', function($scope, $rootScope, $http, $routeParams, Lightbox) {
-
-    $scope.Lightbox = Lightbox;
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
     $scope.isSet = function(checkTab) {
         return $scope.tab === checkTab;
@@ -421,6 +380,8 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             }
 
             $scope.projects = data;
+
+            if ($scope.projects.length > 0) $scope.btnVisible = true;
 
         });
 
@@ -912,12 +873,7 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 }]);
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
-
-    //$scope.Lightbox = Lightbox;
-
-    //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
-
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location) {
 
 
     $http.get('api/get/projects')

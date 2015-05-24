@@ -1,11 +1,6 @@
 'use strict';
 
-artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location, Lightbox) {
-
-    //$scope.Lightbox = Lightbox;
-
-    //$scope.items = [{img: 'iurl', thumb: 'turl', full: 'furl'}, {...}, ...]; //Model
-
+artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location) {
 
 
     $http.get('api/get/projects')

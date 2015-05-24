@@ -63,7 +63,7 @@
 
 
                 <ul class="project-list">
-                    <li ng-repeat="project in projects" ng-show="isSet($index)">
+                    <li ng-repeat="project in projects" ng-if="isSet($index)">
                         <h3 class="page-header">Project: "{{project.title_eng}}"</h3>
 
                         <p class="page-header">Project description:</p>
@@ -72,24 +72,23 @@
                             {{project.description_eng}}
                         </div>
 
-                        <hr>
+                        <hr/>
 
-                        <ul class="row img-preview project-list__images">
-                            <li class="col-xs-6 col-md-4 img-preview__item"
-                                ng-repeat="photo in project.photos track by $index">
-                                <a class="thumbnail" ng-click="Lightbox.openModal(project.photos, $index)">
-                                    <img ng-src="images/img/{{photo.src}}" alt="project-photo">
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="fotorama">
+                            <img fotorama-img
+                                 ng-repeat="photo in project.photos"
+                                 ng-src="images/img/{{photo.src}}"
+                                 alt="project-photo"/>
+                        </div>
 
-                        <hr>
+                        <hr/>
 
                         <nav>
                             <ul class="pager">
                                 <li class="previous">
-                                    <a ng-if="$index > 0"
-                                       ng-click="setTab(project.prevProject)" href="">
+                                    <a ng-if="btnVisible"
+                                       ng-click="setTab(project.prevProject)"
+                                       href="">
                                         <span aria-hidden="true">&larr;</span>
                                         Previous project the artist
                                     </a>
@@ -103,8 +102,9 @@
                                     </button>
                                 </li>
                                 <li class="next">
-                                    <a ng-if="$index > 0"
-                                       ng-click="setTab(project.nextProject)" href="">
+                                    <a ng-if="btnVisible"
+                                       ng-click="setTab(project.nextProject)"
+                                       href="">
                                         The next project of the artist
                                         <span aria-hidden="true">&rarr;</span>
                                     </a>

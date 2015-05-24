@@ -14,21 +14,8 @@
                     {{project.description_eng}}
                 </div>
 
-                <hr>
-
-                <ul class="row img-preview project-list__images">
-                    <li class="col-xs-6 col-md-4 img-preview__item"
-                        ng-repeat="photo in project.photos track by $index">
-                        <a class="thumbnail" ng-click="Lightbox.openModal(project.photos, $index)">
-                            <img ng-src="images/img/{{photo.src}}" alt="project-photo">
-                        </a>
-                    </li>
-                </ul>
-
                 <hr/>
 
-                <!--<div ap-fotorama="fotoramaoptions" ng-model="project.photos">-->
-                <!--<ui-fancybox ng-model="project.photos"></ui-fancybox>-->
                 <div class="fotorama">
                     <img fotorama-img
                          ng-repeat="photo in photos"

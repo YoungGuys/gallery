@@ -95,5 +95,4 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             redirectTo: '/main'
         });
 
-    //$locationProvider.html5Mode(true);
 }]);

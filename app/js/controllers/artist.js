@@ -1,8 +1,6 @@
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', 'Lightbox', function($scope, $rootScope, $http, $routeParams, Lightbox) {
-
-    $scope.Lightbox = Lightbox;
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
     $scope.isSet = function(checkTab) {
         return $scope.tab === checkTab;
@@ -36,6 +34,8 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             }
 
             $scope.projects = data;
+
+            if ($scope.projects.length > 0) $scope.btnVisible = true;
 
         });
 
