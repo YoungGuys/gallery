@@ -34,8 +34,9 @@
                             </a>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-danger"
-                                    ng-if="jury"
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    ng-if="!admin"
                                     ng-disabled="rate"
                                     ng-click="chooseProject(project.id_project)">
                                 <span class="glyphicon glyphicon-heart"> </span> Choose project

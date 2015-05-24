@@ -381,7 +381,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
             $scope.projects = data;
 
-            if ($scope.projects.length > 0) $scope.btnVisible = true;
+            if ($scope.projects.length > 1) $scope.btnVisible = true;
 
         });
 
@@ -463,11 +463,10 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
             console.log(data);
 
             $scope.painter = data;
-            $scope.photo = data.photo;
+            $scope.photo = [];
+            $scope.photo[0] = data.photo;
 
         });
-
-
 
 
     $scope.updatePainter = function () {
@@ -478,7 +477,7 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
                 id_user: $routeParams.id,
                 fio:     $scope.painter.fio_eng,
                 bio:     $scope.painter.bio,
-                photo:   $scope.photo
+                photo:   $scope.photo[0]
             };
 
             console.log(data);
@@ -495,10 +494,10 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
     };
 
 
-    $scope.removePhoto = function () {
-        $scope.photo = null;
-        $scope.files = null;
-    };
+    //$scope.removePhoto = function () {
+    //    $scope.photo = null;
+    //    $scope.files = null;
+    //};
 
 }]);
 'use strict';
@@ -516,9 +515,9 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
                 if (data[i].id_jury == $routeParams.id) {
                     $scope.data = data[i];
                     $scope.data.pass = null;
-                    $scope.photo = $scope.data.photo;
-                    //$scope.files = [];
-                    //$scope.files[0] = $scope.data.photo;
+                    $scope.photo[0] = [];
+                    $scope.photo[0] = $scope.data.photo;
+
                     console.log($scope.data);
                 }
             }
@@ -596,14 +595,14 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             console.log('\nProject id = ' + $routeParams.id);
             console.log(data);
 
-            //data.forEach(function(item, i){
-            //    if ( item.id_project == $routeParams.id ) {
-                    $scope.project = data.project;
-                    $scope.project.id_user = data.statement.id_user;
-                    //$scope.photo = data.statement.photo;
-                    //return false;
-                //}
-            //});
+            $scope.project = data.project;
+            $scope.project.id_user = data.statement.id_user;
+
+            $scope.photo = [];
+
+            data.photos.forEach(function(item, i){
+                $scope.photo[i] = item.src
+            });
 
         });
 
@@ -881,9 +880,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             console.log('\nAll project');
             console.log(data);
 
-            //$scope.data = data;
-            //dataPage(data, $routeParams.id);
-
             data.forEach(function(item, i){
                 if ( item.id_project ==  $routeParams.id) {
                     $scope.project = item;
@@ -895,7 +891,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     return false;
                 }
             });
-            //console.log($scope.project);
 
         });
 
@@ -907,19 +902,14 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
     //    dataPage($scope.data, id)
     };
 
-
-    //function dataPage (data, id) {
-
-    //}
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
             console.log('\nAll jury');
             console.log(data);
 
-            //for (var i = 0; i < data.length; i++) {
             for (var i in data) {
                 if (data[i].login == $rootScope.userName) {
-                    data[i].projects.forEach(function(item, i){
+                    data[i].projects.forEach(function(item){
                         if (item.id_project == $routeParams.id) {
                             $scope.rate = true;
                             console.log($scope.rate);
@@ -943,6 +933,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add rating');
                 console.log(data);
+                if (data) $scope.rate = true;
             })
             .error(function(data, status, headers, config) {
                 console.log('Answer add rating "Error"');
@@ -1216,6 +1207,10 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
 artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 
+    if (!$scope.photo) {
+        $scope.photo = [];
+    }
+
     $scope.$watch('files', function () {
         $scope.upload($scope.files);
     });
@@ -1223,12 +1218,12 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
     $scope.log = '';
 
 
-    $scope.deleteImg = function (index) {
-        $scope.files.splice(index, 1);
+    $scope.deleteImg = function(index) {
+        $scope.photo.splice(index, 1);
     };
 
 
-    $scope.upload = function (files) {
+    $scope.upload = function(files) {
 
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
@@ -1251,19 +1246,14 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     evt.config.file.name + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
-                    $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
+                    //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
-
-                    if (files.length == 1 && !$scope.multipleUpload) {
-                        $scope.photo = files[0].name;
+                    if (!$scope.multipleUpload) {
+                        $scope.photo[0] = files[0].name;
                     }
                     else {
-                        $scope.photo = [];
-                        for (var i = 0; i < files.length; i++) {
-                            $scope.photo[i] = files[i].name;
-                        }
+                        $scope.photo.push(config.file.name);
                     }
-
 
                 });
             }

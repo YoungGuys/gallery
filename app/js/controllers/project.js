@@ -8,9 +8,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             console.log('\nAll project');
             console.log(data);
 
-            //$scope.data = data;
-            //dataPage(data, $routeParams.id);
-
             data.forEach(function(item, i){
                 if ( item.id_project ==  $routeParams.id) {
                     $scope.project = item;
@@ -22,7 +19,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                     return false;
                 }
             });
-            //console.log($scope.project);
 
         });
 
@@ -34,19 +30,14 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
     //    dataPage($scope.data, id)
     };
 
-
-    //function dataPage (data, id) {
-
-    //}
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
             console.log('\nAll jury');
             console.log(data);
 
-            //for (var i = 0; i < data.length; i++) {
             for (var i in data) {
                 if (data[i].login == $rootScope.userName) {
-                    data[i].projects.forEach(function(item, i){
+                    data[i].projects.forEach(function(item){
                         if (item.id_project == $routeParams.id) {
                             $scope.rate = true;
                             console.log($scope.rate);
@@ -70,6 +61,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add rating');
                 console.log(data);
+                if (data) $scope.rate = true;
             })
             .error(function(data, status, headers, config) {
                 console.log('Answer add rating "Error"');

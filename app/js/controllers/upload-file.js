@@ -3,6 +3,10 @@
 
 artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 
+    if (!$scope.photo) {
+        $scope.photo = [];
+    }
+
     $scope.$watch('files', function () {
         $scope.upload($scope.files);
     });
@@ -10,12 +14,12 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
     $scope.log = '';
 
 
-    $scope.deleteImg = function (index) {
-        $scope.files.splice(index, 1);
+    $scope.deleteImg = function(index) {
+        $scope.photo.splice(index, 1);
     };
 
 
-    $scope.upload = function (files) {
+    $scope.upload = function(files) {
 
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
@@ -38,19 +42,14 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     evt.config.file.name + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
-                    $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
+                    //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
-
-                    if (files.length == 1 && !$scope.multipleUpload) {
-                        $scope.photo = files[0].name;
+                    if (!$scope.multipleUpload) {
+                        $scope.photo[0] = files[0].name;
                     }
                     else {
-                        $scope.photo = [];
-                        for (var i = 0; i < files.length; i++) {
-                            $scope.photo[i] = files[i].name;
-                        }
+                        $scope.photo.push(config.file.name);
                     }
-
 
                 });
             }

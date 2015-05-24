@@ -16,11 +16,10 @@
     <br/>
 
     <ul class="row img-preview">
-        <li class="col-xs-6 col-md-4 img-preview__item" ng-repeat="f in files track by $index">
+        <li class="col-xs-6 col-md-4 img-preview__item" ng-repeat="p in photo track by $index">
             <figure class="thumbnail" ng-click="deleteImg($index)">
-                <img ngf-thumbnail="files[$index]" ng-src="images/no-photo-project.png" class="thumb">
-
-                <p>{{f.name}}</p>
+                <img ng-src="images/img/{{p}}" class="thumb">
+                <p>{{p.name}}</p>
             </figure>
         </li>
     </ul>

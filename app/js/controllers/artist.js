@@ -35,7 +35,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
             $scope.projects = data;
 
-            if ($scope.projects.length > 0) $scope.btnVisible = true;
+            if ($scope.projects.length > 1) $scope.btnVisible = true;
 
         });
 

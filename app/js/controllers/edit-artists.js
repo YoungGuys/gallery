@@ -9,11 +9,10 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
             console.log(data);
 
             $scope.painter = data;
-            $scope.photo = data.photo;
+            $scope.photo = [];
+            $scope.photo[0] = data.photo;
 
         });
-
-
 
 
     $scope.updatePainter = function () {
@@ -24,7 +23,7 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
                 id_user: $routeParams.id,
                 fio:     $scope.painter.fio_eng,
                 bio:     $scope.painter.bio,
-                photo:   $scope.photo
+                photo:   $scope.photo[0]
             };
 
             console.log(data);
@@ -41,9 +40,9 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
     };
 
 
-    $scope.removePhoto = function () {
-        $scope.photo = null;
-        $scope.files = null;
-    };
+    //$scope.removePhoto = function () {
+    //    $scope.photo = null;
+    //    $scope.files = null;
+    //};
 
 }]);

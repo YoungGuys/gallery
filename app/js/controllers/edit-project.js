@@ -21,14 +21,14 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             console.log('\nProject id = ' + $routeParams.id);
             console.log(data);
 
-            //data.forEach(function(item, i){
-            //    if ( item.id_project == $routeParams.id ) {
-                    $scope.project = data.project;
-                    $scope.project.id_user = data.statement.id_user;
-                    //$scope.photo = data.statement.photo;
-                    //return false;
-                //}
-            //});
+            $scope.project = data.project;
+            $scope.project.id_user = data.statement.id_user;
+
+            $scope.photo = [];
+
+            data.photos.forEach(function(item, i){
+                $scope.photo[i] = item.src
+            });
 
         });
 

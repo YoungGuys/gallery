@@ -13,9 +13,9 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
                 if (data[i].id_jury == $routeParams.id) {
                     $scope.data = data[i];
                     $scope.data.pass = null;
-                    $scope.photo = $scope.data.photo;
-                    //$scope.files = [];
-                    //$scope.files[0] = $scope.data.photo;
+                    $scope.photo[0] = [];
+                    $scope.photo[0] = $scope.data.photo;
+
                     console.log($scope.data);
                 }
             }
