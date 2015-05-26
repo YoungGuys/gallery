@@ -1229,6 +1229,23 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
 
+                var y = new Date().getFullYear();
+                var m = new Date().getMonth() + 1;
+                var d = new Date().getDate();
+                var r = Math.round(Math.random() * 100);
+                var date = y + '-' + m + '-' + d;
+
+                var fileNameArray = file.name.split('.');
+                var fileType = fileNameArray[fileNameArray.length - 1];
+
+                var fileName = '';
+
+                for (var k = 0; k < fileNameArray.length - 1; k++) {
+                    fileName+= fileNameArray[k];
+                }
+
+                file.fileName = fileName + '-' + date + '-' + r + '.' + fileType;
+
                 Upload.upload({
                     //fields: {
                     //    'username': 12
@@ -1237,7 +1254,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,
-                    file: file,
+                    file: file
 
                 }).progress(function (evt) {
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
