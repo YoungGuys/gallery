@@ -85,7 +85,7 @@ class Api {
     }
 
     public function get_projects() {
-        $sql = "SELECT p.*, s.*, pp.*, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project) AS rate FROM `projects` as p
+        $sql = "SELECT p.*, s.*, pp.*, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project AND `rating`.repeat_vote = 0) AS rate FROM `projects` as p
             LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
             LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project ";
         $result = $this->db->send_query($sql);
@@ -105,6 +105,7 @@ class Api {
             $val['photos'] = $arr[$val['id_project']];
             $result[] = $val;
         }
+        var_dump($result);
         $this->result = $result;
     }
 
@@ -173,7 +174,7 @@ class Api {
         $sql = "SELECT * FROM `projects` as p
           LEFT JOIN `statements` as s ON p.`id_statement` = s.id_statement
           LEFT JOIN `rating` as r ON r.id_project = p.id_project
-          WHERE r.id_jury = $my_id";
+          WHERE r.id_jury = $my_id AND r.repeat_vote = 0";
         $this->result = $this->db->send_query($sql);
     }
 
@@ -187,6 +188,18 @@ class Api {
         else {
             $this->result = false;
         }
+    }
+
+    public function get_myRepeatProject()
+    {
+        $my_id = $_COOKIE['id'];
+        //echo $my_id;
+        //$my_id = 1;
+        $sql = "SELECT * FROM `projects` as p
+          LEFT JOIN `statements` as s ON p.`id_statement` = s.id_statement
+          LEFT JOIN `rating` as r ON r.id_project = p.id_project
+          WHERE r.id_jury = $my_id AND r.repeat_vote = 1";
+        $this->result = $this->db->send_query($sql);
     }
 
     public function post_addJury() {
@@ -525,6 +538,45 @@ class Api {
             }
         }
     }
+
+    public function put_setRepeat()
+    {
+        $id_project = $_GET['id_project'];
+        $array = explode(",", $id_project);
+        if ($array[1]) {
+            foreach ($array as $key => $value) {
+                $this->db->update("rating", ["repeat_vote" => 1], ['id_project' => $value]);
+            }
+        }
+        else {
+            $this->db->update("rating", ["repeat_vote" => 1], ['id_project' => $id_project]);
+        }
+    }
+
+    public function put_deleteRepeat()
+    {
+        $id_project = $_GET['id_project'];
+        $id_jury = $_GET['id_jury'];
+        $this->db->update("rating", ["repeat_vote" => 0], ['id_project' => $id_project, "id_jury" => $id_jury]);
+    }
+
+
+
+    /*public function put_repeatRate()
+    {
+        $id_project = $_GET['id_project'];
+        $jury = $this->db->send_query("SELECT * FROM `rating` LEFT JOIN `jury` on `jury`.id_jury = `rating`.id_jury");
+        $this->db->update("rating", ["repeat_vote" => 1], ['id_project' => $id_project]);
+    }
+
+    public function put_newRating()
+    {
+        $id_project_minus = $_GET['id_project_minus'];
+        $id_project_plus = $_GET['id_project_plus'];
+        $id_jury = $_GET['id_jury'];
+        $this->db->delete("rating", ['id_project' => $id_project_minus]);
+        $this->db->update("rating", ['repeat_vote' => 0], ['id_project' => $id_project_plus]);
+    }*/
 
 
     public function delete_project() {
