@@ -8,14 +8,15 @@ artApp.controller('editJuryCtrl',['$scope','$http', '$routeParams', function($sc
             console.log('\nAll jury');
             console.log(data);
 
-            for (var i = 0; i < data.length; i++) {
+            //for (var i = 0; i < data.length; i++) {
+            for (var i in data) {
                 if (data[i].id_jury == $routeParams.id) {
                     $scope.data = data[i];
                     $scope.data.pass = null;
-                    $scope.photo = $scope.data.photo;
-                    //$scope.files = [];
-                    //$scope.files[0] = $scope.data.photo;
-                    console.log($scope.files);
+                    $scope.photo[0] = [];
+                    $scope.photo[0] = $scope.data.photo;
+
+                    console.log($scope.data);
                 }
             }
         })

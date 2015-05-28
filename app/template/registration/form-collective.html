@@ -1,7 +1,10 @@
-<filedest class="form-horizontal">
+<fieldset class="form-horizontal">
 
     <div class="form-group">
-        <label for="GroupNameUA" class="col-sm-4 control-label">Назва групи (Українською)<span class="needs">*</span></label>
+        <label for="GroupNameUA" class="col-sm-4 control-label">
+            Назва групи (Українською)
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
             <input type="text" class="form-control" id="GroupNameUA" required="required">
@@ -9,7 +12,10 @@
     </div>
 
     <div class="form-group">
-        <label for="GroupNameEN" class="col-sm-4 control-label">Назва групи (Англійською)<span class="needs">*</span></label>
+        <label for="GroupNameEN" class="col-sm-4 control-label">
+            Назва групи (Англійською)
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
             <input type="text" class="form-control" id="GroupNameEN" required="required">
@@ -17,7 +23,10 @@
     </div>
 
     <div class="form-group">
-        <label for="GroupEmail" class="col-sm-4 control-label">Ваш E-mail<span class="needs">*</span></label>
+        <label for="GroupEmail" class="col-sm-4 control-label">
+            Ваш E-mail
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
             <input type="email" class="form-control" id="GroupEmail" required="required">
@@ -25,7 +34,10 @@
     </div>
 
     <div class="form-group">
-        <label for="confirmGroupEmail" class="col-sm-4 control-label">Підтвердження E-mail<span class="needs">*</span></label>
+        <label for="confirmGroupEmail" class="col-sm-4 control-label">
+            Підтвердження E-mail
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
             <input type="email" class="form-control" id="confirmGroupEmail" required="required">
@@ -33,25 +45,49 @@
     </div>
 
     <div class="form-group">
-        <label for="GroupMobile" class="col-sm-4 control-label">Контактний телефон<span class="needs">*</span></label>
+        <label for="GroupMobile" class="col-sm-4 control-label">
+            Контактний телефон
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupMobile" aria-describedby="helpBlockMobile" required="required">
-            <span id="helpBlockMobile" class="help-block"><strong>Формат:</strong> +380445556677</span>
+            <input type="text"
+                   class="form-control"
+                   id="GroupMobile"
+                   aria-describedby="helpBlockMobile"
+                   required="required">
+
+            <span id="helpBlockMobile" class="help-block">
+                <strong>Формат:</strong>
+                +380445556677
+            </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupBiografy" class="col-sm-4 control-label">Творча біографія<span class="needs">*</span></label>
+        <label for="GroupBiografy" class="col-sm-4 control-label">
+            Творча біографія
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <textarea class="form-control" rows="4" id="GroupBiografy" required="required" aria-describedby="helpBlockGroupBiografy" maxlength="1000"></textarea>
-            <span id="helpBlockGroupBiografy" class="help-block">До 1000 символів</span>
+            <textarea class="form-control"
+                      rows="4"
+                      id="GroupBiografy"
+                      required="required"
+                      aria-describedby="helpBlockGroupBiografy"
+                      maxlength="1000"></textarea>
+            <span id="helpBlockGroupBiografy" class="help-block">
+                До 1000 символів
+            </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">Участь у виставках<span class="needs">*</span></label>
+        <label class="col-sm-4 control-label">
+            Участь у виставках
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
             <label class="radio-inline" for="GroupTakePartYes">
@@ -66,7 +102,9 @@
     </div>
 
     <div class="form-group">
-        <label for="InputGroupFoto" class="col-sm-4 control-label">Фото групи</label>
+        <label for="InputGroupFoto" class="col-sm-4 control-label">
+            Фото групи
+        </label>
 
         <div class="col-sm-8">
             <input type="file" id="InputGroupFoto">
@@ -74,21 +112,27 @@
     </div>
 
     <div class="form-group">
-        <label for="GroupWebsite" class="col-sm-4 control-label">Адреса сайту</label>
+        <label for="GroupWebsite" class="col-sm-4 control-label">
+            Адреса сайту
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupWebsite" required="required">
+            <input type="url" class="form-control" id="GroupWebsite" required="required">
         </div>
     </div>
+
 
     <form-member></form-member>
 
+
     <div class="row">
-        <div class="col-md-12 text-right"><span class="needs">*</span> - Поля, обов'язкові для
-            заповнення
+        <div class="col-md-12 text-right">
+            <span class="needs">*</span>
+            - Поля, обов'язкові для заповнення
             <hr>
         </div>
     </div>
+
     <div class="form-group">
         <div class="col-sm-12 text-right">
             <button class="btn btn-success btn-lg" ng-click="addMember()">
@@ -101,7 +145,7 @@
         </div>
     </div>
 
-</filedest>
+</fieldset>
 
 
 

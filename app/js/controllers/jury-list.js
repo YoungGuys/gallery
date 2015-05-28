@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('juryListCtrl',['$scope','$http', '$rootScope', function($scope, $http, $rootScope) {
+artApp.controller('juryListCtrl',['$scope','$http', function($scope, $http) {
 
 
     $http.get('api/get/alljury')

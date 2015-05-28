@@ -6,19 +6,41 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     $scope.tab = 1;
     $scope.district = false;
 
+    $scope.individualShow = true;
+
 
     $scope.user = {};
     $scope.projects = [{}];
     $scope.members = [{}];
+
 
     $scope.addProjects = function(){
         console.log('Add project');
         $scope.projects.push($scope.project);
     };
 
+
+    $scope.removeProject = function(index){
+        console.log('Remove project');
+        console.log(index);
+
+        console.log($scope.projects);
+        for (var i = index; i < $scope.projects.length - 1; i++) {
+            $scope.projects[i] = $scope.projects[i + 1]
+        }
+
+        $scope.projects.splice($scope.projects.length - 1, 1);
+    };
+
+
     $scope.addMember = function(){
         console.log('Add member');
         $scope.members.push($scope.member);
+    };
+
+    $scope.removeMember = function(i){
+        console.log('Remove member');
+        $scope.members.splice(i, 1);
     };
 
 
@@ -29,7 +51,13 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     };
 
     $scope.setTab = function(setTab) {
+
+        if (!$scope.rulesModel) return false;
+
+
         $scope.tab = setTab;
+
+
     };
 
 
@@ -39,22 +67,26 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
     });
 
 
-    $scope.changeCountry = function () {
-        console.log($scope.user.country);
-        if ($scope.user.country === 'Україна') {
-            $scope.district = true;
+    //$scope.changeCountry = function (i) {
+    //    console.log($scope.user.country);
+    //    if ($scope.user.country === 'Україна') {
+    //        $scope.district[i] = true;
+    //
+    //        $http.get('template/ukraine-district.json').success(function(data){
+    //            $scope.ukraineDistrict = data;
+    //            //console.log($scope.country);
+    //        });
+    //
+    //    }
+    //    else {
+    //        $scope.district = false;
+    //    }
+    //};
 
-            $http.get('template/ukraine-district.json').success(function(data){
-                $scope.ukraineDistrict = data;
-                //console.log($scope.country);
-            });
-
-        }
-        else {
-            $scope.district = false;
-        }
-    };
-
+    $http.get('template/ukraine-district.json').success(function(data){
+            $scope.ukraineDistrict = data;
+            //console.log($scope.country);
+        });
 
     //var arrDay = [];
     //
@@ -155,7 +187,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
             //    alert(err);
             //});
         }
-    }
+    };
 
     $scope.applicationType = function () {
         if ($scope.user.type === "individual") {

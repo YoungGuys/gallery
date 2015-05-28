@@ -14,16 +14,14 @@
                     {{project.description_eng}}
                 </div>
 
-                <hr>
+                <hr/>
 
-                <ul class="row img-preview project-list__images">
-                    <li class="col-xs-6 col-md-4 img-preview__item"
-                        ng-repeat="photo in project.photos track by $index">
-                        <a class="thumbnail" ng-click="Lightbox.openModal(project.photos, $index)">
-                            <img ng-src="images/img/{{photo.src}}" alt="project-photo">
-                        </a>
-                    </li>
-                </ul>
+                <div class="fotorama">
+                    <img fotorama-img
+                         ng-repeat="photo in photos"
+                         ng-src="images/img/{{photo.src}}"
+                         alt="project-photo"/>
+                </div>
 
                 <hr>
 
@@ -36,7 +34,10 @@
                             </a>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-danger"
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    ng-if="!admin"
+                                    ng-disabled="rate"
                                     ng-click="chooseProject(project.id_project)">
                                 <span class="glyphicon glyphicon-heart"> </span> Choose project
                             </button>

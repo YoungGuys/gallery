@@ -3,6 +3,10 @@
 
 artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
 
+    if (!$scope.photo) {
+        $scope.photo = [];
+    }
+
     $scope.$watch('files', function () {
         $scope.upload($scope.files);
     });
@@ -10,16 +14,33 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
     $scope.log = '';
 
 
-    $scope.deleteImg = function (index) {
-        $scope.files.splice(index, 1);
+    $scope.deleteImg = function(index) {
+        $scope.photo.splice(index, 1);
     };
 
 
-    $scope.upload = function (files) {
+    $scope.upload = function(files) {
 
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
+
+                var y = new Date().getFullYear();
+                var m = new Date().getMonth() + 1;
+                var d = new Date().getDate();
+                var r = Math.round(Math.random() * 100);
+                var date = y + '-' + m + '-' + d;
+
+                var fileNameArray = file.name.split('.');
+                var fileType = fileNameArray[fileNameArray.length - 1];
+
+                var fileName = '';
+
+                for (var k = 0; k < fileNameArray.length - 1; k++) {
+                    fileName+= fileNameArray[k];
+                }
+
+                file.fileName = fileName + '-' + date + '-' + r + '.' + fileType;
 
                 Upload.upload({
                     //fields: {
@@ -29,7 +50,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,
-                    file: file,
+                    file: file
 
                 }).progress(function (evt) {
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -38,19 +59,14 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     evt.config.file.name + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
-                    $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
+                    //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
-
-                    if (files.length == 1 && !$scope.multipleUpload) {
-                        $scope.photo = files[0].name;
+                    if (!$scope.multipleUpload) {
+                        $scope.photo[0] = files[0].name;
                     }
                     else {
-                        $scope.photo = [];
-                        for (var i = 0; i < files.length; i++) {
-                            $scope.photo[i] = files[i].name;
-                        }
+                        $scope.photo.push(config.file.name);
                     }
-
 
                 });
             }

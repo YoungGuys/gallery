@@ -1,8 +1,6 @@
 'use strict';
 
-artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', 'Lightbox', function($scope, $rootScope, $http, $routeParams, Lightbox) {
-
-    $scope.Lightbox = Lightbox;
+artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
     $scope.isSet = function(checkTab) {
         return $scope.tab === checkTab;
@@ -11,13 +9,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
     $scope.setTab = function(setTab) {
         $scope.tab = setTab;
     };
-
-
-    $http.get('api/get/myRateProject')
-        .success(function(data, status, headers, config) {
-            console.log('\nJury rate project');
-            console.log(data);
-        });
 
 
     $http.get('api/get/user', {params: {id_user: $routeParams.id}} )
@@ -44,6 +35,27 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
             $scope.projects = data;
 
+            if ($scope.projects.length > 1) $scope.btnVisible = true;
+
+        });
+
+
+    $http.get('api/get/myRateProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nJury rate project');
+            console.log(data);
+
+            for (var i in data) {
+                if (data[i].id_jury == $rootScope.idJury) {
+                    console.log(data[i].id_jury);
+                    $scope.projects.forEach(function(item, j){
+                        if (item.id_project == data[i].id_project) {
+                            $scope.projects[j].rate = true;
+                            console.log($scope.projects[j].rate);
+                        }
+                    });
+                }
+            }
         });
 
 
@@ -89,7 +101,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         }
 
     };
-
 
 
 

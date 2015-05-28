@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: May 10, 2015 at 12:30 PM
+-- Generation Time: May 13, 2015 at 12:21 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.18
 
@@ -82,7 +82,7 @@ CREATE TABLE `jury` (
   `login` varchar(45) DEFAULT NULL,
   `pass` varchar(32) DEFAULT NULL,
   `photo` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `jury`
@@ -90,7 +90,8 @@ CREATE TABLE `jury` (
 
 INSERT INTO `jury` (`id_jury`, `fio`, `bio`, `login`, `pass`, `photo`) VALUES
 (1, 'Popovych Andrii', 'web developer', 'balon', '827ccb0eea8a706c4c34a16891f84e7b', '529526_581380481935424_348599822_n.jpg'),
-(2, 'Koval Mykola (Jury)', 'Jury jury jury...', 'mikolka', '827ccb0eea8a706c4c34a16891f84e7b', 'mykola_koval.jpg');
+(2, 'Koval Mykola (Jury)', 'Jury jury jury....', 'mikolka', '827ccb0eea8a706c4c34a16891f84e7b', 'mykola_koval.jpg'),
+(3, 'Jury', 'jury...', 'illia', '827ccb0eea8a706c4c34a16891f84e7b', 'ilia_horosh.jpg');
 
 -- --------------------------------------------------------
 
@@ -111,16 +112,17 @@ CREATE TABLE `projects` (
   `sizes` varchar(45) DEFAULT NULL,
   `recomendation` int(11) DEFAULT NULL,
   `owner` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `projects`
 --
 
 INSERT INTO `projects` (`id_project`, `id_statement`, `title_ukr`, `title_eng`, `title_long`, `type`, `description_ukr`, `description_eng`, `material`, `sizes`, `recomendation`, `owner`) VALUES
-(36, 8, NULL, 'My cats', NULL, NULL, NULL, 'cats, cats ...', NULL, NULL, NULL, NULL),
+(36, 8, NULL, 'My cats', NULL, NULL, NULL, 'cats, cats ...cats', NULL, NULL, NULL, NULL),
 (37, 6, NULL, 'Be happy', NULL, NULL, NULL, 'happy...', NULL, NULL, NULL, NULL),
-(38, 5, NULL, 'Cats', NULL, NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?', NULL, NULL, NULL, NULL);
+(38, 5, NULL, 'Cats', NULL, NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores laudantium nisi odio optio quas reprehenderit totam unde voluptate! Aspernatur doloremque dolores explicabo fuga id ipsam minima qui recusandae ut?', NULL, NULL, NULL, NULL),
+(39, 8, NULL, 'People', NULL, NULL, NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem doloremque eligendi fugiat minus neque, nulla obcaecati voluptas! Ab dicta labore nobis quaerat quis similique ut. Fugit nihil nisi reiciendis tenetur.\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Autem doloremque eligendi fugiat minus neque, nulla obcaecati voluptas! Ab dicta labore nobis quaerat quis similique ut. Fugit nihil nisi reiciendis tenetur.\n\n\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequuntur in ipsum odit saepe unde!', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -132,7 +134,7 @@ CREATE TABLE `project_photos` (
 `id_photo` int(11) NOT NULL,
   `id_project` int(11) DEFAULT NULL,
   `src` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `project_photos`
@@ -143,7 +145,28 @@ INSERT INTO `project_photos` (`id_photo`, `id_project`, `src`) VALUES
 (8, 36, 'images.jpeg'),
 (9, 37, 'rOgzABQ8hYo.jpg'),
 (10, 38, 'cat2.jpg'),
-(11, 38, 'cat.jpeg');
+(11, 38, 'cat.jpeg'),
+(12, NULL, 'i'),
+(13, NULL, 'i'),
+(14, NULL, 'c'),
+(15, NULL, 'c'),
+(16, NULL, 'i'),
+(17, NULL, 'i'),
+(18, NULL, 'c'),
+(19, NULL, 'c'),
+(20, NULL, 'i'),
+(21, NULL, 'i'),
+(22, NULL, 'c'),
+(23, 36, 'i'),
+(24, 36, 'i'),
+(25, 36, 'c'),
+(26, 36, 'c'),
+(27, 39, 'liudmyla_pavlenko.jpg'),
+(28, 39, 'maria_schurska.jpg'),
+(29, 39, 'marta_vitvitska.jpg'),
+(30, 39, 'oleksii_molchanovskyi.jpg'),
+(31, 39, 'sandra_yaremchuk.jpg'),
+(32, 39, 'vsevolod_dyomkin.jpg');
 
 -- --------------------------------------------------------
 
@@ -155,14 +178,19 @@ CREATE TABLE `rating` (
 `id_rate` int(11) NOT NULL,
   `id_project` int(11) DEFAULT NULL,
   `id_jury` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rating`
 --
 
 INSERT INTO `rating` (`id_rate`, `id_project`, `id_jury`) VALUES
-(1, 38, 1);
+(1, 38, 1),
+(2, 37, 1),
+(3, 38, 2),
+(4, 36, 2),
+(5, 36, 3),
+(7, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -330,22 +358,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT for table `jury`
 --
 ALTER TABLE `jury`
-MODIFY `id_jury` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id_jury` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-MODIFY `id_project` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+MODIFY `id_project` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `project_photos`
 --
 ALTER TABLE `project_photos`
-MODIFY `id_photo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id_photo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-MODIFY `id_rate` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_rate` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `statements`
 --

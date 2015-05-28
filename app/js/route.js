@@ -7,10 +7,10 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
     //});
 
     $routeProvider
-        .when('/', {
-            templateUrl: 'template/main.html',
-            controller: 'loginCtrl'
-        })
+        //.when('/', {
+        //    templateUrl: 'template/main.html',
+        //    controller: 'loginCtrl'
+        //})
 
         //artist
         .when('/artist/:id', {
@@ -30,22 +30,22 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             controller: 'editArtistCtrl'
         })
 
-        //jury
-        .when('/add-jury', {
+        //expert
+        .when('/add-expert', {
             templateUrl: 'template/add-jury.html',
             controller: 'addJuryCtrl'
         })
-        .when('/edit-jury/:id', {
+        .when('/edit-expert/:id', {
             templateUrl: 'template/edit-jury.html',
             controller: 'editJuryCtrl'
         })
-        .when('/jury-list', {
+        .when('/expert-list', {
             templateUrl: 'template/jury-list.html',
             controller: 'juryListCtrl'
         })
-        .when('/jury-selected/:id', {
-            templateUrl: 'template/jury-selected.html',
-            controller: 'jurySelectedCtrl'
+        .when('/expert-selected/:id', {
+            templateUrl: 'template/jury-selected.html'
+            //controller: 'jurySelectedCtrl'
         })
 
         //project
@@ -71,18 +71,15 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
             templateUrl: 'template/login.html',
             controller: 'loginCtrl'
         })
-        .when('/admin', {
-            templateUrl: 'template/admin.html',
-            controller: 'adminCtrl'
-        })
 
         //page
         .when('/main', {
             templateUrl: 'template/main.html',
             controller: 'mainCtrl'
-        }).when('/home', {
-            templateUrl: 'template/main.html',
-            controller: 'mainCtrl'
+        })
+        .when('/home', {
+            templateUrl: 'template/home.html'
+            //controller: 'homeCtrl'
         })
         .when('/rating', {
             templateUrl: 'template/rating.html',
@@ -95,8 +92,7 @@ artApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $
         })
 
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/main'
         });
 
-    //$locationProvider.html5Mode(true);
 }]);

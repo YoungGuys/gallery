@@ -1,118 +1,189 @@
 <div class="information" ng-repeat="member in members track by $index">
 
-    <h3 class="page-header">Відомості про учасника {{$index + 1}}:</h3>
+    <h3 class="page-header">
+        Відомості про учасника {{$index + 1}}:
+        <button class="btn btn-danger btn-sm pull-right glyphicon glyphicon-remove"
+                ng-if="$index > 0"
+                ng-click="removeMember($index)"></button>
+    </h3>
+
 
     <div class="form-group">
-        <label for="GroupMember1PIBua" class="col-sm-4 control-label">П.І.Б. (Українською)<span class="needs">*</span></label>
+        <label for="GroupMember1PIBua-{{$index}}" class="col-sm-4 control-label">
+            П.І.Б. (Українською)
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupMember1PIBua" aria-describedby="helpBlockGroupMember1PIBua" required="required" ng-model="user.member[$index].nameUa"/>
-            <span id="helpBlockGroupMember1PIBua" class="help-block">
+            <input type="text"
+                   class="form-control"
+                   id="GroupMember1PIBua-{{$index}}"
+                   aria-describedby="helpBlockGroupMember1PIBua"
+                   required="required" ng-model="user.member[$index].nameUa"/>
+
+            <span class="help-block">
                 <strong>Формат:</strong> Петренко Петро Петрович
             </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1PIBen" class="col-sm-4 control-label">П.І.Б. (Англійською)<span class="needs">*</span></label>
+        <label for="GroupMember1PIBen-{{$index}}" class="col-sm-4 control-label">
+            П.І.Б. (Англійською)<span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupMember1PIBen" aria-describedby="helpBlockGroupMember1PIBen" required="required" ng-model="user.member[$index].nameEn"/>
-            <span id="helpBlockGroupMember1PIBen" class="help-block">
+            <input type="text"
+                   class="form-control"
+                   id="GroupMember1PIBen-{{$index}}"
+                   aria-describedby="helpBlockGroupMember1PIBen-{{$index}}"
+                   required="required"
+                   ng-model="user.member[$index].nameEn"/>
+
+            <span id="helpBlockGroupMember1PIBen-{{$index}}" class="help-block">
                 <strong>Формат:</strong> Petrenko Petro Petrovich
             </span>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1BirthDay" class="col-sm-4 control-label">Дата народження<span class="needs">*</span></label>
+        <label for="GroupMember1BirthDay-{{$index}}" class="col-sm-4 control-label">
+            Дата народження
+            <span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="date" id="GroupMember1BirthDay" name="date" class="form-control" value="" required="required" ng-model="user.member[$index].birthDay"/>
+            <input type="date"
+                   id="GroupMember1BirthDay-{{$index}}"
+                   name="date"
+                   class="form-control"
+                   required="required"
+                   ng-model="user.member[$index].birthDay"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1country" class="col-sm-4 control-label">Країна проживання<span class="needs">*</span></label>
+        <label for="GroupMember1country-{{$index}}" class="col-sm-4 control-label">
+            Країна проживання<span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <select class="form-control" id="GroupMember1country" required="required" ng-model="user.member[$index].country" ng-change="changeCountry()">
-                <option ng-repeat="countryItem in country" value="{{countryItem}}">{{countryItem}}</option>
+            <select class="form-control"
+                    id="GroupMember1country-{{$index}}"
+                    required="required"
+                    ng-model="user.member[$index].country"
+                    ng-options="countryItem for countryItem in country track by countryItem">
             </select>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1region" class="col-sm-4 control-label">Область(регіон)
-            проживання<span class="needs">*</span></label>
+        <label for="GroupMember1region-{{$index}}" class="col-sm-4 control-label">
+            Область(регіон) проживання<span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <select class="form-control" id="GroupMember1region" required="required" ng-disabled="!district" ng-model="user.member[$index].district">
-                <option ng-repeat="districtItem in ukraineDistrict" value="{{districtItem}}">{{districtItem}}</option>
+            <select class="form-control"
+                    id="GroupMember1region-{{$index}}"
+                    required="required"
+                    ng-disabled="user.member[$index].country != 'Україна' "
+                    ng-model="user.member[$index].district"
+                    ng-options="districtItem for districtItem in ukraineDistrict track by districtItem">
             </select>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1city" class="col-sm-4 control-label">Населений пункт, де живете<span class="needs">*</span></label>
+        <label for="GroupMember1city-{{$index}}" class="col-sm-4 control-label">
+            Населений пункт, де живете<span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupMember1city" required="required" ng-model="user.member[$index].city"/>
+            <input type="text"
+                   class="form-control"
+                   id="GroupMember1city-{{$index}}"
+                   required="required"
+                   ng-model="user.member[$index].city"/>
         </div>
     </div>
 
     <div class="form-group">
-        <label for="GroupMember1adress" class="col-sm-4 control-label">Адреса місця проживання<span class="needs">*</span></label>
+        <label for="GroupMember1adress-{{$index}}" class="col-sm-4 control-label">
+            Адреса місця проживання<span class="needs">*</span>
+        </label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" id="GroupMember1adress" aria-describedby="helpBlockGroupMember1Adress" required="required" ng-model="user.member[$index].street">/
-            <span id="helpBlockGroupMember1Adress" class="help-block">
+            <input type="text"
+                   class="form-control"
+                   id="GroupMember1adress-{{$index}}"
+                   aria-describedby="helpBlockGroupMember1Adress"
+                   required="required" ng-model="user.member[$index].street">
+
+            <span class="help-block">
                 <strong>Формат:</strong> Вулиця, будинок, квартира
             </span>
         </div>
     </div>
+
 
     <div class="information">
 
         <h4 class="page-header">Паспортні відомості:</h4>
 
         <div class="form-group">
-            <label for="GroupMember1PassportSeries" class="col-sm-4 control-label">
+            <label for="GroupMember1PassportSeries-{{$index}}" class="col-sm-4 control-label">
                 Паспорт серія<span class="needs">*</span>
             </label>
 
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="GroupMember1PassportSeries" required="required" ng-model="passport.member[$index].series">
+                <input type="text"
+                       class="form-control"
+                       id="GroupMember1PassportSeries-{{$index}}"
+                       required="required"
+                       ng-model="passport.member[$index].series">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="GroupMember1PassportNumber" class="col-sm-4 control-label">
+            <label for="GroupMember1PassportNumber-{{$index}}" class="col-sm-4 control-label">
                 Паспорт №<span class="needs">*</span>
             </label>
 
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="GroupMember1PassportNumber" required="required" ng-model="passport.member[$index].number">
+                <input type="text"
+                       class="form-control"
+                       id="GroupMember1PassportNumber-{{$index}}"
+                       required="required"
+                       ng-model="passport.member[$index].number">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="GroupMember1PassportIssued" class="col-sm-4 control-label">
+            <label for="GroupMember1PassportIssued-{{$index}}" class="col-sm-4 control-label">
                 Ким виданий<span class="needs">*</span>
             </label>
 
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="GroupMember1PassportIssued" required="required" ng-model="passport.member[$index].issuedBy" />
+                <input type="text"
+                       class="form-control"
+                       id="GroupMember1PassportIssued-{{$index}}"
+                       required="required"
+                       ng-model="passport.member[$index].issuedBy" />
             </div>
         </div>
 
         <div class="form-group">
-            <label for="GroupMember1PassportDate" class="col-sm-4 control-label">
+            <label for="GroupMember1PassportDate-{{$index}}" class="col-sm-4 control-label">
                 Коли виданий<span class="needs">*</span>
             </label>
 
             <div class="col-sm-8">
-                <input type="date" id="GroupMember1PassportDate" name="date" class="form-control" value="" required="required" ng-model="passport.member[$index].whenIssuedBy" />
+                <input type="date"
+                       id="GroupMember1PassportDate-{{$index}}"
+                       name="date"
+                       class="form-control"
+                       required="required"
+                       ng-model="passport.member[$index].whenIssuedBy" />
             </div>
         </div>
 
