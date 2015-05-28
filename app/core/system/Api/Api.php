@@ -105,7 +105,7 @@ class Api {
             $val['photos'] = $arr[$val['id_project']];
             $result[] = $val;
         }
-        var_dump($result);
+        //var_dump($result);
         $this->result = $result;
     }
 
@@ -529,7 +529,7 @@ class Api {
         if ($val['photos']) {
             $this->db->delete("project_photos",["id_project" => $val['id_project']]);
             foreach ($val['photos'] as $k => $v) {
-                print_r ($v);
+                //print_r ($v);
                 $this->db->insert("project_photos",
                     [
                         "id_project" => $val['id_project'],
