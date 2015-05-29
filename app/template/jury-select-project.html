@@ -1,41 +1,90 @@
-<h3 class="page-header">Voted projects:</h3>
+<h3 class="page-header">Please select from the list of the best project:</h3>
 
 <table class="table table-striped">
     <thead>
-    <tr>
-        <th>Photo</th>
-        <th colspan="3">Project name</th>
-        <!--<th >Author name</th>-->
-        <!--<th ng-if="admin"></th>-->
-    </tr>
+        <tr>
+            <th>Photo</th>
+            <th>Project name</th>
+            <th></th>
+            <th ng-if="admin"></th>
+        </tr>
     </thead>
     <tbody class="js-listProject">
-    <tr ng-repeat="project in projects track by $index">
-        <td class="column-photo">
-            <a href="#/project/{{project.id_project}}">
-                <img src="images/img/{{project.photos[0].src}}" alt="project-photo">
-            </a>
-        </td>
-        <td>
-            <a href="#/project/{{project.id_project}}">
-                {{project.title_eng}}
-            </a>
-        </td>
-        <!--<td>-->
-        <!--<a href="#/artist/{{project.id_user}}">-->
-        <!--{{project.user}}-->
-        <!--</a>-->
-        <!--</td>-->
-        <td width="55" ng-if="admin">
-            <a href="#/edit-project/{{project.id_project}}" class="btn btn-success">
-                <span class="glyphicon glyphicon-pencil"></span> Edit
-            </a>
-        </td>
-        <td width="45" ng-if="admin">
-            <button type="button" class="btn btn-danger" ng-click="deleteProject(project.id_project, $index)">
-                <span class="glyphicon glyphicon-minus"> </span>
-            </button>
-        </td>
-    </tr>
+        <tr ng-repeat="project in choseProjects track by $index">
+            <td class="column-photo">
+                <a href="#/project/{{project.id_project}}">
+                    <img src="images/img/{{project.photos[0].src}}" alt="project-photo">
+                </a>
+            </td>
+            <td>
+                <a href="#/project/{{project.id_project}}">
+                    {{project.title_eng}}
+                </a>
+            </td>
+            <td class="text-right">
+                <button type="button"
+                        class="btn btn-success"
+                        ng-if="!admin"
+                        ng-click="chooseProject(project.id_project)">
+
+                    <span class="glyphicon glyphicon-heart"> </span>
+                    <span>To vote</span>
+                </button>
+                <button type="button"
+                        class="btn btn-danger"
+                        ng-if="!admin"
+                        ng-click="deleteRepeat(project.id_project)">
+
+                    <span class="glyphicon glyphicon-minus"> </span>
+                    <span>Take voice</span>
+                </button>
+            </td>
+            <td width="55" ng-if="admin">
+                <a href="#/edit-project/{{project.id_project}}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+            </td>
+            <td width="45" ng-if="admin">
+                <button type="button" class="btn btn-danger" ng-click="deleteProject(project.id_project, $index)">
+                    <span class="glyphicon glyphicon-minus"> </span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 class="page-header">Voted projects:</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th colspan="3">Project name</th>
+            <!--<th >Author name</th>-->
+            <!--<th ng-if="admin"></th>-->
+        </tr>
+    </thead>
+    <tbody class="js-listProject">
+        <tr ng-repeat="project in projects track by $index">
+            <td class="column-photo">
+                <a href="#/project/{{project.id_project}}">
+                    <img src="images/img/{{project.photos[0].src}}" alt="project-photo">
+                </a>
+            </td>
+            <td>
+                <a href="#/project/{{project.id_project}}">
+                    {{project.title_eng}}
+                </a>
+            </td>
+            <td width="55" ng-if="admin">
+                <a href="#/edit-project/{{project.id_project}}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </a>
+            </td>
+            <td width="45" ng-if="admin">
+                <button type="button" class="btn btn-danger" ng-click="deleteProject(project.id_project, $index)">
+                    <span class="glyphicon glyphicon-minus"> </span>
+                </button>
+            </td>
+        </tr>
     </tbody>
 </table>

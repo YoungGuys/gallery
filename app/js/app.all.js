@@ -647,7 +647,6 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
 
 
     $scope.idJury = $routeParams.id || $rootScope.idJury;
-    //console.log()
 
 
     $http.get('api/get/projects')
@@ -675,6 +674,51 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             }
             console.log($scope.projects);
         });
+
+
+
+    $http.get('api/get/myRepeatProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nmyRepeatProject');
+            console.log(data);
+
+            $scope.choseProjects = data
+        });
+
+
+    $scope.deleteRepeat = function (id) {
+        $http.get('api/put/deleteRepeat', { params: {
+            id_project: id,
+            id_jury: $scope.idJury
+        }})
+            .success(function(data, status, headers, config) {
+                console.log('\ndeleteRepeat');
+                console.log(data);
+
+                $scope.choseProjects = data
+            });
+    };
+
+    $scope.chooseProject = function(id) {
+
+        var data = {
+            id_project: id
+        };
+
+        $http.get('api/post/rating', {params: data} )
+            .success(function(data, status, headers, config) {
+                console.log('\nAnswer add rating');
+                console.log(data);
+
+                $scope.deleteRepeat(id);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('Answer add rating "Error"');
+            });
+
+
+    };
+
 
 
     //$http.get('api/get/myRateProject')
@@ -929,15 +973,28 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             id_project: id
         };
 
-        $http.get('api/post/rating', {params: data} )
-            .success(function(data, status, headers, config) {
-                console.log('\nAnswer add rating');
-                console.log(data);
-                if (data) $scope.rate = true;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('Answer add rating "Error"');
-            });
+        if ($scope.rate) {
+            $http.get('api/delete/rate', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer delete rating');
+                    console.log(data);
+                    if (data) $scope.rate = false;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer delete rating "Error"');
+                });
+        }
+        else {
+            $http.get('api/post/rating', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer add rating');
+                    console.log(data);
+                    if (data) $scope.rate = true;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer add rating "Error"');
+                });
+        }
 
     };
 
@@ -948,6 +1005,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
     $scope.currentDate = new Date();
+    $scope.select = [];
 
 
     $http.get('api/get/ratingVisibility')
@@ -995,6 +1053,40 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
                 $scope.projects = data;
             });
     }
+
+
+    $scope.selectMode = function () {
+        //$scope.select = [];
+        $scope.selectProject = $scope.selectProject ? 0 : 1;
+    };
+
+    //$scope.selectProject = function (id) {
+    //$scope.select.push(id)
+    //};
+
+    $scope.sendToVote = function () {
+        var select = '';
+        var n = $scope.select.length;
+
+        $scope.select.forEach(function(item, i){
+
+            if (item > 0) {
+                select += item;
+            }
+
+            if (i < n - 1) {
+                select += ',';
+            }
+
+        });
+
+        $http.get('api/put/setRepeat', {params: {id_project: select} })
+            .success(function(data, status, headers, config) {
+                console.log('\nsendToVote');
+                console.log(select);
+                console.log(data);
+            });
+    };
 
 
 }]);

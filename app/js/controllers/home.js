@@ -4,7 +4,6 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
 
 
     $scope.idJury = $routeParams.id || $rootScope.idJury;
-    //console.log()
 
 
     $http.get('api/get/projects')
@@ -32,6 +31,51 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             }
             console.log($scope.projects);
         });
+
+
+
+    $http.get('api/get/myRepeatProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nmyRepeatProject');
+            console.log(data);
+
+            $scope.choseProjects = data
+        });
+
+
+    $scope.deleteRepeat = function (id) {
+        $http.get('api/put/deleteRepeat', { params: {
+            id_project: id,
+            id_jury: $scope.idJury
+        }})
+            .success(function(data, status, headers, config) {
+                console.log('\ndeleteRepeat');
+                console.log(data);
+
+                $scope.choseProjects = data
+            });
+    };
+
+    $scope.chooseProject = function(id) {
+
+        var data = {
+            id_project: id
+        };
+
+        $http.get('api/post/rating', {params: data} )
+            .success(function(data, status, headers, config) {
+                console.log('\nAnswer add rating');
+                console.log(data);
+
+                $scope.deleteRepeat(id);
+            })
+            .error(function(data, status, headers, config) {
+                console.log('Answer add rating "Error"');
+            });
+
+
+    };
+
 
 
     //$http.get('api/get/myRateProject')

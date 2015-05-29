@@ -57,15 +57,28 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             id_project: id
         };
 
-        $http.get('api/post/rating', {params: data} )
-            .success(function(data, status, headers, config) {
-                console.log('\nAnswer add rating');
-                console.log(data);
-                if (data) $scope.rate = true;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('Answer add rating "Error"');
-            });
+        if ($scope.rate) {
+            $http.get('api/delete/rate', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer delete rating');
+                    console.log(data);
+                    if (data) $scope.rate = false;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer delete rating "Error"');
+                });
+        }
+        else {
+            $http.get('api/post/rating', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer add rating');
+                    console.log(data);
+                    if (data) $scope.rate = true;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer add rating "Error"');
+                });
+        }
 
     };
 

@@ -8,9 +8,34 @@
 
                 <h3 class="page-header">
                     Rating
-                    <button ng-if="admin" ng-click="showRating()" class="btn btn-default pull-right">
-                        Show rating for expert
-                    </button>
+
+                    <span class="pull-right" ng-if="admin">
+
+                        <button ng-hide="selectProject"
+                                ng-click="selectMode()"
+                                class="btn btn-default">
+                            Select the projects to vote
+                        </button>
+
+                        <button ng-show="selectProject"
+                                ng-click="sendToVote()"
+                                class="btn btn-success">
+                            Send
+                        </button>
+
+                        <button ng-show="selectProject"
+                                ng-click="selectMode()"
+                                class="btn btn-danger">
+                            Cancel
+                        </button>
+
+                        <button ng-click="showRating()"
+                                class="btn btn-default">
+                            Show rating for expert
+                        </button>
+
+                    </span>
+
                 </h3>
 
                 <p ng-if="ratingVisibility">
@@ -22,34 +47,48 @@
 
                     <table class="table table-striped text-center">
                         <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>Photo</th>
-                            <th>Name Project</th>
-                            <th>Votes</th>
-                        </tr>
+                            <tr>
+                                <th>Place</th>
+                                <th>Photo</th>
+                                <th>Name Project</th>
+                                <th>Votes</th>
+                                <th ng-if="selectProject">Select</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="project in projects | orderBy : '-rate'"
-                            ng-if="$index < 10"
-                            ng-class="$index > 0 || 'info'">
-                            <td scope="row" width="60">
-                                {{$index + 1}}
-                            </td>
-                            <td width="200">
-                                <img ng-src="images/img/{{project.photos[0].src}}" alt="photo-project">
-                            </td>
-                            <td width="240" class="text-left">
-                                <a href="#/project/{{project.id_project}}">
-                                    {{project.title_eng}}
-                                </a>
-                            </td>
-                            <td width="100">
-                                {{project.rate}}
-                            </td>
-                        </tr>
+                            <tr ng-repeat="project in projects | orderBy : '-rate'"
+                                ng-hide="$index > 8 && !admin"
+                                ng-class="$index > 0 || 'info'">
+
+                                <td scope="row" width="60">
+                                    {{$index + 1}}
+                                </td>
+
+                                <td width="200">
+                                    <img ng-src="images/img/{{project.photos[0].src}}" alt="photo-project">
+                                </td>
+
+                                <td width="240" class="text-left">
+                                    <a href="#/project/{{project.id_project}}">
+                                        {{project.title_eng}}
+                                    </a>
+                                </td>
+
+                                <td width="100">
+                                    {{project.rate}}
+                                </td>
+
+                                <td ng-show="selectProject">
+                                    <input type="checkbox"
+                                           ng-model="select[$index]"
+                                           ng-true-value="{{project.id_project}}"
+                                           ng-false-value="-1" />
+                                </td>
+
+                            </tr>
                         </tbody>
                     </table>
+
 
 
                     <h3 class="page-header">Status expert vote</h3>
