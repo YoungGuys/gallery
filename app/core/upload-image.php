@@ -1,7 +1,7 @@
 <?php
 
 
-function resizeImage($tmp_name, $file_name, $size_image) {
+/*function resizeImage($tmp_name, $file_name, $size_image) {
     $end = explode(".", $tmp_name);
     $end = end($end);
     if (file_exists($tmp_name)) {
@@ -57,9 +57,6 @@ function resizeImage($tmp_name, $file_name, $size_image) {
                         imagejpeg($new_image, $file_name, 75);
                     }
                     imagedestroy($new_image);
-                    /*if (file_exists($tmp_name) && !$unlinked) {
-                        unlink($tmp_name);
-                    }*/
                 }
             } else {
                 $filename = $tmp_name;
@@ -106,14 +103,19 @@ function resizeImage($tmp_name, $file_name, $size_image) {
             copy($tmp_name, $file_name);
         }
     }
-}
+}*/
 
 
-  $filename = $_POST['fileName'];//$_FILES['file']['name'];
+/*//$filename = $_POST['fileName'];//$_FILES['file']['name'];
+$filename = $_FILES['file']['name'];
   $destination = '../images/img/' . $filename;
-    resizeImage($_FILES['file']['tmp_name'], $destination, [1280]);
-  //move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
+   // resizeImage($_FILES['file']['tmp_name'], $destination, [1280]);
+  move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );*/
 
+//$filename = $_FILES['file']['name'];
+$filename = $_POST['fileName'];
+$destination = '../images/img/' . $filename;
+move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
 
 
 
