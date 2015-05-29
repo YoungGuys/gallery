@@ -1,9 +1,59 @@
 <?php
 
 
-/*function resizeImage($tmp_name, $file_name, $size_image) {
+function resizeImage($tmp_name, $file_name, $size_image) {
     $end = explode(".", $tmp_name);
     $end = end($end);
+
+
+    $size = getimagesize($tmp_name);
+    $size_w = $size[0]; // ширина оригіналу
+    if ($size_w < $size_image[0]) {
+        //echo $size_w;
+        move_uploaded_file( $tmp_name, $file_name);
+        //echo "small";
+        return;
+    }
+
+    $filename = $tmp_name;
+    $size = getimagesize($filename);
+    $size_w = $size[0]; // ширина оригіналу
+    $size_h = $size[1]; // висота оригіналу
+    $w = $size_image[0]; // потрібна ширина
+    $h = $size_image[1]; // потрібна висота
+    if (!$h) {
+        $h = round($w * $size_h / $size_w);
+    }
+    $type = $size['mime'];
+    // щоб виликі картинки норм завантажувались
+    if (($size[0] > $w) or ($size[1] > $h)) {
+        exec('mogrify -resize ' . $w . 'x' . $h . ' ' . $filename);
+        $size = getimagesize($filename);
+        $size_w = $w; // ширина оригіналу
+        $size_h = $h; // висота оригіналу
+    }
+    echo $type;
+    switch ($type) {
+        case 'image/png':
+            $image = imagecreatefrompng($filename);
+            break;
+        case 'image/jpeg':
+            $image = imagecreatefromjpeg($filename);
+            break;
+        case 'image/gif':
+            $image = imagecreatefromgif($filename);
+            break;
+    }
+    $new_image = imagecreatetruecolor($w, $h);
+    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $w, $h, $size_w, $size_h);
+    var_dump($new_image);
+    if ($path) {
+        imagejpeg($new_image, $path, 75);
+    } else {
+        imagejpeg($new_image, $file_name, 75);
+    }
+    //imagedestroy($new_image);
+return;
     if (file_exists($tmp_name)) {
         if ($size_image[0] || $size_image[1]) {
             if ($size_image[0] == 100) {
@@ -38,25 +88,7 @@
                         $size_w = $w; // ширина оригіналу
                         $size_h = $h; // висота оригіналу
                     }
-                    switch ($type) {
-                        case 'image/png':
-                            $image = imagecreatefrompng($filename);
-                            break;
-                        case 'image/jpeg':
-                            $image = imagecreatefromjpeg($filename);
-                            break;
-                        case 'image/gif':
-                            $image = imagecreatefromgif($filename);
-                            break;
-                    }
-                    $new_image = imagecreatetruecolor($w, $h);
-                    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $w, $h, $size_w, $size_h);
-                    if ($path) {
-                        imagejpeg($new_image, $path, 75);
-                    } else {
-                        imagejpeg($new_image, $file_name, 75);
-                    }
-                    imagedestroy($new_image);
+
                 }
             } else {
                 $filename = $tmp_name;
@@ -103,7 +135,7 @@
             copy($tmp_name, $file_name);
         }
     }
-}*/
+}
 
 
 /*//$filename = $_POST['fileName'];//$_FILES['file']['name'];
@@ -113,8 +145,10 @@ $filename = $_FILES['file']['name'];
   move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );*/
 
 //$filename = $_FILES['file']['name'];
-$filename = $_POST['fileName'] ? $_POST['fileName'] : $_GET['fileName'];
+$array = json_decode($_POST['data'], true);
+$filename = $array['fileName'];
 $destination = '../images/img/' . $filename;
+//resizeImage($_FILES['file']['tmp_name'], $destination, [1280,430]);
 move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
 
 

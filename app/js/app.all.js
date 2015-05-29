@@ -1342,7 +1342,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     //fields: {
                     //    'username': 12
                     //},
-                    url: 'http://gallery.com/core/upload-image.php',
+                    url: 'http://www.pinchuk.dev/core/upload-image.php',
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,
@@ -1355,13 +1355,14 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     evt.config.file.name + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
+                    alert(data);
                     //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
                     if (!$scope.multipleUpload) {
                         $scope.photo[0] = files[0].name;
                     }
                     else {
-                        $scope.photo.push(config.file.name);
+                        $scope.photo.push(config.file.fileName);
                     }
 
                 });
