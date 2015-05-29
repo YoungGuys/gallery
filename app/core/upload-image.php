@@ -113,7 +113,7 @@ $filename = $_FILES['file']['name'];
   move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );*/
 
 //$filename = $_FILES['file']['name'];
-$filename = $_POST['fileName'];
+$filename = $_POST['fileName'] ? $_POST['fileName'] : $_GET['fileName'];
 $destination = '../images/img/' . $filename;
 move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
 
