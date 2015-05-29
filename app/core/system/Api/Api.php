@@ -599,7 +599,7 @@ class Api {
 
     public function delete_rate() {
         $id_project = $_GET['id_project'];
-        $this->db->delete("rating", ['id_project' => $id_project, "id_jury" => $_GET['id']]);
+        $this->db->delete("rating", ['id_project' => $id_project, "id_jury" => $_COOKIE['id']]);
         $this->result = true;
     }
 
