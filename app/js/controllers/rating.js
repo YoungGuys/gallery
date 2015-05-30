@@ -1,11 +1,15 @@
 'use strict';
 
-artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", function($scope, $http, $location, $route) {
 
     $scope.currentDate = new Date();
     $scope.select = [];
 
 
+    /*
+        перевірка видимості рейтингу,
+        if true, дані не загружаються
+     */
     $http.get('api/get/ratingVisibility')
         .success(function(data, status, headers, config) {
             console.log('\nratingVisibility');
@@ -13,7 +17,7 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
             $scope.ratingVisibility = (data == "false") ? false : true;
 
-            if (data) apiData();
+            if (!$scope.ratingVisibility) apiData();
         });
 
 
@@ -21,8 +25,11 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
         $scope.ratingVisibility = $scope.ratingVisibility ? 0 : 1;
 
         $http.get(
-            'api/put/settings',
-            {params: {"ratingVisibility": $scope.ratingVisibility}}
+            'api/put/settings', {
+                params: {
+                    "ratingVisibility": $scope.ratingVisibility
+                }
+            }
         )
             .success(function(data, status, headers, config) {
                 console.log('\nRating setting');
@@ -54,7 +61,6 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
 
     $scope.selectMode = function () {
-        //$scope.select = [];
         $scope.selectProject = $scope.selectProject ? 0 : 1;
     };
 
@@ -83,6 +89,8 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
                 console.log('\nsendToVote');
                 console.log(select);
                 console.log(data);
+
+                if (data) $route.reload();
             });
     };
 

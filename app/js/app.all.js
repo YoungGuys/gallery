@@ -596,6 +596,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             console.log(data);
 
             $scope.project = data.project;
+            $scope.user = data.user;
             $scope.project.id_user = data.statement.id_user;
 
             $scope.photo = [];
@@ -646,6 +647,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
 artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope) {
 
 
+    $scope.choseProjects = null;
     $scope.idJury = $routeParams.id || $rootScope.idJury;
 
 
@@ -668,7 +670,7 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             for (var i in data) {
                 for (var j in $scope.dataProjects) {
                     if (data[i].id_project == $scope.dataProjects[j].id_project) {
-                        $scope.projects[i] = $scope.dataProjects[j];
+                        $scope.projects.push($scope.dataProjects[j]);
                     }
                 }
             }
@@ -682,11 +684,20 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             console.log('\nmyRepeatProject');
             console.log(data);
 
-            $scope.choseProjects = data
+            $scope.choseProjects = data;
+
+            for (var i in data) {
+                for (var j in $scope.dataProjects) {
+                    if (data[i].id_project == $scope.dataProjects[j].id_project) {
+                        $scope.choseProjects[i].photos = $scope.dataProjects[j].photos;
+                    }
+                }
+            }
+
         });
 
 
-    $scope.deleteRepeat = function (id) {
+    $scope.deleteRepeat = function (id, i) {
         $http.get('api/put/deleteRepeat', { params: {
             id_project: id,
             id_jury: $scope.idJury
@@ -695,11 +706,12 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
                 console.log('\ndeleteRepeat');
                 console.log(data);
 
-                $scope.choseProjects = data
+                $scope.choseProjects.slice(i, 1);
             });
     };
 
-    $scope.chooseProject = function(id) {
+
+    $scope.chooseProject = function(id, i) {
 
         var data = {
             id_project: id
@@ -710,12 +722,11 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
                 console.log('\nAnswer add rating');
                 console.log(data);
 
-                $scope.deleteRepeat(id);
+                $scope.deleteRepeat(id, i);
             })
             .error(function(data, status, headers, config) {
                 console.log('Answer add rating "Error"');
             });
-
 
     };
 
@@ -723,21 +734,19 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
 
     //$http.get('api/get/myRateProject')
     //    .success(function(data, status, headers, config) {
-    //        console.log('\nJury rate project');
+    //        console.log('\nMy rate project');
     //        console.log(data);
     //
-    //        $scope.projects = {};
+    //        $scope.projects = data;
     //
     //        for (var i in data) {
-    //            if (data[i].id_jury == $scope.idJury) {
-    //                $scope.data.forEach(function(item, j){
-    //                    if (item.id_project == data[i].id_project) {
-    //                        $scope.projects[item.id_project] = item;
-    //                    }
-    //                });
+    //            for (var j in $scope.dataProjects) {
+    //                if (data[i].id_project == $scope.dataProjects[j].id_project) {
+    //                    $scope.projects[i].photos = $scope.dataProjects[j].photos;
+    //                }
     //            }
     //        }
-    //        console.log($scope.projects);
+    //
     //    });
 
 
@@ -914,10 +923,9 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
     }
 
 }]);
-'use strict';
 
 artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location) {
-
+    'use strict';
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
@@ -939,6 +947,15 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         });
 
 
+    $http.get('api/get/myRepeatProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nmyRepeatProject');
+            console.log(data);
+
+            $scope.choseProjects = data;
+
+        });
+
     $scope.setProject = function(id) {
     //    $location.path("/project/"+ id).replace().reload(false);
     //    alert(id);
@@ -950,6 +967,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         .success(function(data, status, headers, config) {
             console.log('\nAll jury');
             console.log(data);
+
+            for (var i in $scope.choseProjects) {
+                if ($scope.choseProjects[i].id_project == $routeParams.id) {
+                    $scope.deleteRepeatRating = true;
+                    return false;
+                }
+            }
 
             for (var i in data) {
                 if (data[i].login == $rootScope.userName) {
@@ -989,7 +1013,23 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer add rating');
                     console.log(data);
-                    if (data) $scope.rate = true;
+
+                    if (data) {
+                        $scope.rate = true;
+
+                        if ($scope.deleteRepeatRating) {
+                            $http.get('api/put/deleteRepeat', { params: {
+                                id_project: id,
+                                id_jury: $scope.idJury
+                            }})
+                                .success(function(data, status, headers, config) {
+                                    console.log('\ndeleteRepeat');
+                                    console.log(data);
+
+                                    $scope.choseProjects = data;
+                                });
+                        }
+                    }
                 })
                 .error(function(data, status, headers, config) {
                     console.log('Answer add rating "Error"');
@@ -1002,12 +1042,16 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 }]);
 'use strict';
 
-artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", function($scope, $http, $location, $route) {
 
     $scope.currentDate = new Date();
     $scope.select = [];
 
 
+    /*
+        перевірка видимості рейтингу,
+        if true, дані не загружаються
+     */
     $http.get('api/get/ratingVisibility')
         .success(function(data, status, headers, config) {
             console.log('\nratingVisibility');
@@ -1015,7 +1059,7 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
             $scope.ratingVisibility = (data == "false") ? false : true;
 
-            if (data) apiData();
+            if (!$scope.ratingVisibility) apiData();
         });
 
 
@@ -1023,8 +1067,11 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
         $scope.ratingVisibility = $scope.ratingVisibility ? 0 : 1;
 
         $http.get(
-            'api/put/settings',
-            {params: {"ratingVisibility": $scope.ratingVisibility}}
+            'api/put/settings', {
+                params: {
+                    "ratingVisibility": $scope.ratingVisibility
+                }
+            }
         )
             .success(function(data, status, headers, config) {
                 console.log('\nRating setting');
@@ -1056,7 +1103,6 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
 
 
     $scope.selectMode = function () {
-        //$scope.select = [];
         $scope.selectProject = $scope.selectProject ? 0 : 1;
     };
 
@@ -1085,6 +1131,8 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', function($scope, 
                 console.log('\nsendToVote');
                 console.log(select);
                 console.log(data);
+
+                if (data) $route.reload();
             });
     };
 
@@ -1342,7 +1390,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     //fields: {
                     //    'username': 12
                     //},
-                    url: 'http://www.pinchuk.dev/core/upload-image.php',
+                    url: 'http://gallery.com/core/upload-image.php',
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,
@@ -1352,14 +1400,13 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 
                     $scope.log = 'progress: ' + progressPercentage + '% ' +
-                    evt.config.file.name + '\n' + $scope.log;
+                    evt.config.file.fileName + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
-                    alert(data);
                     //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
                     if (!$scope.multipleUpload) {
-                        $scope.photo[0] = files[0].name;
+                        $scope.photo[0] = files[0].fileName;
                     }
                     else {
                         $scope.photo.push(config.file.fileName);

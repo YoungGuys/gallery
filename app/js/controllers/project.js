@@ -1,7 +1,6 @@
-'use strict';
 
 artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope', '$location', function($scope, $http, $routeParams, $rootScope, $location) {
-
+    'use strict';
 
     $http.get('api/get/projects')
         .success(function(data, status, headers, config) {
@@ -23,6 +22,15 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         });
 
 
+    $http.get('api/get/myRepeatProject')
+        .success(function(data, status, headers, config) {
+            console.log('\nmyRepeatProject');
+            console.log(data);
+
+            $scope.choseProjects = data;
+
+        });
+
     $scope.setProject = function(id) {
     //    $location.path("/project/"+ id).replace().reload(false);
     //    alert(id);
@@ -34,6 +42,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         .success(function(data, status, headers, config) {
             console.log('\nAll jury');
             console.log(data);
+
+            for (var i in $scope.choseProjects) {
+                if ($scope.choseProjects[i].id_project == $routeParams.id) {
+                    $scope.deleteRepeatRating = true;
+                    return false;
+                }
+            }
 
             for (var i in data) {
                 if (data[i].login == $rootScope.userName) {
@@ -73,7 +88,23 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer add rating');
                     console.log(data);
-                    if (data) $scope.rate = true;
+
+                    if (data) {
+                        $scope.rate = true;
+
+                        if ($scope.deleteRepeatRating) {
+                            $http.get('api/put/deleteRepeat', { params: {
+                                id_project: id,
+                                id_jury: $scope.idJury
+                            }})
+                                .success(function(data, status, headers, config) {
+                                    console.log('\ndeleteRepeat');
+                                    console.log(data);
+
+                                    $scope.choseProjects = data;
+                                });
+                        }
+                    }
                 })
                 .error(function(data, status, headers, config) {
                     console.log('Answer add rating "Error"');

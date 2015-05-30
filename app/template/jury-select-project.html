@@ -1,6 +1,6 @@
-<h3 class="page-header" ng-if="!choseProjects">Please select from the list of the best project:</h3>
+<h3 class="page-header" ng-hide="choseProjects">Please select from the list of the best project:</h3>
 
-<table class="table table-striped" ng-if="!choseProjects">
+<table class="table table-striped" ng-hide="choseProjects">
     <thead>
         <tr>
             <th>Photo</th>
@@ -25,7 +25,7 @@
                 <button type="button"
                         class="btn btn-success"
                         ng-if="!admin"
-                        ng-click="chooseProject(project.id_project)">
+                        ng-click="chooseProject(project.id_project, $index)">
 
                     <span class="glyphicon glyphicon-heart"> </span>
                     <span>To vote</span>
@@ -33,7 +33,7 @@
                 <button type="button"
                         class="btn btn-danger"
                         ng-if="!admin"
-                        ng-click="deleteRepeat(project.id_project)">
+                        ng-click="deleteRepeat(project.id_project, $index)">
 
                     <span class="glyphicon glyphicon-minus"> </span>
                     <span>Take voice</span>

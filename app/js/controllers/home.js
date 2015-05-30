@@ -3,6 +3,7 @@
 artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope) {
 
 
+    $scope.choseProjects = null;
     $scope.idJury = $routeParams.id || $rootScope.idJury;
 
 
@@ -25,7 +26,7 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             for (var i in data) {
                 for (var j in $scope.dataProjects) {
                     if (data[i].id_project == $scope.dataProjects[j].id_project) {
-                        $scope.projects[i] = $scope.dataProjects[j];
+                        $scope.projects.push($scope.dataProjects[j]);
                     }
                 }
             }
@@ -39,11 +40,20 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             console.log('\nmyRepeatProject');
             console.log(data);
 
-            $scope.choseProjects = data
+            $scope.choseProjects = data;
+
+            for (var i in data) {
+                for (var j in $scope.dataProjects) {
+                    if (data[i].id_project == $scope.dataProjects[j].id_project) {
+                        $scope.choseProjects[i].photos = $scope.dataProjects[j].photos;
+                    }
+                }
+            }
+
         });
 
 
-    $scope.deleteRepeat = function (id) {
+    $scope.deleteRepeat = function (id, i) {
         $http.get('api/put/deleteRepeat', { params: {
             id_project: id,
             id_jury: $scope.idJury
@@ -52,11 +62,12 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
                 console.log('\ndeleteRepeat');
                 console.log(data);
 
-                $scope.choseProjects = data
+                $scope.choseProjects.slice(i, 1);
             });
     };
 
-    $scope.chooseProject = function(id) {
+
+    $scope.chooseProject = function(id, i) {
 
         var data = {
             id_project: id
@@ -67,12 +78,11 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
                 console.log('\nAnswer add rating');
                 console.log(data);
 
-                $scope.deleteRepeat(id);
+                $scope.deleteRepeat(id, i);
             })
             .error(function(data, status, headers, config) {
                 console.log('Answer add rating "Error"');
             });
-
 
     };
 
@@ -80,21 +90,19 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
 
     //$http.get('api/get/myRateProject')
     //    .success(function(data, status, headers, config) {
-    //        console.log('\nJury rate project');
+    //        console.log('\nMy rate project');
     //        console.log(data);
     //
-    //        $scope.projects = {};
+    //        $scope.projects = data;
     //
     //        for (var i in data) {
-    //            if (data[i].id_jury == $scope.idJury) {
-    //                $scope.data.forEach(function(item, j){
-    //                    if (item.id_project == data[i].id_project) {
-    //                        $scope.projects[item.id_project] = item;
-    //                    }
-    //                });
+    //            for (var j in $scope.dataProjects) {
+    //                if (data[i].id_project == $scope.dataProjects[j].id_project) {
+    //                    $scope.projects[i].photos = $scope.dataProjects[j].photos;
+    //                }
     //            }
     //        }
-    //        console.log($scope.projects);
+    //
     //    });
 
 
