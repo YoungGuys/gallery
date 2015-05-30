@@ -12,13 +12,14 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <label class="col-xs-12" for="name-project">Project name:</label>
 
                             <div class="col-xs-6">
+                                <label for="name-project">Project name:</label>
                                 <input type="text" class="form-control" id="name-project" ng-model="project.title_eng">
                             </div>
 
                             <div class="col-xs-6">
+                                <label for="name-project">Project painter:</label>
                                 <select class="form-control" ng-model="project.id_user">
                                     <option value="null">Select an painter</option>
                                     <option ng-repeat="painter in painters"
@@ -30,29 +31,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <div class="row">
-
-                            <div class="col-xs-6">
-                                <label for="town">User town:</label>
-                                <input type="text" class="form-control" id="town" ng-model="user.town_eng">
-                            </div>
-
-                            <div class="col-xs-6">
-                                <label for="education">User education:</label>
-                                <input type="text" class="form-control" id="education" ng-model="user.education_eng">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="biography">User biography:</label>
-                        <input type="text" class="form-control" id="biography" ng-model="user.bio_eng">
-                    </div>
-
-
 
                     <div class="form-group">
                         <label for="InputInformation">Information about the project:</label>

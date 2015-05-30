@@ -84,31 +84,32 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                 });
         }
         else {
-            $http.get('api/post/rating', {params: data} )
-                .success(function(data, status, headers, config) {
-                    console.log('\nAnswer add rating');
-                    console.log(data);
+            if ($scope.deleteRepeatRating) {
 
-                    if (data) {
+                $http.get('api/put/deleteRepeat', { params: {
+                    id_project: id,
+                    id_jury: $scope.idJury
+                }})
+                    .success(function(data, status, headers, config) {
+                        console.log('\ndeleteRepeat');
+                        console.log(data);  // -> null
+
                         $scope.rate = true;
+                    });
+            }
+            else {
+                $http.get('api/post/rating', {params: data} )
+                    .success(function(data, status, headers, config) {
+                        console.log('\nAnswer add rating');
+                        console.log(data);
 
-                        if ($scope.deleteRepeatRating) {
-                            $http.get('api/put/deleteRepeat', { params: {
-                                id_project: id,
-                                id_jury: $scope.idJury
-                            }})
-                                .success(function(data, status, headers, config) {
-                                    console.log('\ndeleteRepeat');
-                                    console.log(data);
+                        if (data) $scope.rate = true;
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.log('Answer add rating "Error"');
+                    });
+            }
 
-                                    $scope.choseProjects = data;
-                                });
-                        }
-                    }
-                })
-                .error(function(data, status, headers, config) {
-                    console.log('Answer add rating "Error"');
-                });
         }
 
     };
