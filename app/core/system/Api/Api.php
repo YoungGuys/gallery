@@ -403,7 +403,8 @@ class Api {
             $this->result = $this->db->insert("rating",
                 [
                     "id_project" => $_GET['id_project'],
-                    'id_jury' => $_COOKIE['id']
+                    'id_jury' => $_COOKIE['id'],
+                    'repeat_vote' => 0
                 ], true
             );
         }
