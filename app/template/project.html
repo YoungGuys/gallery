@@ -6,7 +6,16 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">Project: "{{project.title_eng}}"</h3>
+                <h3 class="page-header">
+                    Project: "{{project.title_eng}}"
+
+                    <span class="lead pull-right">
+                        Author:
+                        <a href="#/artist/{{painter.id_user}}">
+                            {{painter.fio_eng}}
+                        </a>
+                    </span>
+                </h3>
 
                 <p class="page-header">Project description:</p>
 

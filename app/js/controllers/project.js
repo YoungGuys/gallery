@@ -10,10 +10,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             data.forEach(function(item, i){
                 if ( item.id_project ==  $routeParams.id) {
                     $scope.project = item;
+
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
 
                     $scope.photos = $scope.project.photos; //fotorama directive
+
+                    painter();
 
                     return false;
                 }
@@ -113,6 +116,24 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         }
 
     };
+
+
+
+    function painter () {
+        $http.get('api/get/user', {
+            params: {
+                id_user: $scope.project.id_user
+            }
+        })
+            .success(function(data, status, headers, config) {
+                console.log('\nUser id = ' + $scope.project.id_user);
+                console.log(data);
+
+                if (data) $scope.painter = data;
+
+            });
+    }
+
 
 
 }]);

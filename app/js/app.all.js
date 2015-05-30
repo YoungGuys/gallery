@@ -367,7 +367,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         });
 
 
-    $http.get('api/get/artistprojects', {params: {artist: $routeParams.id} })
+    $http.get('api/get/artistProjects', {params: {artist: $routeParams.id} })
         .success(function(data, status, headers, config) {
             console.log('\nArtist projects');
             console.log(data);
@@ -390,17 +390,27 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         .success(function(data, status, headers, config) {
             console.log('\nJury rate project');
             console.log(data);
+            console.log($scope.projects);
 
             for (var i in data) {
+
                 if (data[i].id_jury == $rootScope.idJury) {
-                    console.log(data[i].id_jury);
-                    $scope.projects.forEach(function(item, j){
-                        if (item.id_project == data[i].id_project) {
+
+                    //console.log(data[i].id_jury);
+
+                    for (var j in $scope.projects) {
+
+                        if ($scope.projects[j].id_project == data[i].id_project) {
+
                             $scope.projects[j].rate = true;
                             console.log($scope.projects[j].rate);
+
                         }
-                    });
+
+                    }
+
                 }
+
             }
         });
 
@@ -948,10 +958,13 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             data.forEach(function(item, i){
                 if ( item.id_project ==  $routeParams.id) {
                     $scope.project = item;
+
                     $scope.project.prevProject = i == 0 ? data[data.length - 1].id_project : data[i - 1].id_project;
                     $scope.project.nextProject = data.length == i + 1 ?  data[0].id_project : data[i + 1].id_project;
 
                     $scope.photos = $scope.project.photos; //fotorama directive
+
+                    painter();
 
                     return false;
                 }
@@ -1051,6 +1064,24 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         }
 
     };
+
+
+
+    function painter () {
+        $http.get('api/get/user', {
+            params: {
+                id_user: $scope.project.id_user
+            }
+        })
+            .success(function(data, status, headers, config) {
+                console.log('\nUser id = ' + $scope.project.id_user);
+                console.log(data);
+
+                if (data) $scope.painter = data;
+
+            });
+    }
+
 
 
 }]);
