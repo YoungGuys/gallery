@@ -12,25 +12,26 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             console.log(data);
 
             $scope.dataProjects = data;
+            myRateProject();
         });
 
 
-    $http.get('api/get/juryProjects', {params: {id_jury: $scope.idJury}} )
-        .success(function(data, status, headers, config) {
-            console.log('\njuryProjects');
-            console.log(data);
-
-            $scope.projects = [];
-
-            for (var i in data) {
-                for (var j in $scope.dataProjects) {
-                    if (data[i].id_project == $scope.dataProjects[j].id_project) {
-                        $scope.projects[i] = $scope.dataProjects[j];
-                    }
-                }
-            }
-            console.log($scope.projects);
-        });
+    //$http.get('api/get/juryProjects', {params: {id_jury: $scope.idJury}} )
+    //    .success(function(data, status, headers, config) {
+    //        console.log('\njuryProjects');
+    //        console.log(data);
+    //
+    //        $scope.projects = [];
+    //
+    //        for (var i in data) {
+    //            for (var j in $scope.dataProjects) {
+    //                if (data[i].id_project == $scope.dataProjects[j].id_project) {
+    //                    $scope.projects.push($scope.dataProjects[j]);
+    //                }
+    //            }
+    //        }
+    //        console.log($scope.projects);
+    //    });
 
 
 
@@ -39,11 +40,20 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
             console.log('\nmyRepeatProject');
             console.log(data);
 
-            $scope.choseProjects = data
+            $scope.choseProjects = data;
+
+            for (var i in data) {
+                for (var j in $scope.dataProjects) {
+                    if (data[i].id_project == $scope.dataProjects[j].id_project) {
+                        $scope.choseProjects[i].photos = $scope.dataProjects[j].photos;
+                    }
+                }
+            }
+
         });
 
 
-    $scope.deleteRepeat = function (id) {
+    $scope.deleteRepeat = function (id, i) {
         $http.get('api/put/deleteRepeat', { params: {
             id_project: id,
             id_jury: $scope.idJury
@@ -52,50 +62,53 @@ artApp.controller('homeCtrl',['$scope','$http', '$routeParams', '$rootScope', fu
                 console.log('\ndeleteRepeat');
                 console.log(data);
 
-                $scope.choseProjects = data
+                $scope.choseProjects.splice(i, 1);
+                myRateProject();
             });
     };
 
-    $scope.chooseProject = function(id) {
+
+    $scope.notChooseProject = function (id, i) {
 
         var data = {
             id_project: id
         };
 
-        $http.get('api/post/rating', {params: data} )
+        $http.get('api/delete/rate', {params: data} )
             .success(function(data, status, headers, config) {
-                console.log('\nAnswer add rating');
+                console.log('\nAnswer delete rating');
                 console.log(data);
 
-                $scope.deleteRepeat(id);
+                if (data) $scope.deleteRepeat(id, i);
             })
-            .error(function(data, status, headers, config) {
-                console.log('Answer add rating "Error"');
-            });
+    };
 
+
+    $scope.chooseProject = function(id, i) {
+
+        $scope.deleteRepeat(id, i);
 
     };
 
 
+    function myRateProject () {
+        $http.get('api/get/myRateProject')
+            .success(function(data, status, headers, config) {
+                console.log('\nMy rate project');
+                console.log(data);
 
-    //$http.get('api/get/myRateProject')
-    //    .success(function(data, status, headers, config) {
-    //        console.log('\nJury rate project');
-    //        console.log(data);
-    //
-    //        $scope.projects = {};
-    //
-    //        for (var i in data) {
-    //            if (data[i].id_jury == $scope.idJury) {
-    //                $scope.data.forEach(function(item, j){
-    //                    if (item.id_project == data[i].id_project) {
-    //                        $scope.projects[item.id_project] = item;
-    //                    }
-    //                });
-    //            }
-    //        }
-    //        console.log($scope.projects);
-    //    });
+                $scope.projects = data;
+
+                for (var i in data) {
+                    for (var j in $scope.dataProjects) {
+                        if (data[i].id_project == $scope.dataProjects[j].id_project) {
+                            $scope.projects[i].photos = $scope.dataProjects[j].photos;
+                        }
+                    }
+                }
+
+            });
+    }
 
 
 }]);

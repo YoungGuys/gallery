@@ -22,6 +22,7 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             console.log(data);
 
             $scope.project = data.project;
+            $scope.user = data.user;
             $scope.project.id_user = data.statement.id_user;
 
             $scope.photo = [];

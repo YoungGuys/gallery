@@ -38,7 +38,7 @@
 
                 </h3>
 
-                <p ng-if="ratingVisibility">
+                <p ng-if="!ratingVisibility">
                     Not enough data to display the rating
                 </p>
 
@@ -58,6 +58,7 @@
                         <tbody>
                             <tr ng-repeat="project in projects | orderBy : '-rate'"
                                 ng-hide="$index > 8 && !admin"
+                                ng-if="project.rate > 0"
                                 ng-class="$index > 0 || 'info'">
 
                                 <td scope="row" width="60">

@@ -56,16 +56,16 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 
                     $scope.log = 'progress: ' + progressPercentage + '% ' +
-                    evt.config.file.name + '\n' + $scope.log;
+                    evt.config.file.fileName + '\n' + $scope.log;
 
                 }).success(function (data, status, headers, config) {
                     //$scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + data + '\n' + $scope.log;
 
                     if (!$scope.multipleUpload) {
-                        $scope.photo[0] = files[0].name;
+                        $scope.photo[0] = files[0].fileName;
                     }
                     else {
-                        $scope.photo.push(config.file.name);
+                        $scope.photo.push(config.file.fileName);
                     }
 
                 });

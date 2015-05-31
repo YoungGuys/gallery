@@ -12,13 +12,14 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <label class="col-xs-12" for="InputNameProject">Project name:</label>
 
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="InputNameProject" ng-model="project.title_eng">
+                                <label for="name-project">Project name:</label>
+                                <input type="text" class="form-control" id="name-project" ng-model="project.title_eng">
                             </div>
 
                             <div class="col-xs-6">
+                                <label for="name-project">Project painter:</label>
                                 <select class="form-control" ng-model="project.id_user">
                                     <option value="null">Select an painter</option>
                                     <option ng-repeat="painter in painters"
