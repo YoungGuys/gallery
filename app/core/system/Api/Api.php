@@ -503,7 +503,7 @@ class Api {
                 'passport_number' => $_GET['passport_number'],
                 'passport_who' => $_GET['passport_who'],
                 'passport_when' => $_GET['passport_when'],
-            ], ['id' => $_GET['id_user']]);
+            ], ['id_user' => $_GET['id_user']]);
         $this->db->update("statements",
             [
                 "phone" => $_GET['phone'],
