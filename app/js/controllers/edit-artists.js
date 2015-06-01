@@ -19,20 +19,11 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
         if ($scope.formEditPainter.$valid) {
 
-            //var data;
+            var data;
 
-            //data = $scope.painter;
-            //data.id_user = $routeParams.id;
-            //data.photo = $scope.photo[0];
-
-            var data = {
-                id_user:        $routeParams.id,
-                fio_eng:        $scope.painter.fio_eng,
-                bio_eng:        $scope.painter.bio,
-                town_eng:       $scope.painter.town_eng,
-                education_eng:  $scope.painter.education_eng,
-                photo:          $scope.photo[0]
-            };
+            data = $scope.painter;
+            data.id_user = $routeParams.id;
+            data.photo = $scope.photo[0];
 
             console.log(data);
             $http.get('api/put/user', {params: data} )
