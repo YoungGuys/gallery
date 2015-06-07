@@ -124,3 +124,23 @@ artApp.directive('fotoramaImg', function () {
         }
     }
 });
+
+
+artApp.directive('alert', function () {
+    return {
+        templateUrl: 'template/alert.html',
+        link: function(scope, element, attrs) {
+
+            scope.$watch('status', function () {
+
+                if (scope.status) {
+                    setTimeout(function(){
+                        scope.status = null;
+                    }, 2000);
+                }
+
+            });
+
+        }
+    }
+});
