@@ -29,7 +29,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 var m = new Date().getMonth() + 1;
                 var d = new Date().getDate();
                 var r = Math.round(Math.random() * 100);
-                var date = y + '-' + m + '-' + d;
+                var date = y + m + d;
 
                 var fileNameArray = file.name.split('.');
                 var fileType = fileNameArray[fileNameArray.length - 1];

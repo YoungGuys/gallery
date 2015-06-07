@@ -10,19 +10,23 @@
 
                 <h3 class="page-header">Add new project:</h3>
 
-                <form name="formAddArtist">
+                <form name="formAddProject" novalidate>
 
                     <div class="form-group">
                         <div class="row">
 
                             <label  class="col-xs-12" for="InputNameProject">Project name:</label>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="InputNameProject" ng-model="project.name"/>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameProject"
+                                       required="required"
+                                       ng-model="project.title_eng"/>
                             </div>
 
                             <div class="col-xs-6">
-                                <select class="form-control" ng-model="project.id_user">
-                                    <option value="null" selected="selected">Select an painter</option>
+                                <select class="form-control" ng-model="project.id_user" required="required">
+                                    <option value="null" ng-selected="true" ng-disabled="true">Select an painter</option>
                                     <option ng-repeat="painter in painters"
                                             value="{{painter.id_user}}">
                                         {{painter.fio_eng}}
@@ -35,7 +39,11 @@
 
                     <div class="form-group">
                         <label for="InputInformation">About project:</label>
-                        <textarea class="form-control" rows="10" id="InputInformation" ng-model="project.description"></textarea>
+                        <textarea class="form-control"
+                                  rows="10"
+                                  id="InputInformation"
+                                  required="required"
+                                  ng-model="project.description_eng"></textarea>
                     </div>
 
 

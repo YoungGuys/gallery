@@ -17,29 +17,33 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
     $scope.addProject = function () {
 
-        if ($scope.project.id_user == "null") {
-            alert('Choose painter!');
+        if (!$scope.formAddProject.$valid) {
+            $scope.status = "danger";
+            $scope.message = "Please complete all fields";
             return false;
         }
 
-        var data = {
-            id_user:         $scope.project.id_user,
-            title_eng:       $scope.project.name,
-            description_eng: $scope.project.description,
-            photos:          $scope.photo
-        };
+        if ($scope.project.id_user == "null") {
+            $scope.status = "danger";
+            $scope.message = "Error";
+            return false;
+        }
 
-        data = {"json": JSON.stringify(data)};
+        $scope.project.photos = $scope.photo;
+
+        $scope.project = {"json": JSON.stringify($scope.project)};
+
         console.log('\nSend server data add project');
-        console.log(data);
+        console.log($scope.project);
 
-        $http.get('api/post/project', {params: data})
+        $http.get('api/post/project', {params: $scope.project})
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);
 
                 if (data) {
-
+                    $scope.project = {};
+                    $scope.photo = [];
                     $scope.status = "success";
                     $scope.message = "Successfully";
                 }

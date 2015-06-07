@@ -49,9 +49,4 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
     };
 
 
-//$scope.removePhoto = function () {
-//    $scope.photo = null;
-//    $scope.files = null;
-//};
-
 }]);

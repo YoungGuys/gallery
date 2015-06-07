@@ -190,59 +190,76 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
     $scope.addPainter = function () {
 
-        if ($scope.formAddPainter.$valid) {
-
-            $scope.painter.photo = $scope.photo || null;
-
-            console.log($scope.painter);
-
-            $http.get('api/post/addArtist', {params: $scope.painter})
-                .success(function (data, status, headers, config) {
-                    console.log('\nAnswer add artist');
-                    console.log(data);
-
-                    if (data) {
-                        $scope.painter = {};
-                        $scope.photo = null;
-
-                        $scope.status = "success";
-                        $scope.message = "Done";
-                    }
-                    else {
-                        $scope.status = "danger";
-                        $scope.message = "Error";
-                    }
-
-                })
-                .error(function (data, status, headers, config) {
-                    console.log('Answer add artist "Error"')
-                });
-
+        if (!$scope.formAddPainter.$valid) {
+            $scope.status = "danger";
+            $scope.message = "Please complete all fields";
+            return false;
         }
+
+
+        $scope.painter.photo = $scope.photo || null;
+
+        console.log($scope.painter);
+
+        $http.get('api/post/addArtist', {params: $scope.painter})
+            .success(function (data, status, headers, config) {
+                console.log('\nAnswer add artist');
+                console.log(data);
+
+                if (data) {
+                    $scope.painter = {};
+                    $scope.photo = [];
+
+                    $scope.status = "success";
+                    $scope.message = "Successfully";
+                }
+                else {
+                    $scope.status = "danger";
+                    $scope.message = "Error";
+                }
+
+            })
+            .error(function (data, status, headers, config) {
+                console.log('Answer add artist "Error"')
+            });
+
     };
 
 
 }]);
 'use strict';
 
-artApp.controller('addJuryCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
+artApp.controller('addJuryCtrl',['$scope','$http', function($scope, $http) {
 
+    $scope.jury = {};
 
     $scope.addJury = function () {
 
-        var data = {
-            login: $scope.login,
-            pass:  $scope.pass,
-            fio:   $scope.fio,
-            bio:   $scope.bio,
-            photo: $scope.photo
-        };
-        console.log(data);
+        if ($scope.formAddJury.$valid) {
+            $scope.status = "danger";
+            $scope.message = "Please complete all fields";
+            return false;
+        }
 
-        $http.get('/api/post/addjury', {params: data})
+        $scope.jury.photo = $scope.photo;
+        console.log($scope.jury);
+
+        $http.get('/api/post/addjury', {params: $scope.jury})
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add jury');
                 console.log(data);
+
+                if (data) {
+                    $scope.jury = {};
+                    $scope.photo = [];
+
+                    $scope.status = "success";
+                    $scope.message = "Successfully";
+                }
+                else {
+                    $scope.status = "danger";
+                    $scope.message = "Error";
+                }
             })
             .error(function(data, status, headers, config) {
                 console.log('\nAnswer add jury "Error"')
@@ -272,29 +289,33 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
     $scope.addProject = function () {
 
-        if ($scope.project.id_user == "null") {
-            alert('Choose painter!');
+        if (!$scope.formAddProject.$valid) {
+            $scope.status = "danger";
+            $scope.message = "Please complete all fields";
             return false;
         }
 
-        var data = {
-            id_user:         $scope.project.id_user,
-            title_eng:       $scope.project.name,
-            description_eng: $scope.project.description,
-            photos:          $scope.photo
-        };
+        if ($scope.project.id_user == "null") {
+            $scope.status = "danger";
+            $scope.message = "Error";
+            return false;
+        }
 
-        data = {"json": JSON.stringify(data)};
+        $scope.project.photos = $scope.photo;
+
+        $scope.project = {"json": JSON.stringify($scope.project)};
+
         console.log('\nSend server data add project');
-        console.log(data);
+        console.log($scope.project);
 
-        $http.get('api/post/project', {params: data})
+        $http.get('api/post/project', {params: $scope.project})
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);
 
                 if (data) {
-
+                    $scope.project = {};
+                    $scope.photo = [];
                     $scope.status = "success";
                     $scope.message = "Successfully";
                 }
@@ -537,11 +558,6 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
     };
 
-
-//$scope.removePhoto = function () {
-//    $scope.photo = null;
-//    $scope.files = null;
-//};
 
 }]);
 'use strict';
@@ -1444,7 +1460,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 var m = new Date().getMonth() + 1;
                 var d = new Date().getDate();
                 var r = Math.round(Math.random() * 100);
-                var date = y + '-' + m + '-' + d;
+                var date = y + m + d;
 
                 var fileNameArray = file.name.split('.');
                 var fileType = fileNameArray[fileNameArray.length - 1];
