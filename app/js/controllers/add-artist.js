@@ -7,28 +7,29 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
     $scope.addPainter = function () {
 
-        //if ($scope.formAddPainter.$valid && $scope.photo) {
-
         if ($scope.formAddPainter.$valid) {
 
-            var data = {
-                fio_eng: $scope.name,
-                bio: $scope.bio,
-                photo: $scope.photo || null
-            };
-            console.log(data);
+            $scope.painter.photo = $scope.photo || null;
 
-            $http.get('api/post/addArtist', {params: data})
+            console.log($scope.painter);
+
+            $http.get('api/post/addArtist', {params: $scope.painter})
                 .success(function (data, status, headers, config) {
                     console.log('\nAnswer add artist');
                     console.log(data);
 
                     if (data) {
-                        $scope.name = null;
-                        $scope.bio = null;
+                        $scope.painter = {};
                         $scope.photo = null;
-                        $scope.files = null;
+
+                        $scope.status = "success";
+                        $scope.message = "Done";
                     }
+                    else {
+                        $scope.status = "danger";
+                        $scope.message = "Error";
+                    }
+
                 })
                 .error(function (data, status, headers, config) {
                     console.log('Answer add artist "Error"')

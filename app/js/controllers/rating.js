@@ -1,6 +1,6 @@
 'use strict';
 
-artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", function($scope, $http, $location, $route) {
+artApp.controller('ratingCtrl',['$scope', '$rootScope', '$http', '$location', "$route", function($scope, $rootScope, $http, $location, $route) {
 
     $scope.currentDate = new Date();
     $scope.select = [];
@@ -17,7 +17,7 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", functio
 
             $scope.ratingVisibility = (data == "false") ? false : true;
 
-            if (!$scope.ratingVisibility) apiData();
+            if (!$scope.ratingVisibility || $rootScope.admin) apiData();
         });
 
 

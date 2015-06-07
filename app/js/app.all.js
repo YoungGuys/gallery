@@ -190,28 +190,29 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
     $scope.addPainter = function () {
 
-        //if ($scope.formAddPainter.$valid && $scope.photo) {
-
         if ($scope.formAddPainter.$valid) {
 
-            var data = {
-                fio_eng: $scope.name,
-                bio: $scope.bio,
-                photo: $scope.photo || null
-            };
-            console.log(data);
+            $scope.painter.photo = $scope.photo || null;
 
-            $http.get('api/post/addArtist', {params: data})
+            console.log($scope.painter);
+
+            $http.get('api/post/addArtist', {params: $scope.painter})
                 .success(function (data, status, headers, config) {
                     console.log('\nAnswer add artist');
                     console.log(data);
 
                     if (data) {
-                        $scope.name = null;
-                        $scope.bio = null;
+                        $scope.painter = {};
                         $scope.photo = null;
-                        $scope.files = null;
+
+                        $scope.status = "success";
+                        $scope.message = "Done";
                     }
+                    else {
+                        $scope.status = "danger";
+                        $scope.message = "Error";
+                    }
+
                 })
                 .error(function (data, status, headers, config) {
                     console.log('Answer add artist "Error"')
@@ -467,8 +468,8 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($scope, $http, $routeParams) {
 
 
-    $http.get('api/get/user', {params: {id_user: $routeParams.id}} )
-        .success(function(data, status, headers, config) {
+    $http.get('api/get/user', {params: {id_user: $routeParams.id}})
+        .success(function (data, status, headers, config) {
             console.log('\nUser id = ' + $routeParams.id);
             console.log(data);
 
@@ -483,27 +484,29 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
         if ($scope.formEditPainter.$valid) {
 
-            //var data;
+            var data;
 
-            //data = $scope.painter;
-            //data.id_user = $routeParams.id;
-            //data.photo = $scope.photo[0];
-
-            var data = {
-                id_user:        $routeParams.id,
-                fio_eng:        $scope.painter.fio_eng,
-                bio_eng:        $scope.painter.bio,
-                town_eng:       $scope.painter.town_eng,
-                education_eng:  $scope.painter.education_eng,
-                photo:          $scope.photo[0]
-            };
+            data = $scope.painter;
+            data.id_user = $routeParams.id;
+            data.photo = $scope.photo[0];
 
             console.log(data);
-            $http.get('api/put/user', {params: data} )
-                .success(function(data, status, headers, config) {
+            $http.get('api/put/user', {params: data})
+                .success(function (data, status, headers, config) {
                     console.log(data);
+
+                    if (data) {
+                        $scope.status = "success";
+                        $scope.message = "Done";
+                    }
+                    else {
+                        $scope.status = "danger";
+                        $scope.message = "Error";
+                    }
+
+
                 })
-                .error(function(data, status, headers, config) {
+                .error(function (data, status, headers, config) {
                     console.log('NOT OK')
                 });
 
@@ -512,10 +515,10 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
     };
 
 
-    //$scope.removePhoto = function () {
-    //    $scope.photo = null;
-    //    $scope.files = null;
-    //};
+//$scope.removePhoto = function () {
+//    $scope.photo = null;
+//    $scope.files = null;
+//};
 
 }]);
 'use strict';
@@ -1087,7 +1090,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 }]);
 'use strict';
 
-artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", function($scope, $http, $location, $route) {
+artApp.controller('ratingCtrl',['$scope', '$rootScope', '$http', '$location', "$route", function($scope, $rootScope, $http, $location, $route) {
 
     $scope.currentDate = new Date();
     $scope.select = [];
@@ -1104,7 +1107,7 @@ artApp.controller('ratingCtrl',['$scope','$http', '$location', "$route", functio
 
             $scope.ratingVisibility = (data == "false") ? false : true;
 
-            if (!$scope.ratingVisibility) apiData();
+            if (!$scope.ratingVisibility || $rootScope.admin) apiData();
         });
 
 
@@ -1432,9 +1435,6 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 file.fileName = fileName + '-' + date + '-' + r + '.' + fileType;
 
                 Upload.upload({
-                    //fields: {
-                    //    'username': 12
-                    //},
                     url: 'http://gallery.com/core/upload-image.php',
                     headers: {'Content-Type': file.type},
                     method: 'POST',
@@ -1589,6 +1589,26 @@ artApp.directive('fotoramaImg', function () {
                         });
                 });
             }
+        }
+    }
+});
+
+
+artApp.directive('alert', function () {
+    return {
+        templateUrl: 'template/alert.html',
+        link: function(scope, element, attrs) {
+
+            scope.$watch('status', function () {
+
+                if (scope.status) {
+                    setTimeout(function(){
+                        scope.status = null;
+                    }, 2000);
+                }
+
+            });
+
         }
     }
 });

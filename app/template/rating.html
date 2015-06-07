@@ -31,18 +31,20 @@
 
                         <button ng-click="showRating()"
                                 class="btn btn-default">
-                            Show rating for expert
+                            <span ng-if="ratingVisibility">Show</span>
+                            <span ng-if="!ratingVisibility">Hide</span>
+                            rating for expert
                         </button>
 
                     </span>
 
                 </h3>
 
-                <p ng-if="!ratingVisibility">
+                <p ng-show="ratingVisibility && !admin">
                     Not enough data to display the rating
                 </p>
 
-                <div class="rating" ng-if="!ratingVisibility">
+                <div class="rating" ng-show="!ratingVisibility || admin">
                     <p class="text-muted">To: {{currentDate | date: "d.M.yyyy '=' HH:mm"}}</p>
 
                     <table class="table table-striped text-center">
