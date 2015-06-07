@@ -61,7 +61,8 @@
                             <tr ng-repeat="project in projects | orderBy : '-rate'"
                                 ng-hide="$index > 8 && !admin"
                                 ng-if="project.rate > 0"
-                                ng-class="$index > 0 || 'info'">
+                                ng-class="$index > 0 || 'info'"
+                                class="animate-repeat">
 
                                 <td scope="row" width="60">
                                     {{$index + 1}}
@@ -105,7 +106,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="jury in allJury">
+                        <tr class="animate-repeat" ng-repeat="jury in allJury">
                             <td width="100">
                                 <img ng-src="images/img/{{jury.photo}}" alt="jury-photo">
                             </td>

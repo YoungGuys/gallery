@@ -18,7 +18,8 @@
                         </tr>
                     </thead>
                     <tbody class="js-juryList">
-                        <tr ng-repeat="j in jury track by $index">
+                        <tr class="animate-repeat"
+                            ng-repeat="j in jury track by $index">
                             <td scope="row" width="150">
                                 <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
                             </td>

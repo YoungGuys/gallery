@@ -19,7 +19,9 @@
                         </tr>
                     </thead>
                     <tbody class="js-lsit">
-                        <tr ng-repeat="painter in painters track by $index">
+                        <tr class="animate-repeat"
+                            ng-repeat="painter in painters track by $index">
+
                             <td class="column-photo">
                                 <img ng-src="images/img/{{painter.photo}}" alt="painter-photo">
                             </td>
