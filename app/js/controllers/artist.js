@@ -50,8 +50,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
                 if (data[i].id_jury == $rootScope.idJury) {
 
-                    //console.log(data[i].id_jury);
-
                     for (var j in $scope.projects) {
 
                         if ($scope.projects[j].id_project == data[i].id_project) {
@@ -75,14 +73,45 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             id_project: id
         };
 
-        $http.get('api/post/rating', {params: data} )
-            .success(function(data, status, headers, config) {
-                console.log('\nAnswer add rating');
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('Answer add rating "Error"');
-            });
+        if ($scope.rate) {
+            $http.get('api/delete/rate', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer delete rating');
+                    console.log(data);
+                    if (data) $scope.rate = false;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer delete rating "Error"');
+                });
+        }
+        else {
+            if ($scope.deleteRepeatRating) {
+
+                $http.get('api/put/deleteRepeat', { params: {
+                    id_project: id,
+                    id_jury: $scope.idJury
+                }})
+                    .success(function(data, status, headers, config) {
+                        console.log('\ndeleteRepeat');
+                        console.log(data);  // -> null
+
+                        $scope.rate = true;
+                    });
+            }
+            else {
+                $http.get('api/post/rating', {params: data} )
+                    .success(function(data, status, headers, config) {
+                        console.log('\nAnswer add rating');
+                        console.log(data);
+
+                        if (data) $scope.rate = true;
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.log('Answer add rating "Error"');
+                    });
+            }
+
+        }
 
     };
 

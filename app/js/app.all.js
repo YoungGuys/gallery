@@ -442,8 +442,6 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
                 if (data[i].id_jury == $rootScope.idJury) {
 
-                    //console.log(data[i].id_jury);
-
                     for (var j in $scope.projects) {
 
                         if ($scope.projects[j].id_project == data[i].id_project) {
@@ -467,14 +465,45 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
             id_project: id
         };
 
-        $http.get('api/post/rating', {params: data} )
-            .success(function(data, status, headers, config) {
-                console.log('\nAnswer add rating');
-                console.log(data);
-            })
-            .error(function(data, status, headers, config) {
-                console.log('Answer add rating "Error"');
-            });
+        if ($scope.rate) {
+            $http.get('api/delete/rate', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nAnswer delete rating');
+                    console.log(data);
+                    if (data) $scope.rate = false;
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('Answer delete rating "Error"');
+                });
+        }
+        else {
+            if ($scope.deleteRepeatRating) {
+
+                $http.get('api/put/deleteRepeat', { params: {
+                    id_project: id,
+                    id_jury: $scope.idJury
+                }})
+                    .success(function(data, status, headers, config) {
+                        console.log('\ndeleteRepeat');
+                        console.log(data);  // -> null
+
+                        $scope.rate = true;
+                    });
+            }
+            else {
+                $http.get('api/post/rating', {params: data} )
+                    .success(function(data, status, headers, config) {
+                        console.log('\nAnswer add rating');
+                        console.log(data);
+
+                        if (data) $scope.rate = true;
+                    })
+                    .error(function(data, status, headers, config) {
+                        console.log('Answer add rating "Error"');
+                    });
+            }
+
+        }
 
     };
 
@@ -1024,12 +1053,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 
         });
 
-    $scope.setProject = function(id) {
-    //    $location.path("/project/"+ id).replace().reload(false);
-    //    alert(id);
-    //    history.replaceState({}, '', 'http://gallery.com/#/project/' + id);
-    //    dataPage($scope.data, id)
-    };
 
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
@@ -1037,22 +1060,32 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             console.log(data);
 
             for (var i in $scope.choseProjects) {
+
                 if ($scope.choseProjects[i].id_project == $routeParams.id) {
+
                     $scope.deleteRepeatRating = true;
                     return false;
+
                 }
+
             }
 
             for (var i in data) {
+
                 if (data[i].login == $rootScope.userName) {
+
                     data[i].projects.forEach(function(item){
+
                         if (item.id_project == $routeParams.id) {
                             $scope.rate = true;
-                            console.log($scope.rate);
                         }
+
                     });
+
                 }
+
             }
+
         })
         .error(function(data, status, headers, config) {
             console.log('All jury error')

@@ -34,12 +34,6 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
 
         });
 
-    $scope.setProject = function(id) {
-    //    $location.path("/project/"+ id).replace().reload(false);
-    //    alert(id);
-    //    history.replaceState({}, '', 'http://gallery.com/#/project/' + id);
-    //    dataPage($scope.data, id)
-    };
 
     $http.get('api/get/alljury')
         .success(function(data, status, headers, config) {
@@ -47,22 +41,32 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
             console.log(data);
 
             for (var i in $scope.choseProjects) {
+
                 if ($scope.choseProjects[i].id_project == $routeParams.id) {
+
                     $scope.deleteRepeatRating = true;
                     return false;
+
                 }
+
             }
 
             for (var i in data) {
+
                 if (data[i].login == $rootScope.userName) {
+
                     data[i].projects.forEach(function(item){
+
                         if (item.id_project == $routeParams.id) {
                             $scope.rate = true;
-                            console.log($scope.rate);
                         }
+
                     });
+
                 }
+
             }
+
         })
         .error(function(data, status, headers, config) {
             console.log('All jury error')
