@@ -32,13 +32,12 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
                     if (data) {
                         $scope.status = "success";
-                        $scope.message = "Done";
+                        $scope.message = "Successfully";
                     }
                     else {
                         $scope.status = "danger";
                         $scope.message = "Error";
                     }
-
 
                 })
                 .error(function (data, status, headers, config) {

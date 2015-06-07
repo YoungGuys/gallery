@@ -37,6 +37,16 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);
+
+                if (data) {
+
+                    $scope.status = "success";
+                    $scope.message = "Successfully";
+                }
+                else {
+                    $scope.status = "danger";
+                    $scope.message = "Error";
+                }
             })
             .error(function(data, status, headers, config) {
                 console.log('\nAnswer add project "Error"')

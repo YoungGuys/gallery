@@ -1,3 +1,7 @@
+body {
+    padding-bottom: 50px;
+}
+
 /* Nav */
 
 .top-nav{
@@ -307,4 +311,8 @@ html, body {
 
 .nav > li > a {
     color: #000;
+}
+
+.alert {
+    margin-top: 20px;
 }

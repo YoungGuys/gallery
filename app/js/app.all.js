@@ -292,12 +292,36 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
             .success(function(data, status, headers, config) {
                 console.log('\nAnswer add project');
                 console.log(data);
+
+                if (data) {
+
+                    $scope.status = "success";
+                    $scope.message = "Successfully";
+                }
+                else {
+                    $scope.status = "danger";
+                    $scope.message = "Error";
+                }
             })
             .error(function(data, status, headers, config) {
                 console.log('\nAnswer add project "Error"')
             });
 
     };
+
+}]);
+'use strict';
+
+artApp.controller('alertCtrl',['$scope', '$timeout', function($scope, $timeout) {
+
+    $scope.$watch('status', function () {
+
+        $timeout(function(){
+            $scope.status = false;
+        }, 4000);
+
+    });
+
 
 }]);
 'use strict';
@@ -497,13 +521,12 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
                     if (data) {
                         $scope.status = "success";
-                        $scope.message = "Done";
+                        $scope.message = "Successfully";
                     }
                     else {
                         $scope.status = "danger";
                         $scope.message = "Error";
                     }
-
 
                 })
                 .error(function (data, status, headers, config) {
@@ -1596,20 +1619,9 @@ artApp.directive('fotoramaImg', function () {
 
 artApp.directive('alert', function () {
     return {
+        restrict: 'E',
         templateUrl: 'template/alert.html',
-        link: function(scope, element, attrs) {
-
-            scope.$watch('status', function () {
-
-                if (scope.status) {
-                    setTimeout(function(){
-                        scope.status = null;
-                    }, 2000);
-                }
-
-            });
-
-        }
+        controller: 'alertCtrl'
     }
 });
 'use strict';
