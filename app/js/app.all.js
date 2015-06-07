@@ -509,7 +509,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
 
     $scope.deleteProject = function (id, i) {
-        var remove = confirm('Видалити проект?');
+        var remove = confirm('Remove project?');
 
         if (remove) {
 
