@@ -75,12 +75,22 @@ class Api {
     }
 
     public function get_allUsers() {
-        $this->result = $this->db->send_query("SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user");
+        if (User::trueAdmin()) {
+            $this->result = $this->db->send_query("SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user");
+        }
+        else {
+            $this->result = $this->db->send_query("SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user WHERE u.visibility = 1");
+        }
     }
 
     public function get_user() {
         $id = $_GET['id_user'];
-        $sql = "SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user WHERE u.id_user = $id";
+
+        if (User::trueAdmin()) {
+            $sql = "SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user WHERE u.id_user = $id";
+        } else {
+            $sql = "SELECT * FROM `users` as u LEFT JOIN `statements` as s ON u.id_user = s.id_user WHERE u.id_user = $id AND u.visibility = 1";
+        }
         $this->result = $this->db->send_query($sql)[0];
     }
 
@@ -120,13 +130,22 @@ class Api {
         $statement = $this->db->send_query($sql)[0];
         if ($statement) {
             if ($statement['id_user']) {
-                $user = $this->db->select("users", false, ['id_user' => $statement['id_user']])[0];
+                if (User::trueAdmin()) {
+                    $user = $this->db->select("users", false, ['id_user' => $statement['id_user']])[0];
+                } else {
+                    $user = $this->db->select("users", false, ['id_user' => $statement['id_user'], "visibility" => 1])[0];
+                }
                 $this->result = [
                     "project" => $project,"photos" => $photos,'statement' => $statement, 'user' => $user
                 ];
             } elseif ($statement['id_group']) {
                 $group = $this->db->select("group", false, ['id' => $statement['id_group']])[0];
-                $users[0] = $this->db->select("users", false, ['id_group' => $statement['id_group']])[0];
+                if (User::trueAdmin()) {
+                    $users[0] = $this->db->select("users", false, ['id_group' => $statement['id_group']])[0];
+                }
+                else {
+                    $users[0] = $this->db->select("users", false, ['id_group' => $statement['id_group']])[0];
+                }
                 $this->result = [
                     "project" => $project,
                     "photos" => $photos,
@@ -140,7 +159,12 @@ class Api {
 
     public function get_artistProjects() {
         $id = $_GET['artist'];
-        $group_id = $this->db->select("users", false, ['id_user' => $id])[0];
+        if (User::trueAdmin()) {
+            $group_id = $this->db->select("users", false, ['id_user' => $id])[0];
+        }
+        else {
+            $group_id = $this->db->select("users", false, ['id_user' => $id, "visibility" => 1])[0];
+        }
         if ($group_id['id_group']) {
             $searchId = $group_id['id_group'];
         } else $searchId = $group_id['id_user'];
@@ -567,7 +591,12 @@ class Api {
         $this->db->update("rating", ["repeat_vote" => 0], ['id_project' => $id_project, "id_jury" => $id_jury]);
     }
 
-
+    public function put_changeVisibilityUser()
+    {
+        $id_user = $_GET['id_user'];
+        $visi = $_GET['visibility'];
+        $this->db->update("users", ["visibility" => $visi], ["id_user" => $id_user]);
+    }
 
     /*public function put_repeatRate()
     {
@@ -587,9 +616,21 @@ class Api {
 
 
     public function delete_project() {
-        $id = $_GET['id_project<div class="form-group">'];
+        $id = $_GET['id_project'];
         $this->db->delete("projects", ['id_project' => $id]);
         $this->result = true;
+    }
+
+    public function delete_image()
+    {
+        $name = $_GET['name'];
+        if (file_exists("images/img/$name")) {
+            unlink("image/img/$name");
+            $this->result = true;
+        }
+        else {
+            $this->result = false;
+        }
     }
 
     public function delete_jury() {
