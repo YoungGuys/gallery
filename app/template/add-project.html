@@ -15,36 +15,64 @@
                     <div class="form-group">
                         <div class="row">
 
-                            <label  class="col-xs-12" for="InputNameProject">Project name:</label>
+                            <div class="col-xs-12">
+                                <div class="pull-right">
+                                    <select class="form-control" ng-model="project.id_user" required="required">
+                                        <option value="null" ng-selected="true" ng-disabled="true">Select a painter</option>
+                                        <option ng-repeat="painter in painters"
+                                                value="{{painter.id_user}}">
+                                            {{painter.fio_eng}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-xs-6">
+                                <label for="InputNameProject">
+                                    Project name (ENG):
+                                </label>
                                 <input type="text"
                                        class="form-control"
                                        id="InputNameProject"
                                        required="required"
+                                       placeholder="Name"
                                        ng-model="project.title_eng"
                                 />
                             </div>
 
                             <div class="col-xs-6">
-                                <select class="form-control" ng-model="project.id_user" required="required">
-                                    <option value="null" ng-selected="true" ng-disabled="true">Select an painter</option>
-                                    <option ng-repeat="painter in painters"
-                                            value="{{painter.id_user}}">
-                                        {{painter.fio_eng}}
-                                    </option>
-                                </select>
+                                <label for="InputNameProject">
+                                    Project name (UA):
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameProject"
+                                       required="required"
+                                       placeholder="Ім'я"
+                                       ng-model="project.title_ukr"
+                                />
                             </div>
 
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="InputInformation">About project:</label>
+                        <label for="InputInformation">About project (ENG):</label>
                         <textarea class="form-control"
                                   rows="10"
                                   id="InputInformation"
                                   required="required"
                                   ng-model="project.description_eng"></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputInformation">About project (UA):</label>
+                        <textarea class="form-control"
+                                  rows="10"
+                                  id="InputInformation"
+                                  required="required"
+                                  ng-model="project.description_ukr"></textarea>
                     </div>
 
 
