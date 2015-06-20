@@ -6,7 +6,7 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">Painter list:</h3>
+                <h3 class="page-header">Artist list:</h3>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -34,7 +34,7 @@
                                 <a class="btn btn-success"
                                    href="#/edit-artist/{{painter.id_user}}"
                                    ng-if="admin">
-                                    <span class="glyphicon glyphicon-pencil"></span> Edit painter
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit artist
                                 </a>
                             </td>
                             <td width="45">
@@ -42,7 +42,7 @@
                                         class="btn btn-danger"
                                         ng-click="deletePainter(painter.id_user, $index)"
                                         ng-if="admin">
-                                    <span class="glyphicon glyphicon-minus"> </span>
+                                    <span class="glyphicon glyphicon-trash"> </span>
                                 </button>
                             </td>
                         </tr>
