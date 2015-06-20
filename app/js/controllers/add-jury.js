@@ -6,7 +6,10 @@ artApp.controller('addJuryCtrl',['$scope','$http', function($scope, $http) {
 
     $scope.addJury = function () {
 
-        if ($scope.formAddJury.$valid) {
+        console.log($scope.formAddJury);
+        console.log($scope.formAddJury.$valid);
+
+        if (!$scope.formAddJury.$valid) {
             $scope.status = "danger";
             $scope.message = "Please complete all fields";
             return false;

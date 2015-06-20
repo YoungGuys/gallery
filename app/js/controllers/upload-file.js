@@ -43,7 +43,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 file.fileName = fileName + '-' + date + '-' + r + '.' + fileType;
 
                 Upload.upload({
-                    url: 'http://gallery.com/core/upload-image.php',
+                    url: 'core/upload-image.php',
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,

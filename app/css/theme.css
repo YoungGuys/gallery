@@ -335,3 +335,19 @@ html, body {
 .animate-repeat.ng-enter.ng-enter-active {
     opacity: 1;
 }
+
+
+.house-item {
+    position: relative;
+}
+
+.house-item:before {
+    position: absolute;
+    content: '';
+    bottom: 100%;
+    left: 50%;
+    margin-left: -2px;
+    width: 4px
+    height: 250px
+    background-color: #d2a734
+}

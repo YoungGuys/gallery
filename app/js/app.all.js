@@ -235,7 +235,10 @@ artApp.controller('addJuryCtrl',['$scope','$http', function($scope, $http) {
 
     $scope.addJury = function () {
 
-        if ($scope.formAddJury.$valid) {
+        console.log($scope.formAddJury);
+        console.log($scope.formAddJury.$valid);
+
+        if (!$scope.formAddJury.$valid) {
             $scope.status = "danger";
             $scope.message = "Please complete all fields";
             return false;
@@ -1314,9 +1317,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
         if (!$scope.rulesModel) return false;
 
-
         $scope.tab = setTab;
-
 
     };
 
@@ -1507,7 +1508,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 file.fileName = fileName + '-' + date + '-' + r + '.' + fileType;
 
                 Upload.upload({
-                    url: 'http://gallery.com/core/upload-image.php',
+                    url: 'core/upload-image.php',
                     headers: {'Content-Type': file.type},
                     method: 'POST',
                     data: file,
@@ -1542,14 +1543,12 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
 
 /* Directives */
 
-
 artApp.directive('formStepOne', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-1.html'
     }
 });
-
 
 artApp.directive('formStepTwo', function() {
     return {
@@ -1614,10 +1613,6 @@ artApp.directive('menu', function() {
             $scope.exit = function() {
                 $cookieStore.put('authorization', false);
                 $cookieStore.put('admin', false);
-
-                //$cookieStore.put('jury', false);
-                //$cookieStore.put('login', false);
-                //$cookieStore.put('idJury', false);
             };
         }
     }

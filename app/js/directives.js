@@ -2,14 +2,12 @@
 
 /* Directives */
 
-
 artApp.directive('formStepOne', function() {
     return {
         restrict: 'E',
         templateUrl: 'template/registration/step-1.html'
     }
 });
-
 
 artApp.directive('formStepTwo', function() {
     return {
@@ -74,10 +72,6 @@ artApp.directive('menu', function() {
             $scope.exit = function() {
                 $cookieStore.put('authorization', false);
                 $cookieStore.put('admin', false);
-
-                //$cookieStore.put('jury', false);
-                //$cookieStore.put('login', false);
-                //$cookieStore.put('idJury', false);
             };
         }
     }

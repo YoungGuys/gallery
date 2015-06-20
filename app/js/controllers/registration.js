@@ -54,9 +54,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
         if (!$scope.rulesModel) return false;
 
-
         $scope.tab = setTab;
-
 
     };
 
