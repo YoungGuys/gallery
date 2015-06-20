@@ -231,6 +231,11 @@ img.media-object {
     transition: all .2s;
 }
 
+.checkbox:not(checked) + label.bg-blue:before {
+    background: #337ab7;
+}
+
+.checkbox:checked + label.bg-blue:before,
 .checkbox:checked + label:before {
     background: #9FD468;
 }
@@ -284,6 +289,7 @@ menu {
 }
 
 .thumbnail {
+    position: relative;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
 }
@@ -350,4 +356,42 @@ html, body {
     width: 4px
     height: 250px
     background-color: #d2a734
+}
+
+
+.glyphicon-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    cursor: pointer;
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.glyphicon-bg .glyphicon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    margin: auto;
+    color: #fff;
+    transform: scale(2);
+}
+
+.thumbnail:hover .glyphicon-bg {
+    visibility: visible;
+    opacity: 1;
 }

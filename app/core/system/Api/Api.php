@@ -587,7 +587,7 @@ class Api {
 
 
     public function delete_project() {
-        $id = $_GET['id_project'];
+        $id = $_GET['id_project<div class="form-group">'];
         $this->db->delete("projects", ['id_project' => $id]);
         $this->result = true;
     }

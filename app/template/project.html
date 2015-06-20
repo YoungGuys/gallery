@@ -7,8 +7,10 @@
                 <menu></menu>
 
                 <h3 class="page-header">
-                    Project: "{{project.title_eng}}"
-
+                    Project:
+                    "
+                    {{langs == 'eng' ? project.title_eng : project.title_ukr}}
+                    "
                     <span class="lead pull-right">
                         Author:
                         <a href="#/artist/{{painter.id_user}}">
@@ -20,7 +22,7 @@
                 <p class="page-header">Project description:</p>
 
                 <div>
-                    {{project.description_eng}}
+                    {{langs == 'eng' ? project.description_eng : project.description_ukr}}
                 </div>
 
                 <hr/>

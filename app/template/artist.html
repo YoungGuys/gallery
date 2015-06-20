@@ -6,7 +6,9 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">Painter: {{painter.fio_eng}}</h3>
+                <h3 class="page-header">Painter:
+                    {{langs == 'eng' ? painter.fio_eng : painter.fio_ukr}}
+                </h3>
 
                 <div class="row">
                     <div class="col-xs-3">
@@ -17,15 +19,17 @@
 
                         <div class="information">
                             <p>
-                                Town: {{painter.education_eng}}
+                                Town:
+                                {{langs == 'eng' ? painter.town_eng : painter.town}}
                             </p>
                             <p>
-                                Education: {{painter.town_eng}}
+                                Education:
+                                {{langs == 'eng' ? painter.education_eng : painter.education}}
                             </p>
                             <p>
                                 Biography:
                             </p>
-                            {{painter.bio}}
+                            {{langs == 'eng' ? painter.bio_eng : painter.bio}}
                         </div>
                     </div>
                 </div>
@@ -49,7 +53,7 @@
                                 <img src="images/img/{{project.photos[0].src}}" alt="project-photo">
                             </td>
                             <td>
-                                {{project.title_eng}}
+                                {{langs == 'eng' ? project.title_eng : project.title_ukr}}
                             </td>
                             <td width="85">
                                 <button class="btn btn-primary" ng-click="setTab($index)">
@@ -75,12 +79,16 @@
 
                 <ul class="project-list">
                     <li ng-repeat="project in projects" ng-if="isSet($index)">
-                        <h3 class="page-header">Project: "{{project.title_eng}}"</h3>
+                        <h3 class="page-header">Project:
+                            "
+                            {{langs == 'eng' ? project.title_eng : project.title_ukr}}
+                            "
+                        </h3>
 
                         <p class="page-header">Project description:</p>
 
                         <div>
-                            {{project.description_eng}}
+                            {{langs == 'eng' ? project.description_eng : project.description_ukr}}
                         </div>
 
                         <hr/>

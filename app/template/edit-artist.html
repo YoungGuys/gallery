@@ -12,9 +12,31 @@
 
                 <form name="formEditPainter">
 
+
                     <div class="form-group">
-                        <label for="InputName">Name:</label>
-                        <input type="text" class="form-control" id="InputName" ng-model="painter.fio_eng">
+                        <div class="row">
+
+                            <div class="col-xs-6">
+                                <label for="InputNameEn">Artist name (ENG):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameEn"
+                                       placeholder="Name"
+                                       required="required"
+                                       ng-model="painter.fio_eng"/>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <label for="InputNameUa">Artist name (UA):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameUa"
+                                       placeholder="Ім'я"
+                                       required="required"
+                                       ng-model="painter.fio_ukr"/>
+                            </div>
+
+                        </div>
                     </div>
 
 
@@ -22,35 +44,73 @@
                         <div class="row">
 
                             <div class="col-xs-6">
-                                <label for="town">User town:</label>
+                                <label for="townEn">Artist town (End):</label>
                                 <input type="text"
                                        class="form-control"
-                                       id="town"
+                                       id="townEn"
                                        placeholder="Town"
                                        required="required"
                                        ng-model="painter.town_eng"/>
                             </div>
 
                             <div class="col-xs-6">
-                                <label for="education">User education:</label>
+                                <label for="townUa">Artist town (UA):</label>
                                 <input type="text"
                                        class="form-control"
-                                       id="education"
-                                       placeholder="Education"
+                                       id="townUa"
+                                       placeholder="Місто"
                                        required="required"
-                                       ng-model="painter.education_eng"/>
+                                       ng-model="painter.town"/>
                             </div>
 
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="InputInformation">Information about the artist:</label>
+                        <div class="row">
+
+                            <div class="col-xs-6">
+                                <label for="educationEn">Artist education (End):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="educationEn"
+                                       placeholder="Education"
+                                       required="required"
+                                       ng-model="painter.education_eng"/>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <label for="educationUa">Artist education (UA):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="educationUa"
+                                       placeholder="Освіта"
+                                       required="required"
+                                       ng-model="painter.education"/>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="InputInformationEn">Information about the artist (ENG):</label>
                         <textarea class="form-control"
                                   rows="10"
-                                  id="InputInformation"
+                                  id="InputInformationEn"
+                                  ng-model="painter.bio_eng"
                                   required="required"
-                                  ng-model="painter.bio"></textarea>
+                                  placeholder="Here is a brief biography of the artist"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputInformationUa">Information about the artist (UA):</label>
+                        <textarea class="form-control"
+                                  rows="10"
+                                  id="InputInformationUA"
+                                  ng-model="painter.bio"
+                                  required="required"
+                                  placeholder="Коротка біографія художника"></textarea>
                     </div>
 
 

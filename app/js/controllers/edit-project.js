@@ -41,13 +41,10 @@ artApp.controller('editProjectCtrl',['$scope','$http', '$routeParams', function(
             return false;
         }
 
-        var data = {
-            id_project:      $routeParams.id,
-            id_user:         $scope.project.id_user,
-            title_eng:       $scope.project.title_eng,
-            description_eng: $scope.project.description_eng,
-            photos:          $scope.photo
-        };
+        var data = $scope.project;
+
+        data.id_project = $routeParams.id;
+        data.photos = $scope.photo;
 
         data = {"json": JSON.stringify(data)};
         console.log('\nSend server data update project');

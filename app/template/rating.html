@@ -45,7 +45,7 @@
                 </p>
 
                 <div class="rating" ng-show="!ratingVisibility || admin">
-                    <p class="text-muted">To: {{currentDate | date: "d.M.yyyy '=' HH:mm"}}</p>
+                    <p class="text-muted">To: {{currentDate | date: "d.M.yyyy HH:mm"}}</p>
 
                     <table class="table table-striped text-center">
                         <thead>
@@ -74,7 +74,7 @@
 
                                 <td width="240" class="text-left">
                                     <a href="#/project/{{project.id_project}}">
-                                        {{project.title_eng}}
+                                        {{langs == 'eng' ? project.title_eng : project.title_ukr}}
                                     </a>
                                 </td>
 
@@ -116,10 +116,12 @@
                             <td>
                                 <p ng-repeat="project in jury.projects">
 
-                                    <span ng-if="!project.title_eng">did not vote</span>
+                                    <span ng-if="!project.title_eng">
+                                        {{langs == 'eng' ? 'did not vote' : 'не голосував'}}
+                                    </span>
 
                                     <a ng-if="project.id_project" href="#/project/{{project.id_project}}">
-                                        {{project.title_eng}}
+                                        {{langs == 'eng' ? project.title_eng : project.title_ukr}}
                                     </a>
 
                                 </p>

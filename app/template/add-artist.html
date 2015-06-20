@@ -11,14 +11,31 @@
                 <form name="formAddPainter" novalidate>
 
                     <div class="form-group">
-                        <label for="InputName">Artist name:</label>
-                        <input type="text"
-                               class="form-control"
-                               id="InputName"
-                               placeholder="Name"
-                               required="required"
-                               ng-model="painter.fio_eng"/>
+                        <div class="row">
+
+                            <div class="col-xs-6">
+                                <label for="InputNameEn">Artist name (ENG):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameEn"
+                                       placeholder="Name"
+                                       required="required"
+                                       ng-model="painter.fio_eng"/>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <label for="InputNameUa">Artist name (UA):</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="InputNameUa"
+                                       placeholder="Ім'я"
+                                       required="required"
+                                       ng-model="painter.fio_ukr"/>
+                            </div>
+
+                        </div>
                     </div>
+
 
                     <div class="form-group">
                         <div class="row">
@@ -109,3 +126,4 @@
         </div>
     </div>
 </div>
+

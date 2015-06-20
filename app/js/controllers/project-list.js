@@ -20,7 +20,7 @@ artApp.controller('projectListCtrl',['$scope','$http', '$location', function($sc
 
         if (confirm('Delete project?')) {
 
-            $http.post('api/delete/project', {params: id})
+            $http.get('api/delete/project', {params: {id_project: id } })
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer delete project');
                     console.log(data);

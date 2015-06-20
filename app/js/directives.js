@@ -73,6 +73,27 @@ artApp.directive('menu', function() {
                 $cookieStore.put('authorization', false);
                 $cookieStore.put('admin', false);
             };
+
+
+            $scope.language = function() {
+                if ($rootScope.langs == 'eng' || !$rootScope.langs) {
+                    $rootScope.langs = 'ua';
+                }
+                else {
+                    $rootScope.langs = 'eng';
+                }
+            };
+
+            if ($rootScope.langs == 'eng' || !$rootScope.langs) {
+                $rootScope.lang = false;
+                $rootScope.langs = 'eng'
+            }
+            else {
+                $rootScope.lang = true;
+            }
+
+            console.log($rootScope.langs);
+
         }
     }
 });

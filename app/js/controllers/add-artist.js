@@ -44,3 +44,5 @@ artApp.controller('addArtistCtrl',['$scope','$http', '$location', function($scop
 
 
 }]);
+
+

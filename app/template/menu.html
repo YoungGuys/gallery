@@ -6,7 +6,21 @@
     </figure>
 
     <div class="col-md-10 col-xs-9 container-fluid">
-        <div ng-if="userName" class="navbar-form pull-right">
+
+        <div ng-if="userName" class="navbar-form">
+            <div class="pull-left">
+                <div class="form-group">
+                    <label for="lang" ng-click="language('eng')">Eng</label>
+                    <input type="checkbox"
+                           class="checkbox"
+                           id="lang"
+                           ng-checked="lang"
+                           ng-model="lang"
+                    />
+                    <label for="lang" class="bg-blue" ng-click="language('ua')">Ua</label>
+                </div>
+            </div>
+
             <div class="user-login">
                 You are logged in as: {{userName || ""}}
                 |
@@ -14,7 +28,7 @@
             </div>
         </div>
 
-        <nav class="navbar navbar-default ">
+        <nav class="navbar navbar-default">
 
             <ul class="nav nav-pills nav-justified">
                 <li ng-class="page('main')">

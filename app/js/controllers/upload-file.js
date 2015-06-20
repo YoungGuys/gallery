@@ -15,7 +15,11 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
 
 
     $scope.deleteImg = function(index) {
-        $scope.photo.splice(index, 1);
+
+        if ( confirm('Deleted img?') ) {
+            $scope.photo.splice(index, 1);
+        }
+
     };
 
 

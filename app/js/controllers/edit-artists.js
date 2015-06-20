@@ -19,9 +19,8 @@ artApp.controller('editArtistCtrl',['$scope','$http', '$routeParams', function($
 
         if ($scope.formEditPainter.$valid) {
 
-            var data;
+            var data = $scope.painter;
 
-            data = $scope.painter;
             data.id_user = $routeParams.id;
             data.photo = $scope.photo[0];
 
