@@ -471,6 +471,9 @@ class Api {
                 "sizes" => $val['sizes'],
                 'recomendation' => $val['recomendation'],
                 "owner" => $val['owner'],
+                "video1" => $val['video1'],
+                "video2" => $val['video2'],
+                "audio" => $val['audio']
             ], true);
         if ($val['photos']) {
             foreach ($val['photos'] as $k => $v) {
@@ -555,6 +558,9 @@ class Api {
                 "sizes" => $val['sizes'],
                 'recomendation' => $val['recomendation'],
                 "owner" => $val['owner'],
+                "video1" => $val['video1'],
+                "video2" => $val['video2'],
+                "audio" => $val['audio']
             ], ["id_project" => $val['id_project']]);
         $this->result = true;
         if ($val['photos']) {
