@@ -31,10 +31,26 @@
                                 </a>
                             </td>
                             <td width="55">
+                                <button class="btn"
+                                        ng-class="painter.visibility ? 'btn-warning' : 'btn-info' "
+                                        ng-if="admin"
+                                        ng-click="visibilityUser($index, painter.id_user, painter.visibility)"
+                                    >
+                                    <span ng-hide="!painter.visibility">
+                                        <span class="glyphicon glyphicon-eye-close"></span>
+                                        Hide user
+                                    </span>
+                                    <span ng-hide="painter.visibility">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                        Show user
+                                    </span>
+                                </button>
+                            </td><td width="55">
                                 <a class="btn btn-success"
                                    href="#/edit-artist/{{painter.id_user}}"
                                    ng-if="admin">
-                                    <span class="glyphicon glyphicon-pencil"></span> Edit artist
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    Edit artist
                                 </a>
                             </td>
                             <td width="45">
@@ -42,7 +58,7 @@
                                         class="btn btn-danger"
                                         ng-click="deletePainter(painter.id_user, $index)"
                                         ng-if="admin">
-                                    <span class="glyphicon glyphicon-trash"> </span>
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </td>
                         </tr>

@@ -51,6 +51,7 @@
                         </div>
                     </div>
 
+
                     <div class="form-group">
                         <label for="InputInformation">Information about the project (ENG):</label>
                         <textarea class="form-control"
@@ -72,8 +73,52 @@
 
 
                     <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="video1">
+                                    Video:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="video1"
+                                       required="required"
+                                       placeholder="Link to video"
+                                       ng-model="project.video1"
+                                        />
+                            </div>
 
+                            <div class="col-xs-6">
+                                <label for="video2">
+                                    Video:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="video2"
+                                       required="required"
+                                       placeholder="Link to video"
+                                       ng-model="project.video2"
+                                        />
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label for="audio">
+                                    Audio:
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="audio"
+                                       required="required"
+                                       placeholder="Link to audio"
+                                       ng-model="project.audio"
+                                        />
+                            </div>
+                        </div>
+                    </div>
+
 
                     <upload-file></upload-file>
 

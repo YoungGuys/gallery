@@ -21,9 +21,21 @@
 
                 <p class="page-header">Project description:</p>
 
-                <div>
+                <p>
                     {{langs == 'eng' ? project.description_eng : project.description_ukr}}
-                </div>
+                </p>
+
+                <p ng-if="project.video1">
+                    Video: <a href="{{project.video1}}" target="_blank">{{project.video1}}</a>
+                </p>
+
+                <p ng-if="project.video2">
+                    Video: <a href="{{project.video2}}" target="_blank">{{project.video2}}</a>
+                </p>
+
+                <p ng-if="project.audio">
+                    Audio: <a href="{{project.audio}}" target="_blank">{{project.audio}}</a>
+                </p>
 
                 <hr/>
 

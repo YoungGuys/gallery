@@ -311,7 +311,7 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
         $scope.project = {"json": JSON.stringify($scope.project)};
 
-        console.log('\nsend server data add project');
+        console.log('\nsend server data add PROJECT');
         console.log($scope.project);
 
         $http.get('api/post/project', {params: $scope.project})
@@ -368,6 +368,31 @@ artApp.controller('artistListCtrl',['$scope','$http', function($scope, $http) {
         });
 
 
+    $scope.visibilityUser = function (i, id, status) {
+
+        var data = {
+            id_user: id,
+            visibility: status ? 0 : 1
+        };
+
+        $http.get('api/put/changeVisibilityUser', {params: data})
+            .success(function(data, status, headers, config) {
+                console.log('\Visibility users');
+                console.log(data);
+
+                if (data) {
+                    $('.js-lsit tr').eq(i).hide(300);
+                }
+
+                //$scope.painters = data;
+            })
+            .error(function(data, status, headers, config) {
+                console.log('NOT OK')
+            });
+
+    }
+
+
     $scope.deletePainter = function (id, i) {
 
         if (confirm('Delete painter?')) {
@@ -406,6 +431,10 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
     $scope.setTab = function(setTab) {
         $scope.tab = setTab;
+
+        setTimeout(function () {
+            $('html, body').animate({'scrollTop': $('body').height() }, 0);
+        },10);
     };
 
 
@@ -465,18 +494,19 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         });
 
 
-    $scope.chooseProject = function(id) {
+    $scope.chooseProject = function(id, i, rate) {
 
         var data = {
             id_project: id
         };
 
-        if ($scope.rate) {
+        if (rate) {
             $http.get('api/delete/rate', {params: data} )
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer delete rating');
                     console.log(data);
-                    if (data) $scope.rate = false;
+
+                    if (data) $scope.projects[i].rate = false;
                 })
                 .error(function(data, status, headers, config) {
                     console.log('Answer delete rating "Error"');
@@ -485,15 +515,14 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         else {
             if ($scope.deleteRepeatRating) {
 
-                $http.get('api/put/deleteRepeat', { params: {
-                    id_project: id,
-                    id_jury: $scope.idJury
-                }})
+                data.id_jury = $scope.idJury;
+
+                $http.get('api/put/deleteRepeat', { params: data })
                     .success(function(data, status, headers, config) {
                         console.log('\ndeleteRepeat');
                         console.log(data);  // -> null
 
-                        $scope.rate = true;
+                        $scope.projects[i].rate = true;
                     });
             }
             else {
@@ -502,7 +531,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
                         console.log('\nAnswer add rating');
                         console.log(data);
 
-                        if (data) $scope.rate = true;
+                        if (data) $scope.projects[i].rate = true;
                     })
                     .error(function(data, status, headers, config) {
                         console.log('Answer add rating "Error"');
@@ -1465,7 +1494,7 @@ artApp.controller('registrationCtrl',['$scope','$http', '$location', function($s
 
 
 
-artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+artApp.controller('uploadFileCtrl', ['$scope', 'Upload', '$http', function ($scope, Upload, $http) {
 
     if (!$scope.photo) {
         $scope.photo = [];
@@ -1478,10 +1507,26 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
     $scope.log = '';
 
 
-    $scope.deleteImg = function(index) {
+    $scope.deleteImg = function(index, name) {
 
-        if ( confirm('Deleted img?') ) {
-            $scope.photo.splice(index, 1);
+        if ( confirm('Delete the image?') ) {
+
+            var data = {
+                name: name
+            };
+
+            $http.get('/api/delete/image', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nDeleted img');
+                    console.log(data);
+
+                    if (data) {
+                        $scope.photo.splice(index, 1);
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('\nAnswer deleted img "Error"')
+                });
         }
 
     };
@@ -1497,7 +1542,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 var m = new Date().getMonth() + 1;
                 var d = new Date().getDate();
                 var r = Math.round(Math.random() * 100);
-                var date = y + m + d;
+                var date = y + '' + m + '' + d;
 
                 var fileNameArray = file.name.split('.');
                 var fileType = fileNameArray[fileNameArray.length - 1];

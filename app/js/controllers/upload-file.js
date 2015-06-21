@@ -1,7 +1,7 @@
 
 
 
-artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Upload) {
+artApp.controller('uploadFileCtrl', ['$scope', 'Upload', '$http', function ($scope, Upload, $http) {
 
     if (!$scope.photo) {
         $scope.photo = [];
@@ -14,10 +14,26 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
     $scope.log = '';
 
 
-    $scope.deleteImg = function(index) {
+    $scope.deleteImg = function(index, name) {
 
-        if ( confirm('Deleted img?') ) {
-            $scope.photo.splice(index, 1);
+        if ( confirm('Delete the image?') ) {
+
+            var data = {
+                name: name
+            };
+
+            $http.get('/api/delete/image', {params: data} )
+                .success(function(data, status, headers, config) {
+                    console.log('\nDeleted img');
+                    console.log(data);
+
+                    if (data) {
+                        $scope.photo.splice(index, 1);
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log('\nAnswer deleted img "Error"')
+                });
         }
 
     };
@@ -33,7 +49,7 @@ artApp.controller('uploadFileCtrl', ['$scope', 'Upload', function ($scope, Uploa
                 var m = new Date().getMonth() + 1;
                 var d = new Date().getDate();
                 var r = Math.round(Math.random() * 100);
-                var date = y + m + d;
+                var date = y + '' + m + '' + d;
 
                 var fileNameArray = file.name.split('.');
                 var fileType = fileNameArray[fileNameArray.length - 1];

@@ -8,6 +8,10 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
 
     $scope.setTab = function(setTab) {
         $scope.tab = setTab;
+
+        setTimeout(function () {
+            $('html, body').animate({'scrollTop': $('body').height() }, 0);
+        },10);
     };
 
 
@@ -67,18 +71,19 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         });
 
 
-    $scope.chooseProject = function(id) {
+    $scope.chooseProject = function(id, i, rate) {
 
         var data = {
             id_project: id
         };
 
-        if ($scope.rate) {
+        if (rate) {
             $http.get('api/delete/rate', {params: data} )
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer delete rating');
                     console.log(data);
-                    if (data) $scope.rate = false;
+
+                    if (data) $scope.projects[i].rate = false;
                 })
                 .error(function(data, status, headers, config) {
                     console.log('Answer delete rating "Error"');
@@ -87,15 +92,14 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
         else {
             if ($scope.deleteRepeatRating) {
 
-                $http.get('api/put/deleteRepeat', { params: {
-                    id_project: id,
-                    id_jury: $scope.idJury
-                }})
+                data.id_jury = $scope.idJury;
+
+                $http.get('api/put/deleteRepeat', { params: data })
                     .success(function(data, status, headers, config) {
                         console.log('\ndeleteRepeat');
                         console.log(data);  // -> null
 
-                        $scope.rate = true;
+                        $scope.projects[i].rate = true;
                     });
             }
             else {
@@ -104,7 +108,7 @@ artApp.controller('artistCtrl',['$scope', '$rootScope', '$http', '$routeParams',
                         console.log('\nAnswer add rating');
                         console.log(data);
 
-                        if (data) $scope.rate = true;
+                        if (data) $scope.projects[i].rate = true;
                     })
                     .error(function(data, status, headers, config) {
                         console.log('Answer add rating "Error"');
