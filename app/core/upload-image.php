@@ -9,8 +9,7 @@ function resizeImage($tmp_name, $file_name, $size_image) {
     $size = getimagesize($tmp_name);
     $size_w = $size[0]; // ширина оригіналу
     if ($size_w < $size_image[0]) {
-        //echo $size_w;
-        move_uploaded_file( $tmp_name, $file_name);
+        copy( $tmp_name, $file_name);
         //echo "small";
         return;
     }
@@ -32,7 +31,6 @@ function resizeImage($tmp_name, $file_name, $size_image) {
         $size_w = $w; // ширина оригіналу
         $size_h = $h; // висота оригіналу
     }
-    echo $type;
     switch ($type) {
         case 'image/png':
             $image = imagecreatefrompng($filename);
@@ -54,7 +52,7 @@ function resizeImage($tmp_name, $file_name, $size_image) {
     }
     //imagedestroy($new_image);
 return;
-    if (file_exists($tmp_name)) {
+    /*if (file_exists($tmp_name)) {
         if ($size_image[0] || $size_image[1]) {
             if ($size_image[0] == 100) {
                 $a = 0;
@@ -134,7 +132,7 @@ return;
         } else {
             copy($tmp_name, $file_name);
         }
-    }
+    }*/
 }
 
 
@@ -148,8 +146,11 @@ $filename = $_FILES['file']['name'];
 $array = json_decode($_POST['data'], true);
 $filename = $array['fileName'];
 $destination = '../images/img/' . $filename;
-//resizeImage($_FILES['file']['tmp_name'], $destination, [1280,430]);
-move_uploaded_file( $_FILES['file']['tmp_name'] , $destination );
+resizeImage($_FILES['file']['tmp_name'], $destination, [1280]);
+$name = "1.jpg";
+//$_FILES['file']['tmp_name']
+//move_uploaded_file( $name , $destination );
+//var_dump(copy( $name , $destination ));
 
 
 
