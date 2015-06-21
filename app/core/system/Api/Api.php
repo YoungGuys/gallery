@@ -96,18 +96,19 @@ class Api {
 
     public function get_projects() {
         if (User::trueAdmin()) {
-            $sql = "SELECT p.*, s.*, pp.*, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project AND `rating`.repeat_vote = 0) AS rate FROM `projects` as p
+            $sql = "SELECT p.*, s.*, pp.id_photo, pp.src, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project AND `rating`.repeat_vote = 0) AS rate FROM `projects` as p
             LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
             LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project";
         } else {
-            $sql = "SELECT p.*, s.*, pp.*, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project AND `rating`.repeat_vote = 0) AS rate FROM `projects` as p
+            $sql = "SELECT p.*, s.*, pp.id_photo, pp.src, (SELECT COUNT(*) FROM `rating` WHERE `rating`.id_project = p.id_project AND `rating`.repeat_vote = 0) AS rate FROM `projects` as p
             LEFT JOIN `statements` as s ON p.`id_statement` = s.`id_statement`
             LEFT JOIN `project_photos` as pp ON pp.id_project = p.id_project LEFT JOIN `users` as u ON u.id_user = s.id_user WHERE u.visibility = 1";
         }
+        //echo $sql;
         $result = $this->db->send_query($sql);
         $newResult = [];
         $b = 0;
-
+        //var_dump($result);
         foreach ($result as $key => $val) {
             $newResult[$val['id_project']] = $val;
             $arr[$val['id_project']][] = ['id' => $val['id_photo'], 'src' => $val['src']];
