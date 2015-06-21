@@ -637,7 +637,6 @@ class Api {
     {
         $name = $_GET['name'];
         if (file_exists("images/img/$name")) {
-            echo "image/img/$name";
             if (unlink("images/img/$name")) {
                 $this->result = true;
             }else {
