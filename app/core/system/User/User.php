@@ -17,7 +17,7 @@ class User {
     public static function trueAdmin() {
         //return false;
         //return true;
-        $role = $_COOKIE['auth'];
+        $role = $_COOKIE['id'];
         $token = $_COOKIE['token'];
         if ($token == md5("balon_" . $role . "_core_role")) {
             return true;

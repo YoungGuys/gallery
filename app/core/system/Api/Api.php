@@ -32,6 +32,10 @@ class Api {
     public function get_admin() {
         $this->result = $this->db->select("admin_login", false,
             ['login' => $_GET['login'], 'pass' => md5($_GET['pass'])]);
+        if ($this->result) {
+            setcookie("id", $this->result[0]['id'], time() + 60 * 60 * 24 * 360, "/");
+            setcookie("token", md5("balon_"   . $this->result[0]['id']. "_core_role"), time() + 60 * 60 * 24 * 360, "/");
+        }
     }
 
     public function get_jury() {
