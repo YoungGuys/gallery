@@ -7,34 +7,34 @@
                 <menu></menu>
 
                 <h3 class="page-header">
-                    Project:
+                    project:
                     "
                     {{langs == 'eng' ? project.title_eng : project.title_ukr}}
                     "
                     <span class="lead pull-right">
-                        Author:
+                        author:
                         <a href="#/artist/{{painter.id_user}}">
                             {{painter.fio_eng}}
                         </a>
                     </span>
                 </h3>
 
-                <p class="page-header">Project description:</p>
+                <p class="page-header">project description:</p>
 
                 <p>
                     {{langs == 'eng' ? project.description_eng : project.description_ukr}}
                 </p>
 
                 <p ng-if="project.video1">
-                    Video: <a href="{{project.video1}}" target="_blank">{{project.video1}}</a>
+                    video: <a href="{{project.video1}}" target="_blank">{{project.video1}}</a>
                 </p>
 
                 <p ng-if="project.video2">
-                    Video: <a href="{{project.video2}}" target="_blank">{{project.video2}}</a>
+                    video: <a href="{{project.video2}}" target="_blank">{{project.video2}}</a>
                 </p>
 
                 <p ng-if="project.audio">
-                    Audio: <a href="{{project.audio}}" target="_blank">{{project.audio}}</a>
+                    audio: <a href="{{project.audio}}" target="_blank">{{project.audio}}</a>
                 </p>
 
                 <hr/>
@@ -51,9 +51,9 @@
                 <nav>
                     <ul class="pager">
                         <li class="previous">
-                            <a ng-click="setProject(project.prevProject)" href="#/project/{{project.prevProject}}">
+                            <a ng-click="setproject(project.prevproject)" href="#/project/{{project.prevproject}}">
                                 <span aria-hidden="true">&larr;</span>
-                                Previous project the artist
+                                previous project the artist
                             </a>
                         </li>
                         <li>
@@ -61,18 +61,18 @@
                                     class="btn"
                                     ng-class=" !rate ? 'btn-success' : 'btn-danger' "
                                     ng-if="!admin"
-                                    ng-click="chooseProject(project.id_project)">
+                                    ng-click="chooseproject(project.id_project)">
 
                                 <span ng-if="!rate" class="glyphicon glyphicon-heart"> </span>
-                                <span ng-if="!rate">To vote</span>
+                                <span ng-if="!rate">to vote</span>
 
                                 <span ng-if="rate" class="glyphicon glyphicon-minus"> </span>
-                                <span ng-if="rate">Take voice</span>
+                                <span ng-if="rate">take voice</span>
                             </button>
                         </li>
                         <li class="next">
-                            <a ng-click="setProject(project.nextProject)" href="#/project/{{project.nextProject}}">
-                                The next project of the artist
+                            <a ng-click="setproject(project.nextproject)" href="#/project/{{project.nextproject}}">
+                                the next project of the artist
                                 <span aria-hidden="true">&rarr;</span>
                             </a>
                         </li>

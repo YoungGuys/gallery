@@ -25,12 +25,12 @@ function resizeImage($tmp_name, $file_name, $size_image) {
     }
     $type = $size['mime'];
     // щоб виликі картинки норм завантажувались
-    if (($size[0] > $w) or ($size[1] > $h)) {
+    /*if (($size[0] > $w) or ($size[1] > $h)) {
         exec('mogrify -resize ' . $w . 'x' . $h . ' ' . $filename);
         $size = getimagesize($filename);
         $size_w = $w; // ширина оригіналу
         $size_h = $h; // висота оригіналу
-    }
+    }*/
     switch ($type) {
         case 'image/png':
             $image = imagecreatefrompng($filename);
