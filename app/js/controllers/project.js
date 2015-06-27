@@ -84,6 +84,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer delete rating');
                     console.log(data);
+
                     if (data) $scope.rate = false;
                 })
                 .error(function(data, status, headers, config) {
@@ -93,10 +94,9 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         else {
             if ($scope.deleteRepeatRating) {
 
-                $http.get('api/put/deleteRepeat', { params: {
-                    id_project: id,
-                    id_jury: $scope.idJury
-                }})
+                data.id_jury = $scope.idJury;
+
+                $http.get('api/put/deleteRepeat', { params: data })
                     .success(function(data, status, headers, config) {
                         console.log('\ndeleteRepeat');
                         console.log(data);  // -> null

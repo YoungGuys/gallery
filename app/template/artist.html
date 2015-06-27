@@ -6,7 +6,8 @@
 
                 <menu></menu>
 
-                <h3 class="page-header">Painter:
+                <h3 class="page-header">
+                    Artist:
                     {{langs == 'eng' ? painter.fio_eng : painter.fio_ukr}}
                 </h3>
 
@@ -122,7 +123,7 @@
                                        ng-click="setTab(project.prevProject)"
                                        href="">
                                         <span aria-hidden="true">&larr;</span>
-                                        Previous project the artist
+                                        previous project of the artist
                                     </a>
                                 </li>
                                 <li>
@@ -143,7 +144,7 @@
                                     <a ng-if="btnVisible"
                                        ng-click="setTab(project.nextProject)"
                                        href="">
-                                        The next project of the artist
+                                        next project of the artist
                                         <span aria-hidden="true">&rarr;</span>
                                     </a>
                                 </li>

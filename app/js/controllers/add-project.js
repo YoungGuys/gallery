@@ -3,7 +3,7 @@
 artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 
-    $scope.multipleupload = true;
+    $scope.multipleUpload = true;
 
     $http.get('api/get/allusers')
         .success(function(data, status, headers, config) {

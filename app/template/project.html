@@ -7,10 +7,10 @@
                 <menu></menu>
 
                 <h3 class="page-header">
-                    project:
-                    "
+                    <!--project:-->
+                    <!--"-->
                     {{langs == 'eng' ? project.title_eng : project.title_ukr}}
-                    "
+                    <!--"-->
                     <span class="lead pull-right">
                         author:
                         <a href="#/artist/{{painter.id_user}}">
@@ -51,9 +51,9 @@
                 <nav>
                     <ul class="pager">
                         <li class="previous">
-                            <a ng-click="setproject(project.prevproject)" href="#/project/{{project.prevproject}}">
+                            <a href="#/project/{{project.prevProject}}">
                                 <span aria-hidden="true">&larr;</span>
-                                previous project the artist
+                                previous project
                             </a>
                         </li>
                         <li>
@@ -61,7 +61,7 @@
                                     class="btn"
                                     ng-class=" !rate ? 'btn-success' : 'btn-danger' "
                                     ng-if="!admin"
-                                    ng-click="chooseproject(project.id_project)">
+                                    ng-click="chooseProject(project.id_project)">
 
                                 <span ng-if="!rate" class="glyphicon glyphicon-heart"> </span>
                                 <span ng-if="!rate">to vote</span>
@@ -71,8 +71,8 @@
                             </button>
                         </li>
                         <li class="next">
-                            <a ng-click="setproject(project.nextproject)" href="#/project/{{project.nextproject}}">
-                                the next project of the artist
+                            <a href="#/project/{{project.nextProject}}">
+                                next project
                                 <span aria-hidden="true">&rarr;</span>
                             </a>
                         </li>

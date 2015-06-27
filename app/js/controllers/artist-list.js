@@ -19,25 +19,22 @@ artApp.controller('artistListCtrl',['$scope','$http', function($scope, $http) {
 
         var data = {
             id_user: id,
-            visibility: status ? 0 : 1
+            visibility: status == 1 ? 0 : 1
         };
 
         $http.get('api/put/changeVisibilityUser', {params: data})
             .success(function(data, status, headers, config) {
-                console.log('\Visibility users');
+                console.log('\nVisibility users');
                 console.log(data);
 
                 if (data) {
-                    $('.js-lsit tr').eq(i).hide(300);
+                    $scope.painters[i].visibility = status == 1 ? 0 : 1;
                 }
 
                 //$scope.painters = data;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
             });
 
-    }
+    };
 
 
     $scope.deletePainter = function (id, i) {

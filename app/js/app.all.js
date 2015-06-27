@@ -281,7 +281,7 @@ artApp.controller('addJuryCtrl',['$scope','$http', function($scope, $http) {
 artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($scope, $http, $location) {
 
 
-    $scope.multipleupload = true;
+    $scope.multipleUpload = true;
 
     $http.get('api/get/allusers')
         .success(function(data, status, headers, config) {
@@ -372,25 +372,22 @@ artApp.controller('artistListCtrl',['$scope','$http', function($scope, $http) {
 
         var data = {
             id_user: id,
-            visibility: status ? 0 : 1
+            visibility: status == 1 ? 0 : 1
         };
 
         $http.get('api/put/changeVisibilityUser', {params: data})
             .success(function(data, status, headers, config) {
-                console.log('\Visibility users');
+                console.log('\nVisibility users');
                 console.log(data);
 
                 if (data) {
-                    $('.js-lsit tr').eq(i).hide(300);
+                    $scope.painters[i].visibility = status == 1 ? 0 : 1;
                 }
 
                 //$scope.painters = data;
-            })
-            .error(function(data, status, headers, config) {
-                console.log('NOT OK')
             });
 
-    }
+    };
 
 
     $scope.deletePainter = function (id, i) {
@@ -1134,6 +1131,7 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
                 .success(function(data, status, headers, config) {
                     console.log('\nAnswer delete rating');
                     console.log(data);
+
                     if (data) $scope.rate = false;
                 })
                 .error(function(data, status, headers, config) {
@@ -1143,10 +1141,9 @@ artApp.controller('projectCtrl',['$scope','$http', '$routeParams', '$rootScope',
         else {
             if ($scope.deleteRepeatRating) {
 
-                $http.get('api/put/deleteRepeat', { params: {
-                    id_project: id,
-                    id_jury: $scope.idJury
-                }})
+                data.id_jury = $scope.idJury;
+
+                $http.get('api/put/deleteRepeat', { params: data })
                     .success(function(data, status, headers, config) {
                         console.log('\ndeleteRepeat');
                         console.log(data);  // -> null
@@ -1659,8 +1656,15 @@ artApp.directive('menu', function() {
             };
 
             $scope.exit = function() {
-                $cookieStore.put('authorization', false);
-                $cookieStore.put('admin', false);
+                $cookieStore.remove('authorization');
+                $cookieStore.remove('admin');
+                $cookieStore.remove('login');
+                $cookieStore.remove('jury');
+                $cookieStore.remove('id');
+                $cookieStore.remove('idJury');
+                $cookieStore.remove('token');
+
+                $location.url('#/login');
             };
 
 

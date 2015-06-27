@@ -32,15 +32,15 @@
                             </td>
                             <td width="55">
                                 <button class="btn"
-                                        ng-class="painter.visibility ? 'btn-warning' : 'btn-info' "
+                                        ng-class="painter.visibility == 1 ? 'btn-warning' : 'btn-info' "
                                         ng-if="admin"
                                         ng-click="visibilityUser($index, painter.id_user, painter.visibility)"
                                     >
-                                    <span ng-hide="!painter.visibility">
+                                    <span ng-show="painter.visibility == 1">
                                         <span class="glyphicon glyphicon-eye-close"></span>
                                         Hide user
                                     </span>
-                                    <span ng-hide="painter.visibility">
+                                    <span ng-show="painter.visibility == 0">
                                         <span class="glyphicon glyphicon-eye-open"></span>
                                         Show user
                                     </span>

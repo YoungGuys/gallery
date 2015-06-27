@@ -70,8 +70,15 @@ artApp.directive('menu', function() {
             };
 
             $scope.exit = function() {
-                $cookieStore.put('authorization', false);
-                $cookieStore.put('admin', false);
+                $cookieStore.remove('authorization');
+                $cookieStore.remove('admin');
+                $cookieStore.remove('login');
+                $cookieStore.remove('jury');
+                $cookieStore.remove('id');
+                $cookieStore.remove('idJury');
+                $cookieStore.remove('token');
+
+                $location.url('#/login');
             };
 
 
