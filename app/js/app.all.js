@@ -309,12 +309,12 @@ artApp.controller('addProjectCtrl',['$scope','$http', '$location', function($sco
 
         $scope.project.photos = $scope.photo;
 
-        $scope.project = {"json": JSON.stringify($scope.project)};
+        $scope.project = {json: JSON.stringify($scope.project)};
 
         console.log('\nsend server data add PROJECT');
         console.log($scope.project);
 
-        $http.get('api/post/project', {params: $scope.project})
+        $http.get('api/post/project', $scope.project)
             .success(function(data, status, headers, config) {
                 console.log('\nanswer add project');
                 console.log(data);
@@ -904,7 +904,17 @@ artApp.controller('juryListCtrl',['$scope','$http', function($scope, $http) {
                 }
 
             });
-    }
+    };
+
+
+    $http.get('api/get/ratingVisibility')
+        .success(function(data, status, headers, config) {
+            console.log('\nratingVisibility');
+            console.log(data);
+
+            $scope.ratingVisibility = (data == "false") ? false : true;
+        });
+
 
 }]);
 'use strict';

@@ -24,9 +24,10 @@
                                 <img ng-src="images/img/{{j.photo}}" alt="jury-photo"/>
                             </td>
                             <td>
-                                <a href="#/expert-selected/{{j.id_jury}}">
+                                <a href="#/expert-selected/{{j.id_jury}}" ng-show="!ratingVisibility || admin">
                                     {{j.fio}}
                                 </a>
+                                <p ng-show="ratingVisibility && !admin">{{j.fio}}</p>
                             </td>
                             <td width="55" ng-if="admin">
                                 <a href="#/edit-expert/{{j.id_jury}}" class="btn btn-success">

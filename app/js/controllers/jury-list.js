@@ -29,6 +29,16 @@ artApp.controller('juryListCtrl',['$scope','$http', function($scope, $http) {
                 }
 
             });
-    }
+    };
+
+
+    $http.get('api/get/ratingVisibility')
+        .success(function(data, status, headers, config) {
+            console.log('\nratingVisibility');
+            console.log(data);
+
+            $scope.ratingVisibility = (data == "false") ? false : true;
+        });
+
 
 }]);
